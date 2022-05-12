@@ -1,0 +1,214 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-12 grid-margin">
+        <div class="row">
+          <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+            <h3 class="font-weight-bold">XXI ASR BUXGALTERIYA</h3>
+            <h6 class="font-weight-normal mb-0"><span>Topshiriqlar</span></h6>
+          </div>
+          <div class="col-12 col-xl-4">
+           <div class="justify-content-end d-flex">
+            <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+              
+            </div>
+           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    {% if profile.status == 'admin' or profile.status == 'superuser' %}
+    <div class="row">
+        <div class="col-md-12 grid-margin strech-card">
+            <div class="card">
+                <div class="p-4">
+                    <form action="" method="post" enctype= multipart/form-data>
+                        {% csrf_token %}
+                        {% for field in form %}
+                        <div class="form-group">
+                            <label for="">{{field.label}}</label>
+                            {{field}}
+                        </div>
+                        {% endfor %}
+                        <button class="btn btn-primary btn-rounded">Kirish</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            
+          <div class="card-body">
+            <p class="card-title">Filterlash</p>
+            <form action="" method="get">
+                <div class="row">
+                
+                <div class="col-sm-6">
+                    
+                    <div class="form-group">
+                        <label for="">Muddat bo'yicha (...) dan</label>
+                        <input type="date" name="from" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Muddat bo'yicha (...) gacha</label>
+                        <input type="date" name="to" class="form-control" required>
+                    </div>
+                    
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="">Xodimlar bo'yicha</label>
+                        <select name="users" class="form-control">
+                            <option value="">Barcha</option>
+                            {% for user in users %}
+                                <option value="{{user.id}}">{{user.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Topshiriq holati bo'yicha</label>
+                        <select name="type" class="form-control">
+                            <option value="">Barcha</option>
+                            <option value="10">Bajarilgan</option>
+                            <option value="5">Jarayonda</option>
+                            <option value="0">Bajarilmagan</option>
+                        </select>
+                    </div>
+                </div>
+                
+                </div>
+                <button class="btn btn-rounded btn-primary">Aniqlash</button>
+            </form>
+
+            <hr>
+            <div class="card-title"><div class="float-left">Topshiriqlar ro'yxati</div>
+            <div class="float-right">
+                <button class="btn btn-sm btn-success" id="export_button">Excel</button>
+            </div>
+            </div>
+            <div class="table-responsive">
+               <table class="table" id="tasks">
+                   <thead>
+                       <tr>
+                           <th>#</th>
+                           <th>Topshiriq matni</th>
+                           <th>Muddati</th>
+                           <th>Holati</th>
+                           <th>Qabul qiluvchilar</th>
+                           <th>Biriktirlgan mijoz</th>
+                           <th>Fayl</th>
+                           <th>Javob matni</th>
+                           <th>Javob fayli</th>
+                           <th></th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                       {% for task in tasks %}
+                       <tr>
+                           <td>{{forloop.counter}}</td>
+                           <td><p> {{task.text|slice:"0:50"}}  <br> {{task.text|slice:"50:100"}}  <br> {{task.text|slice:"100:150"}}...</p></td>
+                           <td>
+                               {{task.duration}}
+                           </td>
+                           <td>
+                               {% if task.status == '0' %}
+                               <div class="btn-sm btn-danger btn mb-1">
+                                   Bajarilmagan 
+                               </div><br>
+                               {% elif task.status == '5' %}
+                               <div class="btn-sm btn-warning btn mb-1">
+                                    Jarayonda 
+                                </div><br>
+                                {% elif task.status == '10' %}
+                               <div class="btn-sm btn-success btn mb-1">
+                                    Tugatilgan
+                                </div><br>
+                               {% endif %}
+
+                              
+                               {{task.status.get_status_display}}
+                               {% if task.is_past_due %}
+                                    <div class="btn btn-sm btn-danger">Muddati tugagan</div>
+                               {% else %}
+                               <div class="btn btn-sm btn-success">Muddati tugamagan</div>
+                               {% endif %}
+                           </td>
+                           <td>
+                                <div class="btn btn-sm btn-primary mb-1">{{task.user.name}}</div><br>
+                           </td>
+                           <td>
+                               {% for client in task.client.all %}
+                                <a href="{% url 'client' client.id %}"><div class="btn btn-sm btn-primary">{{client.name}}</div></a>
+                                {% endfor%} 
+                           </td>
+                           <td>
+                               {% if task.given_file %}
+                               <a href="/app{{ task.given_file.url }}" download><i class="fa fa-download text-success"></i></a>
+                               {% endif %}
+                           </td>
+                           <td>
+                               {% if task.answer_text %}
+                               {{task.answer_text|slice:"30"}}
+                               {% endif %}
+                           </td>
+                           <td>
+                            {% if task.answer_file %}
+                            <a href="{{ task.answer_file.url }}" download><i class="fa fa-download text-success"></i></a>
+                            {% endif %}
+                           </td>
+                           <td>
+                            <a href="{% url 'finish-task' task.id %}"><i class="ti-pencil text-primary font-weight-bold"></i></a>
+                            <a href="{% url 'view-task' task.id %}"><i class="ti-eye text-primary font-weight-bold"></i></a>
+                            <a href="{% url 'delete-task' task.id %}"><i class="ti-trash text-danger font-weight-bold"></i></a>
+                               
+                           </td>
+                       </tr>
+                       {% endfor %}
+
+
+                   </tbody>
+               </table>
+           </div>
+          {% if pagType %}
+          <nav aria-label="Page navigation example">
+            <ul class="pagination mt-3">
+              {% if tasks.has_previous %}
+              <li class="page-item"><a class="page-link" href="?page={{tasks.previous_page_number}}">&#10094 Oldingi</a></li>
+              {% endif %}
+              {% for page in page_range %}
+              
+              {% if page == tasks.number %}
+              <li class="page-item active"><a class="page-link" href="?page={{page}}">{{page}}</a></li>
+              {% else %}
+              <li class="page-item"><a class="page-link" href="?page={{page}}">{{page}}</a></li>
+              {% endif %}
+              {% endfor %}
+
+              {% if tasks.has_next %}
+              <li class="page-item"><a class="page-link" href="?page={{tasks.next_page_number}}">Keyingi &#10095</a></li>
+              {% endif %}
+
+            </ul>
+          </nav>
+          {% endif %}
+          </div>
+        </div>
+      </div>
+     
+    </div>
+
+  </div>
+ 
+</div>
+
+{% endblock content %}

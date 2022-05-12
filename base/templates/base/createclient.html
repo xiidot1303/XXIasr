@@ -1,0 +1,215 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-12 grid-margin">
+        <div class="row">
+          <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+            <h3 class="font-weight-bold">XXI ASR BUXGALTERIYA</h3>
+            <h6 class="font-weight-normal mb-0">Mijozlarni ro'yxatga olish</span></h6>
+          </div>
+          <div class="col-12 col-xl-4">
+           <div class="justify-content-end d-flex">
+           
+           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+    <div class="row">
+      <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-title">Mijoz kiritish</p>
+           <form action="" method="GET">
+           
+              <b>Mijoz turini tanlang</b>
+              <div class="form-group mt-3">
+                <div class="form-check d-inline-block">
+                  <label class="form-check-label">
+                    <input type="radio" name="type" value="ytt" class="form-check-input">
+                    YaTT
+                  <i class="input-helper"></i></label>
+                </div>
+                <div class="form-check d-inline-block ml-2">
+                  <label class="form-check-label">
+                    <input type="radio" name="type" value="yuridik" class="form-check-input">
+                    Yuridik
+                  <i class="input-helper"></i></label>
+                </div>
+                <div class="form-check d-inline-block ml-2">
+                  <label class="form-check-label">
+                    <input type="radio" name="type" value="jismoniy" class="form-check-input">
+                    Jismoniy
+                  <i class="input-helper"></i></label>
+                </div>
+                <div class="form-check d-inline-block ml-2">
+                  <label class="form-check-label">
+                    <input type="radio" name="type" value="tanirovka" class="form-check-input">
+                    Tanirovka
+                  <i class="input-helper"></i></label>
+                </div>
+                <div class="form-check d-inline-block ml-2">
+                  <label class="form-check-label">
+                    <input type="radio" name="type" value="auction" class="form-check-input">
+                    Auksion
+                  <i class="input-helper"></i></label>
+                </div>
+                <div class="form-check d-inline-block">
+                  <label class="form-check-label">
+                    <input type="radio" name="type" value="teacher" class="form-check-input">
+                    O'qituvchi
+                  <i class="input-helper"></i></label>
+                </div>
+              </div>
+              
+              <button class="btn btn-rounded btn-primary " type="submit">Tasdiqlash</button>
+              <a href="" class="btn">Ortga</a>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 grid-margin stretch-card">
+          <div class="card">
+              <div class="card-body">
+                  <div class="card-title">Mijoz mavjudligini tekshirish</div>
+                  <form method="get">
+                      <input type="hidden" name="check">
+                      <div class="row">
+                          <div class="col-md-6">
+                                <div class="form-group">
+                                  <label>F.I.Sh</label>
+                                  <input type="text" name="name" class="form-control form-control-sm">
+                                </div>
+                          </div>
+                          <div class="col-md-6">
+                                <div class="form-group">
+                                  <label>JSHSHIR</label>
+                                  <input type="text" name="j" class="form-control form-control-sm">
+                                </div>
+                          </div>
+                          <div class="col-md-6">
+                                <div class="form-group">
+                                  <label>STIR</label>
+                                  <input type="text" name="tin" class="form-control form-control-sm">
+                                </div>
+                          </div>
+                      </div>
+                      <button type="submit" class="btn btn-primary">Aniqlash</button>
+                  </form>
+              </div>
+          </div>
+      </div>
+    </div>
+    
+    {% if checked %}
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+                <div class="card-title"><div class="float-left">Qidiruv natijalari</div>
+                    <div class="float-right">
+                        <button class="btn btn-sm btn-success" id="export_button">Excel</button>
+                    </div>
+                </div>
+            
+            <div class="table-responsive">
+               <table class="table table-striped ytt" id="tasks">
+                   <thead>
+                       <tr>
+                           <th>#</th>
+                           <th>Mijoz</th>
+                           <th>Turi</th>
+                           <th>JSHSHIR</th>
+                           <th>STIR</th>
+                           <th>Telefon</th>
+                           <th><i class="fa fa-cog"></i></th>
+                       </tr>
+                   </thead>
+                   
+                   <tbody>
+                     {% for client in clients %}
+                       <tr>
+                           <td>{{ forloop.counter }}</td>
+                           <td  style="display: flex; align-items: center ;">
+                             {% if client.picture %}
+                              <div class="profile-pics">
+                                <img style="width: 100%; height: 100%; border-radius: 0; transition: all 1s;" src="/app{{client.picture.url}}" alt="">
+                              </div>
+                              <div class="img-text" style="line-height: 15px; padding-left: 15px;"><a href="{% url 'client' client.id %}">{{ client.name|wordwrap:"20"|linebreaksbr }}</a></div>
+                              {% else %}
+
+                                <div class="profile-pics">
+                                  <img style="width: 100%; height: 100%; border-radius: 0; transition: all 1s;" src="{% static 'profile/profile-default.jpg' %}" alt="">
+                                </div>
+                                <div class="img-text" style="line-height: 15px; padding-left: 15px;"><a href="{% url 'client' client.id %}">{{ client.name|wordwrap:"20"|linebreaksbr }}</a></div>
+
+                              {% endif %}
+
+                             
+                            </td>
+                           <td>{{ client.get_type_display }}</td>
+                           <td>{% if client.jshshir %} {{ client.jshshir|wordwrap:"14"|linebreaksbr }} {% else %} - {% endif %}</td>
+                           <td>{% if client.tin %} {{ client.tin|wordwrap:"14"|linebreaksbr }} {% else %} - {% endif %}</td>
+                           <td>{{ client.phone1 }}</td>
+                            <td>
+                              <a href="{% url 'edit-client' client.id %}"><i class="fa fa-pencil"></i></a>
+                            </td>
+                       </tr>
+                       {% endfor %}
+
+                   </tbody>
+               </table>
+           </div>
+           
+          </div>
+        </div>
+      </div>
+     
+    </div>
+    {% endif %}
+
+    {% if view %}
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-title">Mijoz ma'lumotlari</p>
+            
+            <form action="" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              {% for field in form %}
+                <div class="form-group">
+
+                  {{ field.errors }}
+                  <label for="">{{field.label}}</label>
+                  {{field}}
+                  
+                </div>
+              {% endfor %}
+              <button type="submit" class="btn btn-rounded btn-primary">Kiritish</button>
+            </form>
+           
+          </div>
+        </div>
+      </div>
+     
+    </div>
+    {% endif %}
+
+  </div>
+ 
+</div>
+{% endblock content %}
+
+
+{% block script %}
+
+
+
+{% endblock %}

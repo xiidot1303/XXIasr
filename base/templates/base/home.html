@@ -1,0 +1,259 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-12 grid-margin">
+        <div class="row">
+          <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+            <h3 class="font-weight-bold">XXI ASR BUXGALTERIYA</h3>
+            <h6 class="font-weight-normal mb-0">Mijozlar bilan ishlash  <span class="text-primary">tizimi</span></h6>
+          </div>
+          <div class="col-12 col-xl-4">
+           <div class="justify-content-end d-flex">
+            <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+              <button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button" id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+               <i class="mdi mdi-calendar"></i> {{date}}
+              </button>
+             
+            </div>
+           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 grid-margin transparent">
+        <div class="row">
+          <div class="col-md-2 mb-4 stretch-card transparent">
+            <a href='{% url "monitoring" %}'>
+             <div class="card card-light-danger">
+              <div class="card-body">
+                <p class="mb-4">Yuklatilgan xizmatlar <b>(tugatilmagan)</b></p>
+                <p class="fs-30 mb-2">{{uploads_uncompleted.count}}</p>
+              </div>
+            </div>
+            </a>
+          </div>
+          <div class="col-md-2 mb-4 stretch-card transparent">
+              <a href='{% url "monitoring" %}'>
+            <div class="card card-light-danger">
+              <div class="card-body">
+                <p class="mb-4">Yuklatilgan xizmatlar <b>(narxlanmagan)</b></p>
+                <p class="fs-30 mb-2">{{uploads_unpriced.count}}</p>
+                
+              </div>
+            </div>
+            </a>
+          </div>
+          <div class="col-md-2 mb-4 stretch-card transparent">
+              <a href='{% url "task" %}'>
+            <div class="card card-light-danger">
+              <div class="card-body">
+                <p class="mb-4">Topshiriqlar <b> (tugatilgan)</b></p>
+                <p class="fs-30 mb-2">{{tasks_completed.count}}</p>
+               
+              </div>
+            </div>
+            </a>
+          </div>
+          <div class="col-md-2 mb-4 stretch-card transparent">
+              <a href='{% url "task" %}'>
+            <div class="card card-light-danger">
+              <div class="card-body">
+                <p class="mb-4">Topshiriqlar <b> (tugatilmagan)</b></p>
+                <p class="fs-30 mb-2">
+                  {{tasks_uncompleted.count}}
+                </p>
+              </div>
+            </div>
+            </a>
+          </div>
+          <div class="col-md-2 mb-4 stretch-card transparent">
+            <div class="card card-light-danger">
+              <div class="card-body">
+                <p class="mb-4">Eslatmalar <b> (tugatilmagan)</b></p>
+                <p class="fs-30 mb-2">
+                  {{notes_uncompleted.count}}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2 mb-4 stretch-card transparent">
+            <div class="card card-light-danger">
+              <div class="card-body">
+                <p class="mb-4">Topshiriqlar <b> (jarayonda)</b></p>
+                <p class="fs-30 mb-2">
+                  {{notes_process.count}}
+                </p>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    
+    {% if profile.status == 'admin' or profile.status == 'superuser' or profile.status == 'user' %}
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-title">Ro'yxatga olingan xizmatlar | Narxlanmagan </p>
+            {% if uploads_unpriced.count > 0 %}
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Mijoz</th>
+                    <th>Xizmat turi</th>
+                    <th>Kiritilgan sana</th>
+                    <th>Muddat</th>
+                    <th>Fayl</th>
+                    <th>Qabul qiluvchi</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for unpriced in uploads_unpriced|slice:":10" %}
+                    <tr>
+                      <td>{{forloop.counter}}</td>
+                      <td  style="display: flex; align-items: center ;">
+                        {% if unpriced.client.picture %}
+                         <div class="profile-pics">
+                           <img style="width: 100%; height: 100%; border-radius: 0; transition: all 1s;" src="/app{{ unpriced.client.picture.url }}" alt="">
+                         </div>
+                         <div class="img-text" style="line-height: 15px; padding-left: 15px;"><a href="{% url 'client' unpriced.client.id %}">{{ unpriced.client.name|wordwrap:"20"|linebreaksbr }}</a></div>
+                         {% else %}
+
+                           <div class="profile-pics">
+                             <img style="width: 100%; height: 100%; border-radius: 0; transition: all 1s;" src="{% static 'profile/profile-default.jpg' %}" alt="">
+                           </div>
+                           <div class="img-text" style="line-height: 15px; padding-left: 15px;"><a href="{% url 'client' unpriced.client.id %}">{{ unpriced.client.name|wordwrap:"17"|linebreaksbr }}</a></div>
+
+                         {% endif %}
+
+                        
+                       </td>
+                      <td style="line-height: 20px;">{{unpriced.service|wordwrap:"30"|linebreaksbr}}</td>
+                      <td>{{unpriced.loaded_date}}</td>
+                      <td>{{unpriced.period}}</td>
+                      <td>
+                          {% if unpriced.uploaded_file %}
+                            <a href="/app{{unpriced.uploaded_file.url}}" download>
+                                <i class="fa fa-download text-success"></i>
+                            </a>
+                          {% endif %}
+                      </td>
+                      <td>{{unpriced.reciever}}</td>
+                      <td>
+                       {% if profile.status == 'admin' or profile.status == 'superuser' %}
+                          <a href="{% url 'confirm-service' unpriced.id %}" class="btn btn-outline-success btn-sm">
+                            <i class="fa fa-check"></i>
+                          </a>
+                          <a href="{% url 'cancel-service' unpriced.id %}" class="btn btn-outline-danger btn-sm">
+                            <i class="fa fa-close"></i>
+                          </a>
+                       {% endif %}
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+            {% else %}
+            <div class="text-center text-danger">
+              Narxlanmagan xizmatlar mavjud emas
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+     
+    </div>
+    {% endif %}
+
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-title">Yuklatilgan xizmatlar | Bajarilmagan </p>
+            {% if uploads_uncompleted.count > 0 %}
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Mijoz</th>
+                    <th>Xizmat turi</th>
+                    <th>Kiritilgan sana</th>
+                    <th>Muddat</th>
+                    <th>Fayl</th>
+                    <th>Qabul qiluvchi</th>
+                    <th>Tugatish</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for uncompleted in uploads_uncompleted|slice:":10" %}
+                    <tr>
+                      <td>{{forloop.counter}}</td>
+                      <td  style="display: flex; align-items: center ;">
+                        {% if uncompleted.client.picture %}
+                         <div class="profile-pics">
+                           <img style="width: 100%; height: 100%; border-radius: 0; transition: all 1s;" src="/app{{ uncompleted.client.picture.url }}" alt="">
+                         </div>
+                         <div class="img-text" style="line-height: 15px; padding-left: 15px;"><a href="{% url 'client' uncompleted.client.id %}">{{ uncompleted.client.name|wordwrap:"20"|linebreaksbr }}</a></div>
+                         {% else %}
+
+                           <div class="profile-pics">
+                             <img style="width: 100%; height: 100%; border-radius: 0; transition: all 1s;" src="{% static 'profile/profile-default.jpg' %}" alt="">
+                           </div>
+                           <div class="img-text" style="line-height: 15px; padding-left: 15px;"><a href="{% url 'client' uncompleted.client.id %}">{{ uncompleted.client.name|wordwrap:"17"|linebreaksbr }}</a></div>
+
+                         {% endif %}
+
+                        
+                       </td>
+                      <td style="line-height: 20px;">{{uncompleted.service|wordwrap:"30"|linebreaksbr}}</td>
+                      <td>{{uncompleted.loaded_date}}</td>
+                      <td>{{uncompleted.period}}</td>
+                      <td>
+                          {% if unpriced.uploaded_file %}
+                            <a href="/app{{unpriced.uploaded_file.url}}" download>
+                                <i class="fa fa-download text-success"></i>
+                            </a>
+                          {% endif %}
+                      </td>
+                      <td>{{uncompleted.reciever}}</td>
+                      <td>
+                        {% if uncompleted.reciever.user == request.user %}
+                        <a href="{% url 'confirm-service' uncompleted.id %}" class="btn btn-outline-success btn-sm">
+                          <i class="fa fa-check"></i>
+                        </a>
+                        {% else %}
+                        Tugatilmagan
+                        {% endif %}
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+            {% else %}
+            <div class="text-center text-danger">
+              Bajarilmagan xizmatlar mavjud emas
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+     
+    </div>
+
+  </div>
+ 
+</div>
+{% endblock content %}

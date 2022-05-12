@@ -1,0 +1,67 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="main-panel">
+  
+  {% if profile.status == 'admin' or profile.status == 'superuser'%}
+  {% if obj %}
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-12 grid-margin">
+        <div class="row">
+          <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+            <h3 class="font-weight-bold">XXI ASR BUXGALTERIYA</h3>
+            <h6 class="font-weight-normal mb-0">Xizmatni bekor qilish</span></h6>
+          </div>
+          <div class="col-12 col-xl-4">
+           <div class="justify-content-end d-flex">
+           
+           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-title">Xizmatni bekor qilish</p>
+           <form action="" method="POST">
+              {% csrf_token %}
+             <p>
+                 Siz <span class="text-danger">{{obj.service}}</span>ni o'chirmoqchimisiz ?
+             </p>
+             <a href="{% url 'home'%}">Ortga</a>
+              <button class="btn btn-primary btn-rounded" type="submit">O'chirish</button>
+            </form>
+          </div>
+        </div>
+      </div>
+     
+    </div>
+
+  </div>
+  {% else %}
+
+  <div class="content-wrapper">
+    <div class="h1 text-danger text-center">
+      Sahifa topilmadi
+    </div>
+  </div>
+
+  {% endif %}
+  {% else %}
+
+  <div class="content-wrapper">
+    <div class="h1 text-danger text-center">
+      Sahifa topilmadi
+    </div>
+  </div>
+
+  {% endif %}
+ 
+</div>
+{% endblock content %}

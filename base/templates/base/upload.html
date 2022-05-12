@@ -1,0 +1,54 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-12 grid-margin">
+        <div class="row">
+          <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+            <h3 class="font-weight-bold">XXI ASR BUXGALTERIYA</h3>
+            <h6 class="font-weight-normal mb-0">Xizmatlarni yuklash</span></h6>
+          </div>
+          <div class="col-12 col-xl-4">
+           <div class="justify-content-end d-flex">
+            <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+              <a href="{% url 'create-service' %}">
+                <button class="btn btn-sm btn-light bg-primary" type="button">
+                  <i class="ti ti-plus font-weight-bold text-white"></i>
+                </button>
+              </a>
+            </div>
+           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  
+    <div class="row">
+        <div class="col-md-12 grid-margin strech-card">
+            <div class="card">
+                <div class="p-4">
+                    <form action="" method="POST" enctype="multipart/form-data">
+                      {% csrf_token %}
+                        <div class="form-group">
+                          {% for field in form %}
+                            <label class="mt-2" for="">{{field.label}}</label>
+                            {{field}}
+                          {% endfor %}
+                        </div>  
+                      
+                        <button class="btn btn-primary btn-rounded" type="submit">Yuklash</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+ 
+</div>
+{% endblock content %}

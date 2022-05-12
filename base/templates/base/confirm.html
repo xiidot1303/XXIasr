@@ -1,0 +1,96 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+{% if profile.status == 'admin' or profile.status == 'superuser' %}
+  {% if obj.status == '0' %}
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-title">Xizmatni narxlash</p>
+          <form action="" method="POST">
+              {% csrf_token %}
+            <p>
+                  {{obj.service}} - {{obj.client}}
+            </p>
+            <div class="form-group">
+              <label for="">Summa</label>
+              <input type="text" name="price" class="form-control">
+            </div>
+            <a href="{% url 'home'%}">Ortga</a>
+              <button class="btn btn-primary btn-rounded" type="submit">Tasdiqlash</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% else %}
+    {% if obj.reciever.user == request.user %}
+    <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-title">Xizmatni tugatish</p>
+          <form action="" method="POST">
+              {% csrf_token %}
+            <p>
+                <b>Xizmatni yakunlash :</b>  {{obj.service}} - {{obj.client}}
+            </p>
+            <a href="{% url 'home'%}">Ortga</a>
+              <button class="btn btn-primary btn-rounded" type="submit">Tasdiqlash</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    {% else %}
+    <div class="content-wrapper">
+      <div class="h1 text-danger text-center">
+        Sahifa topilmadi
+      </div>
+    </div>
+    {% endif %}
+  {% endif %}
+{% elif profile.status == 'user' %}
+{% if obj.status == '5' and obj.reciever.user == request.user %}
+<div class="content-wrapper">
+<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <p class="card-title">Xizmatni tugatish</p>
+      <form action="" method="POST">
+          {% csrf_token %}
+        <p>
+            <b>Xizmatni yakunlash :</b>  {{obj.service}} - {{obj.client}}
+        </p>
+        <a href="{% url 'home'%}">Ortga</a>
+          <button class="btn btn-primary btn-rounded" type="submit">Tasdiqlash</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{% else %}
+<div class="content-wrapper">
+  <div class="h1 text-danger text-center">
+    Sahifa topilmadi
+  </div>
+</div>
+{% endif %}
+{% else %}
+<div class="content-wrapper">
+  <div class="h1 text-danger text-center">
+    Sahifa topilmadi
+  </div>
+</div>
+{% endif %}
+
+{% endblock content %}

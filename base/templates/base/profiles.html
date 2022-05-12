@@ -1,0 +1,114 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-12 grid-margin">
+        <div class="row">
+          <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+            <h3 class="font-weight-bold">XXI ASR BUXGALTERIYA</h3>
+            <h6 class="font-weight-normal mb-0">Xodimlar</span></h6>
+          </div>
+          <div class="col-12 col-xl-4">
+           <div class="justify-content-end d-flex">
+            <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+              <a href="{% url 'create-user'%}">
+                <button class="btn btn-sm btn-light bg-primary" type="button">
+                  <i class="ti ti-plus font-weight-bold text-white"></i>
+                </button>
+              </a>
+            </div>
+           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            
+          <div class="card-body">
+            <p class="card-title">Xodimlar ro'yxati</p>
+            <hr>
+            <div class="table-responsive">
+               <table class="table">
+                   <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Xodim</th>
+                            <th>Login</th>
+                            <th>Parol</th>
+                            <th>Status</th>    
+                            <th>Ofis</th>
+                            <th></th>
+                        </tr>
+                   </thead>
+                   <tbody>
+                        {% for user in profiles %}
+                          <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td style="display: flex; align-items: center ;">
+                              {% if user.picture %}
+                                  <div class="profile-pics">
+                                      <img style="width: 100%; height: 100%; border-radius: 0; transition: all 1s;" src="/app{{user.picture.url}}" alt="">
+                                  </div>
+                                  <div class="img-text" style="line-height: 15px; padding-left: 15px;">{{ user|wordwrap:"20"|linebreaksbr }}</div>
+                                  {% else %}
+                                  <div class="profile-pics">
+                                      <img style="width: 100%; height: 100%; border-radius: 0; transition: all 1s;" src="{% static 'profile/profile-default.jpg' %}" alt="">
+                                  </div>
+                                  <div class="img-text" style="line-height: 15px; padding-left: 15px;">{{ user|wordwrap:"20"|linebreaksbr }}</div>
+                              {% endif %}
+                          </td>
+                          <td>{{user.user}}</td>
+                          <td>{{user.password}}</td>
+                          <td>{{user.get_status_display}}</td>
+                          <td>{{user.get_office_display}}</td>
+                          <td>
+                            {% if user.status != 'admin' %}
+                            <a href="{% url 'delete-profile' user.id %}"><i class="fa fa-trash text-danger"></i></a>
+                            <a href="{% url 'edit-profile' user.id %}"><i class="fa fa-pencil text-success"></i></a>
+                            {% endif %}
+                          </td>
+                          </tr>
+                        {% endfor %}
+                   </tbody>
+               </table>
+           </div>
+          {% if pagType %}
+          <nav aria-label="Page navigation example">
+            <ul class="pagination mt-3">
+              {% if tasks.has_previous %}
+              <li class="page-item"><a class="page-link" href="?page={{tasks.previous_page_number}}">&#10094 Oldingi</a></li>
+              {% endif %}
+              {% for page in page_range %}
+              
+              {% if page == tasks.number %}
+              <li class="page-item active"><a class="page-link" href="?page={{page}}">{{page}}</a></li>
+              {% else %}
+              <li class="page-item"><a class="page-link" href="?page={{page}}">{{page}}</a></li>
+              {% endif %}
+              {% endfor %}
+
+              {% if tasks.has_next %}
+              <li class="page-item"><a class="page-link" href="?page={{tasks.next_page_number}}">Keyingi &#10095</a></li>
+              {% endif %}
+
+            </ul>
+          </nav>
+          {% endif %}
+          </div>
+        </div>
+      </div>
+     
+    </div>
+
+  </div>
+ 
+</div>
+{% endblock content %}

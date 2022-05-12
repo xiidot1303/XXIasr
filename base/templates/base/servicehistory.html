@@ -1,0 +1,146 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-12 grid-margin">
+        <div class="row">
+          <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+            <h3 class="font-weight-bold">XXI ASR BUXGALTERIYA</h3>
+            <h6 class="font-weight-normal mb-0">Xizmatlar tarixi</span></h6>
+          </div>
+          <div class="col-12 col-xl-4">
+           <div class="justify-content-end d-flex">
+           
+           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-title">Xizmatlar tarixi</p>
+           <form action="" method="GET">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="">Muddatni tanlang (...)dan</label>
+                  <input type="date" name="from" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label for="">Muddatni tanlang (...)gacha</label>
+                  <input type="date" name="to" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label for="">Xodimlar bo'yicha</label>
+                  <select name="users" class="form-control">
+                      <option value="">Barcha</option>
+                      {% for user in users %}
+                          <option value="{{user.id}}">{{user.name}}</option>
+                      {% endfor %}
+                  </select>
+              </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="">Ofis bo'yicha</label>
+                  <select name="office" class="form-control">
+                        <option value="">Barchasi</option>
+                        <option value="1">XXI ASR BUXGALTERIYA</option>
+                        <option value="2">XXI ASR KOMPYUTER XIZMATLARI</option>
+                        <option value="3">XXI ASR BUXGALTERIYA XIZMATLARI MARKAZI</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="">Xizmat holati bo'yicha</label>
+                  <select name="type" class="form-control">
+                      <option value="">Barcha</option>
+                      <option value="10">Bajarilgan</option>
+                      <option value="5">Bajarilmagan</option>
+                      <option value="0">Narxlanmagan</option>
+                  </select>
+              </div>
+              </div>
+            </div>  
+            <button class="btn btn-primary btn-rounded" type="submit">Kiritish</button>
+            </form>
+          </div>
+        </div>
+      </div>
+     
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title"><div class="float-left">Topshiriqlar ro'yxati</div>
+            <div class="float-right">
+                <button class="btn btn-sm btn-success" id="export_button">Excel</button>
+            </div>
+            </div>
+          {% if view %}
+          <b>
+          <div class="row">
+            <div class="col-sm-6">
+              <ul style="list-style: none;">
+                <li>Xizmatlar soni -  {{uploads.count}}</li>
+              </ul>
+            </div>
+            <div class="col-sm-6">
+              <ul style="list-style: none;">
+                <li>Umumiy summa - {% if sum.payment__sum %} {{sum.payment__sum}} {% endif %}</li>
+              </ul>
+            </div>
+          </div>
+          </b> 
+              <div class="table-responsive">
+                <table class="table" id="tasks">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Mijoz</th>
+                      <th>Xizmat turi</th>
+                      <th>Sana</th>
+                      <th>Holati</th>
+                      <th>Xodim</th>
+                      <th>Narx</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for upload in uploads %}
+                      <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{upload.client}}</td>
+                        <td>{{upload.service}}</td>
+                        <td>{{upload.loaded_date}}</td>
+                        <th>{{upload.get_status_display}}</th>
+                        <td>{{upload.reciever}}</td>
+                        <td>
+                          {% if upload.payment %}
+                          {{upload.payment}}
+                          {% endif %}
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+
+          {% endif %}
+          </div>
+        </div>
+      </div>
+     
+    </div>
+
+  </div>
+ 
+</div>
+{% endblock content %}

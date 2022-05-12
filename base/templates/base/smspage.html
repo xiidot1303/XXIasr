@@ -1,0 +1,189 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-12 grid-margin">
+        <div class="row">
+          <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+            <h3 class="font-weight-bold">Prime Study</h3>
+            <h6 class="font-weight-normal mb-0">O'quvchilarning davomati</span></h6>
+          </div>
+          <div class="col-12 col-xl-4">
+           <div class="justify-content-end d-flex">
+            <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+              <button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button" id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+               <i class="mdi mdi-calendar"></i> Today (10 Jan 2021)
+              </button>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuDate2">
+                <a class="dropdown-item" href="#">January - March</a>
+                <a class="dropdown-item" href="#">March - June</a>
+                <a class="dropdown-item" href="#">June - August</a>
+                <a class="dropdown-item" href="#">August - November</a>
+              </div>
+            </div>
+           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12 grid-margin strech-card">
+            <div class="card">
+                <div class="p-4">
+                    <form action="{% url 'mark-sms' %}">
+                        <div class="form-group">
+                            <label for="">Guruhni tanlang</label>
+                            <select name="group" id="" class="form-control" required>
+                                <option value="">Guruhni tanlang</option>
+                                {% for group in groups %}
+                                    <option value="{{group.id}}">{{group.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button class="btn btn-primary btn-rounded">Kirish</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+  {% if view != '0' %}
+  <div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <p class="card-title">O'quvchilar ro'yxati</p>
+         <div class="table-responsive"> 
+           <form action="{% url 'attendace'%}" method="POST">
+             {% csrf_token %}
+             <table class="table table-striped">
+                 <thead>
+                     <tr>
+                         <th>#</th>
+                         <th>F.I.Sh</th>
+                         <th>Kelgan vaqti</th>
+                         <th>Baho</th>
+                         <th>Telefon</th>
+                         <th>Xabar matni</th>
+                     </tr>
+                 </thead>
+                 <tbody>
+                     
+                    {% for student in group.students.all %}
+                   
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{student.name}}</td>
+                        <td>
+                            <input type="text" onchange="disableBtn()" class="form-control"  id="time{{forloop.counter}}">
+                        </td>
+                        <td>
+                            <select onchange="disableBtn()"  class="form-control" id="i{{forloop.counter}}">
+                                <option value="">Bahoni tanlang</option>
+                                <option value="5">5</option>
+                                <option value="4">4</option>
+                                <option value="3">3</option>
+                                <option value="2">2</option>
+                                <option value="1">1</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="tel" name="tel{{forloop.counter}}" value="{{student.phone}}" class="form-control">
+                        </td>
+                        <td>
+                          
+                          <input type="hidden" id="h{{forloop.counter}}" value="Assalomu alaykum, farzandingiz {{student.name}} bugun ">
+                          <input name="t{{forloop.counter}}" id="t{{forloop.counter}}" class="form-control form-control-sm">
+                        </td>
+                        
+                    </tr>
+                    <input type="hidden" name="counter" value="{{forloop.counter}}">
+                    <script>
+                        var finish =  "{{forloop.counter}}";
+                        
+                    </script>
+                    {% endfor %}
+
+                    
+
+                    
+
+                 </tbody>
+             </table>
+             <br>
+             <button type="button" id="refreshBtn" class="btn btn-info btn-rounded" onclick="refresh()">Yangilash</button>
+             <button type="submit" class="btn btn-primary btn-rounded">Yuborish</button>
+
+             <script>
+              function refresh() {
+                
+                  for (let index = 1; index <= finish; index++) {
+                      var inid = "i"+index;
+                      var txtid = "t"+index;
+                      var hid = "h"+index;
+                      var sid = "s"+index;
+                      var time = "time"+index;
+                      
+                       
+
+                      var inp = document.getElementById(inid).value;
+                      var late = document.getElementById(time).value;
+                      if(inp == ""){
+                          document.getElementById(txtid).value = document.getElementById(hid).value + "{{group.subject}} guruhida qatnashmadi. Iltimos, eʻtiboringizni kuchaytiring. Oʻqituvchi {{group.teacher.phone}}";
+                      }
+                      else if(inp == "1" || inp=="2" || inp=="3"){
+                        if(late != ""){
+                            document.getElementById(txtid).value = document.getElementById(hid).value + "{{group.subject}} kursida "+late+" daqiqa kech qoldi va "+inp+" baho oldi. Iltimos, eʻtiboringizni kuchaytiring. Koʻproq birgalikda shugʻullaning. Oʻqituvchi {{group.teacher.phone}}";
+                        }else{
+                            document.getElementById(txtid).value = document.getElementById(hid).value + "{{group.subject}} kursida  "+inp+" baho oldi. Iltimos, eʻtiboringizni kuchaytiring. Koʻproq birgalikda shugʻullaning. Oʻqituvchi {{group.teacher.phone}}";                            
+                        }
+                      }
+
+                      else if(inp == "4"){
+                        if(late != ""){
+                            document.getElementById(txtid).value = document.getElementById(hid).value + "{{group.subject}} kursida "+late+" daqiqa kech qoldi va "+inp+" baho oldi. Farzandingiz bilan yanada koʻproq shugʻullaning. Oʻqituvchi {{group.teacher.phone}}";
+                        }else{
+                            document.getElementById(txtid).value = document.getElementById(hid).value + "{{group.subject}} kursida  "+inp+" baho oldi. Farzandingiz bilan yanada koʻproq shugʻullaning. Oʻqituvchi {{group.teacher.phone}}";                            
+                        }
+                      }
+                      else if(inp == "5"){
+                        if(late != ""){
+                            document.getElementById(txtid).value = document.getElementById(hid).value + "{{group.subject}} kursida "+late+" daqiqa kech qoldi va "+inp+" baho oldi.Eʻtiboringiz uchun rahmat. Oʻqituvchi {{group.teacher.phone}}";
+                        }else{
+                            document.getElementById(txtid).value = document.getElementById(hid).value + "{{group.subject}} kursida  "+inp+" baho oldi. Eʻtiboringiz uchun rahmat. Oʻqituvchi {{group.teacher.phone}}";                            
+                        }
+                      }
+
+                      else {
+                          document.getElementById(txtid).value = document.getElementById(hid).value  + "{{group.subject}} kursida " + document.getElementById(inid).value +" baho oldi";
+                      }
+                      
+                      
+                  }
+                  document.getElementById("refreshBtn").disabled = true;
+                  
+              }
+
+              function disableBtn() {
+                document.getElementById("refreshBtn").disabled = false;
+              }
+          </script>
+
+            </form>
+         </div>
+        </div>
+      </div>
+    </div>
+   
+  </div>
+
+  {% endif %}
+  </div>
+ 
+</div>
+{% endblock content %}

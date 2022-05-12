@@ -1,0 +1,338 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-12 grid-margin">
+        <div class="row">
+          <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+            <h3 class="font-weight-bold">XXI ASR BUXGALTERIYA</h3>
+            <h6 class="font-weight-normal mb-0">Telegram</span></h6>
+          </div>
+          <div class="col-12 col-xl-4">
+           <div class="justify-content-end d-flex">
+            <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+              
+            </div>
+           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-12 grid-margin strech-card">
+        <form method="POST" enctype="multipart/form-data">
+            {%csrf_token%}
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title">
+              Telegram
+            </div>
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="form-group">
+                        <input type="file" name='file' class="form-control" id="file" onchange="checks(this.files[0])">
+                    </div>
+                    <div class="form-group" >
+                        <label>Tips: 1)&lt;b&gt;<b>**matn</b>&lt;/b&gt; 2) &lt;a href="**link"&gt;<a href=''>**matn</a>&lt;/a&gt; 3)&lt;i&gt;<i>**matn</i>&lt;/i&gt; 4) &lt;br&gt; - yangi qator</label>
+                        <textarea class="form-control" style="width:100%; height:200px" name='text' oninput="input(this.value)"></textarea>
+                    </div>
+                    <input type="hidden" id="postType" name="postType">
+                    <div class="form-group">
+                        <label>Mijozlar</label>
+                        <select name="type" class="form-control">
+                            <option value="all">Barcha</option>
+                            <option value="ytt">YaTT</option>
+                            <option value="yuridik">Yuridik</option>
+                            <option value="jismoniy">Jismoniy</option>
+                            <option value="auction">Auksion</option>
+                            <option value="tanirovka">Tanirovka</option>
+                            <option value="teacher">O'qituvchi</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary btn-rounded" type="submit">Saqlash</button>
+                </div>
+                <div class="col-sm-4">
+                    <div class='img-section' id="imgSection">
+                        <div class="imgView">
+                        </div>
+                        <img id="myImg" src="" style="width:100%">
+                        <video src="" style="width:100%; display:none;" id="myVideo" controls></video>
+                        <audio src="" style="width:100%; display:none;" id="myAudio" controls></audio>
+                        <div class="document" id="myDoc">
+                            <span class="icon">
+                                <i class="icon-paper"></i>
+                            </span>
+                            <span class="doc-text" id="docTitle" style="padding-left:5px">
+                                
+                            </span>
+                        </div>
+                        <div class="noneof" style="display:none">
+                            <h2 class="text-center text-danger">Noto'g'ri formatda</h2>
+                            <br>
+                            <span class="text-center text-secondary" ></span>
+                        </div>
+                        <div class="caption">
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        </form>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-12 grid-margin strech-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">
+                    POSTlar
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>POST</th>
+                                <th>Mijoz</th>
+                                <th>Yuborish</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for post in posts %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{post.text}}</td>
+                                <td>{{post.client_type}}</td>
+                                <td>
+                                    <a href="?post={{post.id}}" class="btn btn-outline-primary btn-rounded">Yuborish</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-12 grid-margin strech-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">
+                    Mijozlar
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Mijoz</th>
+                                <th>ID</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for telegram in telegrams %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{telegram.name}}</td>
+                                <td>{{telegram.user_id}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    
+    <style>
+        .imgView{
+            position:relative;
+            width:100%;
+            height:350px;
+            border:1px solid #e9e9e9;
+            padding-bottom:50px;
+        }
+        
+        .caption{
+            padding-left:5px;
+            padding-right:5px;
+        }
+        .document{
+            background:#e5e5e5;
+            padding:15px;
+            box-sizing:border-box;
+            border-radius:15px;
+            display:none;
+        }
+        
+        .icon{
+            display:inline-block;
+            width:50px;
+            height:50px;
+            background-color:white;
+            border-radius:50%;
+            text-align:center;
+            box-sizing:border-box;
+            padding-top:10px;
+        }
+        .icon i {
+            font-size:26px;
+            color:#e5e5e5;
+        }
+        
+
+    </style>
+
+    <script>
+    document.querySelector("#postType").value='text';
+    
+        function getExtension(dest) {
+            var vars = dest.name;
+            var parts = vars.split('.');
+            return parts[parts.length - 1];
+        }
+        
+        function isImage(dest, filename) {
+          var ext = getExtension(dest);
+          switch (ext.toLowerCase()) {
+            case 'jpg':
+            case 'jpeg':
+            case 'gif':
+            case 'bmp':
+            case 'png':
+              //etc
+              return true;
+          }
+          return false;
+        }
+        
+        function isVideo(filename) {
+          var ext = getExtension(filename);
+          switch (ext.toLowerCase()) {
+            case 'm4v':
+            case 'avi':
+            case 'mpg':
+            case 'mp4':
+              // etc
+              return true;
+          }
+          return false;
+        }
+        
+        
+        function isAudio(filename) {
+          var ext = getExtension(filename);
+          switch (ext.toLowerCase()) {
+            case 'mp3':
+              // etc
+              return true;
+          }
+          return false;
+        }
+        
+        function isDocument(filename) {
+          var ext = getExtension(filename);
+          switch (ext.toLowerCase()) {
+            case 'doc':
+            case 'docx':
+            case 'xls':
+            case 'xlsx':
+            case 'ppt':
+            case 'pptx':
+            case 'pdf':
+            
+              // etc
+              return true;
+          }
+          return false;
+        }
+        
+        const img = document.querySelector("#imgSection");
+        function checks(imgs){
+            file = document.querySelector("#file").files[0];
+            console.log(file);
+            if(isImage(file)){
+                document.querySelector("#postType").value='photo';
+                image = document.querySelector("#myImg");
+                image.src = window.URL.createObjectURL(imgs);
+                divs = document.querySelector(".imgView");
+                document.querySelector(".noneof").style.display="none";
+                document.querySelector("#myDoc").style.display="none";
+                document.querySelector("#myVideo").style.display="none";
+                document.querySelector("#myAudio").style.display="none";
+                document.querySelector("#myImg").style.display="block";
+                divs.style.display="none";
+            }else if(isVideo(file)){
+                document.querySelector("#postType").value='video';
+                video = document.querySelector("#myVideo");
+                video.style.display="block";
+                video.src = window.URL.createObjectURL(imgs);
+                divs = document.querySelector(".imgView");
+                document.querySelector("#myDoc").style.display="none";
+                document.querySelector(".noneof").style.display="none";
+                document.querySelector("#myAudio").style.display="none";
+                document.querySelector("#myImg").style.display="none";
+                divs.style.display="none";
+            }else if(isAudio(file)){
+                document.querySelector("#postType").value='audio';
+                audio = document.querySelector("#myAudio");
+                audio.style.display="block";
+                audio.src = window.URL.createObjectURL(imgs);
+                divs = document.querySelector(".imgView");
+                document.querySelector("#myDoc").style.display="none";
+                document.querySelector(".noneof").style.display="none";
+                document.querySelector("#myVideo").style.display="none";
+                document.querySelector("#myImg").style.display="none";
+                divs.style.display="none";
+            }else if(isDocument(file)){
+                document.querySelector("#postType").value='document';
+                doc = document.querySelector("#myDoc");
+                doc.style.display="block";
+                document.querySelector("#docTitle").innerHTML = file.name;
+                divs = document.querySelector(".imgView");
+                document.querySelector("#myAudio").style.display="none";
+                document.querySelector(".noneof").style.display="none";
+                document.querySelector("#myVideo").style.display="none";
+                document.querySelector("#myImg").style.display="none";
+                divs.style.display="none";
+            }
+            else{
+                if(!document.querySelector("#file").files[0].name){
+                    document.querySelector("#postType").value='text';
+                }
+                document.querySelector("#postType").value='invalid';
+                divs = document.querySelector(".imgView");
+                divs.style.display="none";
+                document.querySelector("#myDoc").style.display="none";
+                document.querySelector(".noneof").style.display="block";
+                document.querySelector("#myVideo").style.display="none";
+                document.querySelector("#myImg").style.display="none";
+                document.querySelector("#myAudio").style.display="none";
+            }
+        }
+        function input(value){
+            
+            caption = document.querySelector(".caption");
+            caption.innerHTML = value;
+        }
+        
+
+    </script>
+
+
+  </div>
+ 
+</div>
+{% endblock content %}

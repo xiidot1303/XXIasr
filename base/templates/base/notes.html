@@ -1,0 +1,189 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-12 grid-margin">
+        <div class="row">
+          <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+            <h3 class="font-weight-bold">XXI ASR BUXGALTERIYA</h3>
+            <h6 class="font-weight-normal mb-0"><span>Eslatmalar</span></h6>
+          </div>
+          <div class="col-12 col-xl-4">
+           <div class="justify-content-end d-flex">
+            <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+              
+            </div>
+           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            
+          <div class="card-body">
+            <p class="card-title">Eslatmalar ro'yxati</p>
+            <hr>
+            <p class="h4">Filterlash</p>
+            <form action="" method="get">
+              <input type="hidden" name="filter">
+                <div class="row"> 
+                    <div class="col-sm-6">   
+                        <div class="form-group">
+                            <label for="">Muddat bo'yicha (...) dan</label>
+                            <input type="date" name="from" class="form-control" required>
+                        </div>   
+                    </div>
+                    <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="">Muddat bo'yicha (...) gacha</label>
+                                <input type="date" name="to" class="form-control" required>
+                            </div>
+                    </div>
+                </div>
+                <button class="btn btn-rounded btn-primary">Aniqlash</button>
+            </form>
+
+            <hr>
+            <div class="table-responsive">
+               <table class="table">
+                   <thead>
+                       {% if profile.status == 'admin' or profile.status == 'superuser'%}
+                        <tr>
+                            <th>#</th>
+                            <th>Foydalanuvchi</th>
+                            <th>Mavzu</th>
+                            <th>Muddati</th>
+                            <th>Holati</th>    
+                            <th>Mijoz</th>
+                            <th>Xizmat turi</th>
+                            <th>To'lov</th>
+                            <th>To'langan</th>
+                            <th>Izoh</th>
+                            <th></th>
+                        </tr>
+                       
+                       {% else %}
+                        <tr>
+                            <th>#</th>
+                            <th>Mavzu</th>
+                            <th>Muddati</th>
+                            <th>Holati</th>
+                            <th>Mijoz</th>
+                            <th>Xizmat turi</th>
+                            <th>To'lov</th>
+                            <th>To'langan</th>
+                            <th>Izoh</th>
+                            <th></th>
+                        </tr>
+                       {% endif%}
+                   </thead>
+                   <tbody>
+                        
+                            {% for note in notes %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    {% if profile.status == 'admin' or profile.status == 'superuser'%}
+                                    <td>{{note.user}}</td>
+                                    {% endif %}
+                                    <td style="line-height: 25px;">{{note.text|wordwrap:"20"|linebreaksbr }}</td>
+                                    <td>{{note.period}}</td>
+                                    <td>{{note.get_status_display}}</td>
+                                    {% if note.client %}
+                                    <td style="display: flex; align-items: center ;">
+                                        {% if client.picture %}
+                                            <div class="profile-pics">
+                                                <img style="width: 100%; height: 100%; border-radius: 0; transition: all 1s;" src="/app{{note.client.picture.url}}" alt="">
+                                            </div>
+                                            <div class="img-text" style="line-height: 15px; padding-left: 15px;"><a class="" href="{% url 'client' note.client.id %}">{{ note.client|wordwrap:"20"|linebreaksbr }}</a> </div>
+                                            {% else %}
+                                            <div class="profile-pics">
+                                                <img style="width: 100%; height: 100%; border-radius: 0; transition: all 1s;" src="{% static 'profile/profile-default.jpg' %}" alt="">
+                                            </div>
+                                            <div class="img-text" style="line-height: 15px; padding-left: 15px;"><a class="" href="{% url 'client' note.client.id %}">{{ note.client|wordwrap:"20"|linebreaksbr }}</a></div>
+                                        {% endif %}
+                                    </td>
+                                    {% else %}
+                                    <td>-</td>
+                                    {% endif %}
+                                    {% if note.service %}
+                                    <td style="line-height: 25px;">{{note.service|wordwrap:"20"|linebreaksbr }}</td>
+                                    {% else %}
+                                    <td>-</td>
+                                    {% endif %}
+                                    <td>{{note.payment}}</td>
+                                    <td>{{note.payed}}</td>
+                                    <td style="line-height: 25px;">{{note.comment|wordwrap:"20"|linebreaksbr}}</td>
+                                    <td>
+                                        {% if note.user == profile %}
+                                          {% if note.status == '0' or note.status == '5' %}
+                                          <a href="{% url 'note' note.id %}"><i class="fa fa-pencil"></i></a>
+                                          {% endif %}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+                        
+                   </tbody>
+               </table>
+           </div>
+          {% if pagType %}
+          <nav aria-label="Page navigation example">
+            <ul class="pagination mt-3">
+              {% if tasks.has_previous %}
+              <li class="page-item"><a class="page-link" href="?page={{tasks.previous_page_number}}">&#10094 Oldingi</a></li>
+              {% endif %}
+              {% for page in page_range %}
+              
+              {% if page == tasks.number %}
+              <li class="page-item active"><a class="page-link" href="?page={{page}}">{{page}}</a></li>
+              {% else %}
+              <li class="page-item"><a class="page-link" href="?page={{page}}">{{page}}</a></li>
+              {% endif %}
+              {% endfor %}
+
+              {% if tasks.has_next %}
+              <li class="page-item"><a class="page-link" href="?page={{tasks.next_page_number}}">Keyingi &#10095</a></li>
+              {% endif %}
+
+            </ul>
+          </nav>
+          {% endif %}
+          </div>
+        </div>
+      </div>
+     
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12 grid-margin strech-card">
+            <div class="card">
+                <div class="p-4">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        {% for field in form %}
+                        <div class="form-group">
+                            <label for="">{{field.label}}</label>
+                            {{field}}
+                        </div>
+                        {% endfor %}
+                        <button class="btn btn-primary btn-rounded">Kiritish</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  </div>
+ 
+</div>
+{% endblock content %}

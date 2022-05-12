@@ -1,0 +1,289 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-12 grid-margin">
+        <div class="row">
+          <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+            <h3 class="font-weight-bold">XXI ASR BUXGALTERIYA</h3>
+            <h6 class="font-weight-normal mb-0">Monitoring</span></h6>
+          </div>
+          <div class="col-12 col-xl-4">
+           <div class="justify-content-end d-flex">
+           
+           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            
+            <div class="card-body">
+            <div class="card-title">Filterlash</div>
+            
+                <form action="" method="GET">
+                {% csrf_token %}
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="">Muddatni tanlang (...) dan</label>
+                      <input type="date" name="from" class="form-control" required>
+                    </div>
+                    {% if profile.status == 'admin' or profile.status == 'superuser' %}
+                    <div class="form-group">
+                      <label for="">Ofislar</label>
+                      <select name="office" class="form-control">
+                        <option value="">Barchasi</option>
+                        <option value="1">XXI ASR BUXGALTERIYA</option>
+                        <option value="2">XXI ASR KOMPYUTER XIZMATLARI</option>
+                        <option value="3">XXI ASR BUXGALTERIYA XIZMATLARI MARKAZI</option>
+                      </select>
+                    </div>
+                    {% endif %}
+                    <div class="form-group">
+                      <label for="">Holati</label>
+                      <select name="status" class="form-control">
+                        <option value="">Barchasi</option>
+                        <option value="5">Bajarilmagan</option>
+                        <option value="0">Narxlanmagan</option>
+                        <option value="10">Bajarilgan</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="">Muddatni tanlang (...) gacha</label>
+                      <input type="date" name="to" class="form-control" required>
+                    </div>
+                    {% if profile.status == 'admin' or profile.status == 'superuser' %}
+                    <div class="form-group">
+                      <label for="">Xodimlar</label>
+                      <select name="user" class="form-control">
+                        <option value="">Barchasi</option>
+                        {% for user in users %}
+                        <option value="{{user.id}}">{{user.user.first_name}}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+                <button class="btn btn-primary btn-rounded" type="submit">Aniqlash</button>
+                </form>
+          </div>
+        </div>
+      </div>
+     
+    </div>
+
+
+    
+
+    {% if view == 'query'%}
+
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          
+            <div class="card-body">
+            <div class="card-title"><div class="float-left">Filter natijalari</div><div class="float-right">
+                <button class="btn btn-sm btn-success" id="export_button">Excel</button>
+            </div></div>
+                <div class="table-responsive">
+                  <table class="table" id="monitoring">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Mijoz</th>
+                        <th>Xizmat turi</th>
+                        <th>Kiritilgan sana</th>
+                        <th>Muddat</th>
+                        <th>Qabul qiluvchi</th>
+                        <th>Holati</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for row in result %}
+                        <tr>
+                          <td>{{forloop.counter}}</td>
+                          <td>{{row.client}}</td>
+                          <td>{{row.service}}</td>
+                          <td>{{row.loaded_date}}</td>
+                          <td>{{row.period}}</td>
+                          <td>{{row.reciever}}</td>
+                          <td>{{row.get_status_display }}</td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+                
+          </div>
+        </div>
+      </div>
+     
+    </div>
+    {% else %}
+    <div class="row">
+      <div class="col-sm-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title"><div class="float-left">Barcha tugatilmagan yuklamalar</div><div class="float-right">
+                <button class="btn btn-sm btn-success" id="export_button">Excel</button>
+            </div></div>
+            <div class="table-responsive">
+                <table class="table" id="monitoring">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Mijoz</th>
+                      <th>Holat</th>
+                      <th>Xizmat turi</th>
+                      <th>Kiritilgan sana</th>
+                      <th>Muddat</th>
+                      <th>Qabul qiluvchi</th>
+                      <th>Yuklovchi</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for row in result %}
+                    {% if row.status == '0' %}
+                      <tr class="bg-warning">
+                        <td>{{forloop.counter}}</td>
+                        <td style="display: flex; align-items: center ;">
+                          {% if row.client.picture %}
+                          <div class="profile-pics">
+                            <img style="width: 100%; height: 100%; border-radius: 0; transition: all 1s;" src="/app{{row.client.picture.url}}" alt="">
+                          </div>
+                          <div class="img-text" style="line-height: 15px; padding-left: 15px;"><a class="text-dark" href="{% url 'client' row.client.id %}">{{ row.client.name|wordwrap:"20"|linebreaksbr }}</a> </div>
+                         
+                          {% else %}
+    
+                          <div class="profile-pics">
+                            <img style="width: 100%; height: 100%; border-radius: 0; transition: all 1s;" src="{% static 'profile/profile-default.jpg' %}" alt="">
+                          </div>
+                          <div class="img-text" style="line-height: 15px; padding-left: 15px;"><a class="text-dark" href="{% url 'client' row.client.id %}">{{ row.client.name|wordwrap:"20"|linebreaksbr }}</a></div>
+    
+                          {% endif %}
+                        </td>
+                        <td>{{row.get_status_display}}</td>
+                        <td>
+                          {{row.service|wordwrap:"20"|linebreaksbr}}
+                        </td>
+                        <td>
+                          {{row.loaded_date}}
+                        </td>
+                        <td>{{row.period}}</td>
+                        <td>
+                          {{row.reciever}}
+                        </td>
+                        <td>
+                          {{row.sender}}
+                        </td>
+                        <td>
+                          {% if row.status == '0' %}
+                            <a href="{% url 'confirm-service' row.id %}" class="btn btn-success btn-sm">
+                              <i class="fa fa-check"></i>
+                            </a>
+                            <a href="{% url 'cancel-service' row.id %}" class="btn btn-danger btn-sm">
+                              <i class="fa fa-close"></i>
+                            </a>
+                          {% elif row.status == '5' and row.reciever.user == request.user %}
+                            <a href="{% url 'confirm-service' row.id %}" class="btn btn-success btn-sm">
+                              <i class="fa fa-check"></i>
+                            </a>  
+                          {% endif %}
+                        </td>
+                      </tr>
+                    {% elif row.status == '5'%}
+                      <tr class="bg-danger text-white">
+                        <td>{{forloop.counter}}</td>
+                        <td style="display: flex; align-items: center ;">
+                          {% if row.client.picture %}
+                          <div class="profile-pics">
+                            <img style="width: 100%; height: 100%; border-radius: 0; transition: all 1s;" src="/app/{{row.client.picture.url}}" alt="">
+                          </div>
+                          <div class="img-text" style="line-height: 15px; padding-left: 15px;"><a class="text-white" href="{% url 'client' row.client.id %}">{{ row.client.name|wordwrap:"20"|linebreaksbr }}</a> </div>
+                        
+                          {% else %}
+    
+                          <div class="profile-pics">
+                            <img style="width: 100%; height: 100%; border-radius: 0; transition: all 1s;" src="{% static 'profile/profile-default.jpg' %}" alt="">
+                          </div>
+                          <div class="img-text" style="line-height: 15px; padding-left: 15px;"><a class="text-white" href="{% url 'client' row.client.id %}">{{ row.client.name|wordwrap:"20"|linebreaksbr }}</a></div>
+    
+                          {% endif %}
+                        </td>
+                        <td>{{row.get_status_display}}</td>
+                        <td>
+                          {{row.service|wordwrap:"20"|linebreaksbr}}
+                        </td>
+                        <td>
+                          {{row.loaded_date}}
+                        </td>
+                        <td>{{row.period}}</td>
+                        <td>
+                          {{row.reciever}}
+                        </td>
+    
+                        <td>
+                          {{row.sender}}
+                        </td>
+                        <td>
+                          {% if row.status == '0' %}
+                            <a href="{% url 'confirm-service' row.id %}" class="btn btn-success btn-sm">
+                              <i class="fa fa-check"></i>
+                            </a>
+                            <a href="{% url 'cancel-service' row.id %}" class="btn btn-danger btn-sm">
+                              <i class="fa fa-close"></i>
+                            </a>
+                          {% elif row.status == '5' and row.reciever.user == request.user %}
+                            <a href="{% url 'confirm-service' row.id %}" class="btn btn-success btn-sm">
+                              <i class="fa fa-check"></i>
+                            </a>  
+                          {% endif %}
+                        </td>
+                      </tr>
+                    {% endif %}
+                    {% endfor %}
+                  </tbody>
+            </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+  </div>
+ 
+</div>
+
+<script>
+    function html_table_to_excel(type)
+    {
+        var data = document.getElementById('monitoring');
+
+        var file = XLSX.utils.table_to_book(data, {sheet: "sheet1"});
+
+        XLSX.write(file, { bookType: type, bookSST: true, type: 'base64' });
+
+        XLSX.writeFile(file, 'file.' + type);
+    }
+
+    const export_button = document.getElementById('export_button');
+
+    export_button.addEventListener('click', () =>  {
+        html_table_to_excel('xlsx');
+    });
+</script>
+{% endblock content %}

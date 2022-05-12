@@ -1,0 +1,234 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+<style>
+
+  .ytt thead tr th{
+   font-size: 12px !important;
+  }
+  .ytt tbody tr td {
+   font-size: 12px !important;
+  }
+  .profile-pics {
+   float: left; 
+   width: 60px; 
+   height: 60px; 
+   overflow: hidden; 
+   border-radius: 150px; 
+   margin-right: 15px;
+
+  }
+  .profile-pics:hover img {
+    width: 120% !important;
+    height: 120% !important;
+    bottom: auto;
+  }
+  .img-text {
+    width: fit-content;
+  }
+</style>
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-12 grid-margin">
+        <div class="row">
+          <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+            <h3 class="font-weight-bold">XXI ASR BUXGALTERIYA</h3>
+            <h6 class="font-weight-normal mb-0">Mijozlar</span></h6>
+          </div>
+          <div class="col-12 col-xl-4">
+           <div class="justify-content-end d-flex">
+            <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+              <a href="{% url 'create-client'%}?type=auction">
+                <button class="btn btn-sm btn-light bg-primary" type="button">
+                  <i class="ti ti-plus font-weight-bold text-white"></i>
+                </button>
+              </a>
+            </div>
+           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-12 grid-margin strech-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title">
+              Auksion 
+            </div>
+            <form action="{% url 'auction' %}?filter" method="get">
+              <input type="hidden" name="filter" value="true">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="">Buyurtmachi bo'yicha qidiruv</label>
+                    <input type="text" name="name" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="">Avtomobil egasi bo'yicha qidiruv</label>
+                    <input type="text" name="owner" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="">JSHSHIR bo'yicha qidiruv</label>
+                    <input type="text" name="tin" class="form-control">
+                  </div>
+                
+                  
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="">Telefon raqam holati bo'yicha</label>
+                    <select name="phone" class="form-control">
+                      <option value="">Barcha</option>
+                      <option value="true">Telefon raqami mavjud mijozlar</option>
+                      <option value="false">Telefon raqami mavjud bo'lmagan mijozlar</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="">Pasport holati bo'yicha</label>
+                    <select name="passport" class="form-control">
+                      <option value="">Barcha</option>
+                      <option value="false">Pasporti kiritilmagan mijozlar</option>
+                      <option value="true">Pasporti kiritilgan mijozlar</option>
+                    </select>
+                  </div>
+                  
+                </div>
+              </div>
+              <button type="submit" class="btn btn-rounded btn-primary"><i class="fa fa-search"></i>  Aniqlash</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% if pagType == False %}
+    <div class="row">
+      <div class="col-md-12 grid-margin strech-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title">Umumiy SMS yuborish</div>
+            <form action="" method="POST">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="">SMS matni</label>
+                <textarea name="text" class="form-control" cols="30" rows="10"></textarea>
+              </div>
+              <button class="btn btn-rounded btn-primary" type="submit"><i class="fa fa-send"></i>  Yuborish</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif%}
+
+    
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title"><div class="float-left">Auksion ro'yxati</div>
+            <div class="float-right">
+                <button class="btn btn-sm btn-success" id="export_button">Excel</button>
+            </div>
+            </div>
+           <div class="table-responsive">
+               <table class="table table-striped ytt" id="tasks">
+                   <thead>
+                       <tr>
+                           <th>#</th>
+                           <th>Buyurtmachi</th>
+                           <th>Avtomobil egasi</th>
+                           <th>JSHSHIR</th>
+                           <th>Auksion</th>
+                           <th>Buyurtma</th>
+                           <th>Pasport</th>
+                           <th>Telefon</th>
+                           <th><i class="fa fa-cog"></i></th>
+                       </tr>
+                   </thead>
+                   
+                   <tbody>
+                     {% for client in clients %}
+                       <tr>
+                           <td>{{ forloop.counter }}</td>
+                           <td  style="display: flex; align-items: center ;">
+                             {% if client.picture %}
+                              <div class="profile-pics">
+                                <img style="width: 100%; height: 100%; border-radius: 0; transition: all 1s;" src="/app{{client.picture.url}}" alt="">
+                              </div>
+                              <div class="img-text" style="line-height: 15px; padding-left: 15px;"><a href="{% url 'client' client.id %}">{{ client.name|wordwrap:"20"|linebreaksbr }}</a></div>
+                              {% else %}
+
+                                <div class="profile-pics">
+                                  <img style="width: 100%; height: 100%; border-radius: 0; transition: all 1s;" src="{% static 'profile/profile-default.jpg' %}" alt="">
+                                </div>
+                                <div class="img-text" style="line-height: 15px; padding-left: 15px;"><a href="{% url 'client' client.id %}">{{ client.name|wordwrap:"20"|linebreaksbr }}</a></div>
+
+                              {% endif %}
+
+                             
+                            </td>
+                           <td>{% if client.owner %} {{ client.owner|wordwrap:"17" }} {% else %} - {% endif %}</td>
+                           <td>{% if client.jshshir %} {{ client.jshshir|wordwrap:"14"|linebreaksbr }} {% else %} - {% endif %}</td>
+                           <td>{% if client.auc_login %} {{ client.auc_login }} {{ client.auc_password }} {% else %} - {% endif %}</td>
+                           <td>
+                             {% if client.order1 %} "{{ client.order1|wordwrap:"14"|linebreaksbr }}" {% else %} - {% endif %}
+                             {% if client.order2 %} "{{ client.order2|wordwrap:"14"|linebreaksbr }}" {% else %} - {% endif %}
+                             {% if client.order3 %} "{{ client.order3|wordwrap:"14"|linebreaksbr }}" {% else %} - {% endif %}
+                            </td>
+                            <td>
+                              {% if client.passport %} <a href="/app{{client.passport.url}}" download><i class="fa fa-download text-success"></i></a> {% else %} - {% endif %}
+                            </td>
+                           <td>{{ client.phone1 }}</td>
+                            <td>
+                              <a href="{% url 'edit-client' client.id %}"><i class="fa fa-pencil"></i></a>
+                              {% if profile.status == 'admin' %} <a href="{% url 'delete-client' client.id %}"><i class="fa fa-trash"></i></a> {% endif %}
+                            </td>
+                       </tr>
+                       {% endfor %}
+
+                   </tbody>
+               </table>
+           </div>
+           {% if pagType %}
+          <nav aria-label="Page navigation example">
+            <ul class="pagination mt-3">
+              {% if clients.has_previous %}
+              <li class="page-item"><a class="page-link" href="?page={{clients.previous_page_number}}">&#10094 Oldingi</a></li>
+              {% endif %}
+              {% for page in page_range %}
+              
+              {% if page == clients.number %}
+              <li class="page-item active"><a class="page-link" href="?page={{page}}">{{page}}</a></li>
+              {% else %}
+              <li class="page-item"><a class="page-link" href="?page={{page}}">{{page}}</a></li>
+              {% endif %}
+              {% endfor %}
+
+              {% if clients.has_next %}
+              <li class="page-item"><a class="page-link" href="?page={{clients.next_page_number}}">Keyingi &#10095</a></li>
+              {% endif %}
+
+            </ul>
+          </nav>
+          {% endif %}
+          </div>
+          
+        </div>
+      </div>
+
+      
+     
+    </div>
+
+
+
+  </div>
+ 
+</div>
+{% endblock content %}

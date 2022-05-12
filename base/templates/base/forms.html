@@ -1,0 +1,44 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-title">{% if view == 'sms' %} SMS Shablon {% elif view == 'createuser' %} Xodim {% else %} Mijoz {% endif %}</p>
+            <form action="" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              {% if view == 'sms' %}
+              <div class="form-group">
+                <textarea name="text" class="form-control" cols="30" rows="10" required>{{sms.text}}</textarea>
+              </div>
+              {% elif view == 'createuser' %}
+
+                  {% for field in form %}
+                    <div class="form-group">
+                      <label for="">{{field.label}}</label>
+                      {{field}}
+                    </div>
+                  {% endfor %}
+                  
+              {% else %}
+                {% for field in form %}
+                <div class="form-group">
+                  <label for="">{{field.label}}</label>
+                  {{field}}
+                </div>
+                {% endfor %}
+              {% endif %}
+            <a href="{% url 'home'%}">Ortga</a>
+              <button class="btn btn-primary btn-rounded" type="submit">Tasdiqlash</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+{% endblock content %}

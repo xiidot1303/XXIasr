@@ -1,0 +1,325 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+<style>
+
+  .ytt thead tr th{
+   font-size: 12px !important;
+  }
+  .ytt tbody tr td {
+   font-size: 12px !important;
+  }
+  .profile-pics {
+   float: left; 
+   width: 60px; 
+   height: 60px; 
+   overflow: hidden; 
+   border-radius: 150px; 
+   margin-right: 15px;
+
+  }
+  .profile-pics:hover img {
+    width: 120% !important;
+    height: 120% !important;
+    bottom: auto;
+  }
+  .img-text {
+    width: fit-content;
+  }
+</style>
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-12 grid-margin">
+        <div class="row">
+          <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+            <h3 class="font-weight-bold">XXI ASR BUXGALTERIYA</h3>
+            <h6 class="font-weight-normal mb-0">Mijozlar</span></h6>
+          </div>
+          <div class="col-12 col-xl-4">
+           <div class="justify-content-end d-flex">
+            <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+              <a href="{% url 'create-client'%}?type=ytt">
+                <button class="btn btn-sm btn-light bg-primary" type="button">
+                  <i class="ti ti-plus font-weight-bold text-white"></i>
+                </button>
+              </a>
+            </div>
+           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-12 grid-margin strech-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title">
+              YaTTlarni filterlash
+            </div>
+            <form action="?filter" method="get">
+              <input type="hidden" name="filter" value="true">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="">Nom bo'yicha qidiruv</label>
+                    <input type="text" name="name" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="">STIR bo'yicha qidiruv</label>
+                    <input type="text" name="stir" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="">STIR holati bo'yicha</label>
+                    <select name="tin" class="form-control">
+                      <option value="">Barcha</option>
+                      <option value="True">STIRi mavjud mijozlar</option>
+                      <option value="False">STIRi mavjud bo'lmagan mijozlar</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="">Guvohnoma holati bo'yicha</label>
+                    <select name="certificate" class="form-control">
+                      <option value="">Barcha</option>
+                      <option value="none">Guvohnomasi kiritilmagan mijozlar</option>
+                      <option value="in_ten_days">Guvohnoma muddati tugashiga 10 kun qolgan mijozlar</option>
+                      <option value="in_a_month">Guvohnoma muddati tugashiga 1 oy qolgan mijozlar</option>
+                      <option value="active">Guvohnoma muddati uzoq mijozlar</option>
+                      <option value="inactive">Guvohnoma muddati o'tgan mijozlar</option>
+                    </select>
+                  </div>
+                  
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="">JSHSHIR bo'yicha</label>
+                    <input type="text" name="jshshir" class="form-control">
+                    
+                  </div>
+                  <div class="form-group">
+                    <label for="">Hisobot turi bo'yicha</label>
+                    <select name="report" class="form-control">
+                      <option value="">Barcha</option>
+                      <option value="oddiy">Oddiy</option>
+                      <option value="aylanma">Aylanma</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="">Kalit holati bo'yicha</label>
+                    <select name="key" class="form-control">
+                      <option value="">Barcha</option>
+                      <option value="true">Kaliti mavjud mijozlar</option>
+                      <option value="false">Kaliti mavjud bo'lmagan mijozlar</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="">Kalit muddati bo'yicha</label>
+                    <select name="key_expiry" class="form-control">
+                      <option value="">Barcha</option>
+                      <option value="none">Kaliti kiritilmagan mijozlar</option>
+                      <option value="in_ten_days">Kalit muddati tugashiga 10 kun qolgan mijozlar</option>
+                      <option value="in_a_month">Kalit muddati tugashiga 1 oy qolgan mijozlar</option>
+                      <option value="active">Kalit muddati uzoq mijozlar</option>
+                      <option value="inactive">Kalit muddati o'tgan mijozlar</option>
+                    </select>
+                    
+                  </div>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-rounded btn-primary"><i class="fa fa-search"></i>  Aniqlash</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% if pagType == False %}
+    <div class="row">
+      <div class="col-md-12 grid-margin strech-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title">Umumiy SMS yuborish</div>
+            <form action="" method="POST">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="">SMS matni</label>
+                <textarea name="text" class="form-control" cols="30" rows="10"></textarea>
+              </div>
+              <button class="btn btn-rounded btn-primary" type="submit"><i class="fa fa-send"></i>  Yuborish</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif%}
+
+    
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title"><div class="float-left">YaTTlar ro'yxati</div>
+            <div class="float-right">
+                <button class="btn btn-sm btn-success" id="export_button">Excel</button>
+            </div>
+            </div>
+           <div class="table-responsive">
+               <table class="table table-striped ytt" id="tasks">
+                   <thead>
+                       <tr>
+                           <th >#</th>
+                           <th >YaTT nomi</th>
+                           <th>YaTT STIRi</th>
+                           <th>Guvohnoma holati</th>
+                           <th>YaTT raqami</th>
+                           <th>YaTT manzili</th>
+                           <th>Hisobot turi</th>
+                           <th>Kalit</th>
+                           <th><i class="fa fa-cog"></i></th>
+                       </tr>
+                   </thead>
+                   
+                   <tbody>
+                     {% for client in clients %}
+                       <tr>
+                           <td>{{ forloop.counter }}</td>
+                           <td  style="display: flex; align-items: center ;">
+                             {% if client.picture %}
+                              <div class="profile-pics">
+                                <img style="width: 100%; height: 100%; border-radius: 0; transition: all 1s;" src="/app{{client.picture.url}}" alt="">
+                              </div>
+                              <div class="img-text" style="line-height: 15px; padding-left: 15px;"><a href="{% url 'client' client.id %}">{{ client.name|wordwrap:"20"|linebreaksbr }}</a></div>
+                              {% else %}
+
+                                <div class="profile-pics">
+                                  <img style="width: 100%; height: 100%; border-radius: 0; transition: all 1s;" src="{% static 'profile/profile-default.jpg' %}" alt="">
+                                </div>
+                                <div class="img-text" style="line-height: 15px; padding-left: 15px;"><a href="{% url 'client' client.id %}">{{ client.name|wordwrap:"20"|linebreaksbr }}</a></div>
+
+                              {% endif %}
+
+                             
+                            </td>
+                           <td>{{ client.tin }}</td>
+                           <td>
+                             {% if client.is_certificate_expired == 'in_ten_days' %}
+                              <div class="btn btn-warning btn-sm">10 kun</div>
+                             {% elif client.is_certificate_expired == 'in_a_month' %}
+                              <div class="btn btn-primary btn-sm">30 kun</div>
+                             {% elif client.is_certificate_expired == 'active' %}
+                              <div class="btn btn-success btn-sm">Faol</div>
+                             {% elif client.is_certificate_expired == 'inactive' %}
+                              <div class="btn btn-danger btn-sm">Muddati tugagan</div>
+                             {% else %}
+                              <div class="btn btn-secondary btn-sm">Kiritilmagan</div>
+                             {% endif %}
+                            </td>
+                           <td>{{ client.phone1 }}</td>
+                           <td style="line-height: 15px;">{{ client.address|wordwrap:"20"|linebreaksbr }}</td>
+                           <td>{{client.get_sub_type_display}}</td>
+                           <td class="text-center">
+                            {% if profile.status == 'admin' %}
+                            {% if client.key %}
+                            <a href="/app{{ client.key.url }}" download class="text-success"><i class="fa fa-download"></i></a>
+                            {% else %}
+                              <i class="fa fa-close text-danger"></i>
+                            {% endif %}
+                            
+                            {% if client.key %}
+                              {% if client.is_key_expired == 'in_ten_days' %}
+                                <div class="mt-1 text-warning">10 kun</div>
+                              {% elif client.is_key_expired == 'in_a_month' %}
+                                <div class="mt-1 text-primary">30 kun</div>
+                              {% elif client.is_key_expired == 'active' %}
+                                <div class="mt-1 text-success">Faol</div>
+                              {% elif client.is_key_expired == 'inactive' %}
+                                <div class="mt-1 text-danger">Muddati <br> tugagan</div>
+                              {% else %}
+                                <div class="text-secondary">Muddat <br> kiritilmagan</div>
+                              {% endif %}
+                           
+                            {% endif %}
+                            {% else %}
+                              {% if access %}
+                                
+                                {% if client.key %}
+                                    <a href="/app{{ unpriced.uploaded_file.url }}" download>
+                                    <i class="fa fa-download text-success"></i>
+                                    </a>
+                                {% else %}
+                                    <i class="fa fa-close text-danger"></i>
+                                {% endif %}
+                                {% if client.key %}
+                                  {% if client.is_key_expired == 'in_ten_days' %}
+                                    <div class="mt-1 text-warning">10 kun</div>
+                                  {% elif client.is_key_expired == 'in_a_month' %}
+                                    <div class="mt-1 text-primary">30 kun</div>
+                                  {% elif client.is_key_expired == 'active' %}
+                                    <div class="mt-1 text-success">Faol</div>
+                                  {% elif client.is_key_expired == 'inactive' %}
+                                    <div class="mt-1 text-danger">Muddati <br> tugagan</div>
+                                  {% else %}
+                                    <div class="text-secondary">Muddat <br> kiritilmagan</div>
+                                  {% endif %}
+                              
+                                {% endif %}
+                                {% else %}
+                                {% if client.key %}
+                                <i class="fa fa-check text-success"></i>
+                                {% else %}
+                                <i class="fa fa-close text-danger"></i>
+                                {% endif %}
+                              {% endif %}
+                            {% endif %}
+                           </td>
+                           <td>
+                             <a href="{% url 'edit-client' client.id %}" class="text-primary"><i class="fa fa-pencil"></i></a>
+                             {% if profile.status == 'admin' %} <a href="{% url 'delete-client' client.id %}"><i class="fa fa-trash"></i></a> {% endif %}
+                           </td>
+                           
+                       </tr>
+                       {% endfor %}
+
+                   </tbody>
+               </table>
+           </div>
+           {% if pagType %}
+          <nav aria-label="Page navigation example">
+            <ul class="pagination mt-3">
+              {% if clients.has_previous %}
+              <li class="page-item"><a class="page-link" href="?page={{clients.previous_page_number}}">&#10094 Oldingi</a></li>
+              {% endif %}
+              {% for page in page_range %}
+              
+              {% if page == clients.number %}
+              <li class="page-item active"><a class="page-link" href="?page={{page}}">{{page}}</a></li>
+              {% else %}
+              <li class="page-item"><a class="page-link" href="?page={{page}}">{{page}}</a></li>
+              {% endif %}
+              {% endfor %}
+
+              {% if clients.has_next %}
+              <li class="page-item"><a class="page-link" href="?page={{clients.next_page_number}}">Keyingi &#10095</a></li>
+              {% endif %}
+
+            </ul>
+          </nav>
+          {% endif %}
+          </div>
+          
+        </div>
+      </div>
+
+      
+     
+    </div>
+
+
+
+  </div>
+ 
+</div>
+{% endblock content %}

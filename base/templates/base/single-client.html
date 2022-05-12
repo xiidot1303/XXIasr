@@ -1,0 +1,229 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title">
+              <div class="float-left">
+                Mijoz sahifasi
+              </div>
+              <div class="text-right">
+                <a href="{% url 'edit-client' client.id %}"><i class="fa fa-pencil"></i> O'zgartirish</a>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-2">
+                <div  class="text-center">
+                  {% if client.picture %}
+                  <img style="width: 100%; border-radius: 50%;" src="/app{{client.picture.url}}" alt=""><br>
+                  {% else %}
+                  <img style="width: 100%; border-radius: 50%;" src="{% static 'profile/profile-default.jpg'%}" alt=""><br>
+                  {% endif %}
+                  <div class="h5 mt-3" style="line-height: 25px;">F.I.Sh.: {{client.name}}</div>
+                </div>
+              </div>
+
+              <div class="col-sm-4">
+                <div class="h5">Mijoz turi : {{client.get_type_display}}</div>
+                <div class="h5 mt-3">
+                  STIR : 
+                  {% if client.tin %} 
+                    {{client.tin}} 
+                  {% else %} 
+                    Kiritilmagan 
+                  {% endif %}
+                </div>
+                
+                {% if client.gov_login %}
+                <div class="h5 mt-3">ID : {{client.gov_login}} - {{client.gov_password }}</div>
+                {% endif %}
+
+                {% if client.jshshir %}
+                <div class="h5 mt-3">JSHSHIR : {{client.jshshir}}</div>
+                {% endif %}
+
+                {% if client.director %}
+                <div class="h5 mt-3">Direktor : {{ client.director}}</div>
+                {% endif %}
+
+                {% if client.director_tin %}
+                <div class="h5 mt-3">Direktor STIRi : {{client.director_tin}}</div>
+                {% endif %}
+
+                {% if client.phone1 or client.phone2 or client.phone3 %}
+                <div class="h5 mt-3">Telefon : {% if client.phone1%} {{client.phone1}} {% endif %}
+                  {% if client.phone2%} - {{client.phone2}} {% endif %}
+                  {% if client.phone3%} - {{client.phone3}} {% endif %}</div>
+                {% endif %}
+
+                {% if client.address %}
+                <div class="h5 mt-3">Manzil : {{client.address}}</div>
+                {% endif %}
+
+                {% if client.owner %}
+                <div class="h5 mt-3">Ega : {{client.owner}}</div>
+                {% endif %}
+
+                {% if client.tex_number %}
+                <div class="h5 mt-3">Tex pasport raqam : {{client.tex_number}}</div>
+                {% endif %}
+
+                {% if client.text_series %}
+                <div class="h5 mt-3">Tex pasport seriya : {{client.text_series}}</div>
+                {% endif %}
+
+                {% if client.order1 or client.order2 or client.order3 %}
+                <div class="h5 mt-3">Buyurtma : {% if client.order1%} {{client.order1}} {% endif %}
+                  {% if client.order2%} - {{client.order2}} {% endif %}
+                  {% if client.order3%} - {{client.order3}} {% endif %}</div>
+                {% endif %}
+
+                
+                {% if client.auc_login %}
+                <div class="h5 mt-3">ID : {{client.auc_login}} - {{client.auc_password }}</div>
+                {% endif %}
+
+              </div>
+
+
+              <div class="col-sm-4">
+                {% if client.guvohnoma_exp %}
+                <div class="h5">Guvohnoma : 
+                  {% if client.is_certificate_expired == 'in_ten_days' %}
+                  <div class="btn btn-warning btn-sm">10 kun</div>
+                  {% elif client.is_certificate_expired == 'in_a_month' %}
+                  <div class="btn btn-primary btn-sm">30 kun</div>
+                  {% elif client.is_certificate_expired == 'active' %}
+                  <div class="btn btn-success btn-sm">Faol</div>
+                  {% elif client.is_certificate_expired == 'inactive' %}
+                  <div class="btn btn-danger btn-sm">Muddati tugagan</div>
+                  {% else %}
+                  <div class="btn btn-secondary btn-sm">Kiritilmagan</div>
+                  {% endif %}
+                   {% if client.guvohnoma_file %} | <a href="/app{{client.guvohnoma_file.url}}" download><i class="fa fa-download"></i></a>{% endif %}
+                </div>
+                {% endif %}
+
+                {% if profile.status == 'admin' %}
+                  {% if client.key %}
+                    <div class="h5 d-inline">Kalit</div>
+                      {% if client.is_key_expired == 'in_ten_days' %}
+                        <div class="btn btn-sm btn-rounded btn-warning">10 kun</div>
+                      {% elif client.is_key_expired == 'in_a_month' %}
+                        <div class="btn btn-sm btn-rounded btn-primary">30 kun</div>
+                      {% elif client.is_key_expired == 'active' %}
+                        <div class="btn btn-sm btn-rounded btn-success">Faol</div>
+                      {% elif client.is_key_expired == 'inactive' %}
+                        <div class="btn btn btn-sm btn-rounded btn-danger">Muddati tugagan</div>
+                      {% else %}
+                        <div class="d-inline text-dark btn btn-secondary btn-sm btn-rounded"> Muddat kiritilmagan</div>
+                      {% endif %}
+                    | <a href="/app{{ client.key.url }}" download><ifa class="fa fa-download "></ifa></a>
+                  {% endif %}
+                {% else %}
+                  {% if access %}
+                    {% if client.key %}
+                      <div class="h5 d-inline">Kalit</div>
+                        {% if client.is_key_expired == 'in_ten_days' %}
+                          <div class="btn btn-warning btn-sm btn-rounded">10 kun</div>
+                        {% elif client.is_key_expired == 'in_a_month' %}
+                          <div class="btn btn-primary btn-sm btn-rounded">30 kun</div>
+                        {% elif client.is_key_expired == 'active' %}
+                          <div class="btn btn-success btn-sm btn-rounded">Faol</div>
+                        {% elif client.is_key_expired == 'inactive' %}
+                          <div class="btn btn-danger btn-sm btn-rounded">Muddati tugagan</div>
+                        {% else %}
+                          <div class="d-inline text-dark btn btn-secondary btn-sm btn-rounded"> Muddat kiritilmagan</div>
+                        {% endif %}
+                      | <a href="/app{{ client.key.url }}" download><ifa class="fa fa-download "></ifa></a>
+                    {% endif %}
+                  {% endif %}
+                {% endif %}
+                
+                {% if client.passport %}
+                <div class="h5 mt-3">
+                  Pasport : <a href="/app{{client.passport.url}}" download><i class="fa fa-download"></i></a>
+                </div>
+                {% endif %}
+
+                {% if client.selfy %}
+                <div class="h5 mt-3">
+                  Selfi : <a href="/app{{client.selfy.url}}" download><i class="fa fa-download"></i></a>
+                </div>
+                {% endif %}
+
+                {% if client.ustav %}
+                <div class="h5 mt-3">
+                  Ustav : <a href="/app{{client.ustav.url}}" download><i class="fa fa-download"></i></a>
+                </div>
+                {% endif %}
+
+                {% if client.expiry_date %}
+                Tanirovka - 
+                  {% if client.is_t_expired == 'in_ten_days' %}
+                  <div class="btn btn-warning btn-sm">10 kun</div>
+                  {% elif client.is_t_expired == 'in_a_month' %}
+                    <div class="btn btn-primary btn-sm">30 kun</div>
+                  {% elif client.is_t_expired == 'active' %}
+                    <div class="btn btn-success btn-sm">Faol</div>
+                  {% elif client.is_t_expired == 'inactive' %}
+                    <div class="btn btn-danger btn-sm">Muddati tugagan</div>
+                  {% else %}
+                    <div class="btn btn-secondary btn-sm">Kiritilmagan</div>
+                  {% endif %}
+                {% endif %}    
+                
+                {% if client.texpas %}
+                <div class="h5 mt-3">
+                  Texpasport : <a href="/app{{client.texpas.url}}" download><i class="fa fa-download"></i></a>
+                </div>
+                {% endif %}
+                {% if client.ruxsatnoma %}
+                <div class="h5 mt-3">
+                  Ruxsatnoma : <a href="/app{{client.ruxsatnoma.url}}" download><i class="fa fa-download"></i></a>
+                </div>
+                {% endif %}
+            </div>
+            </div>
+            <hr>
+            <div class="row mt-3">
+              <div class="col-sm-12">
+                <div class="card-title text-left">Xizmat ko'rsatish tarixi</div>
+                <table class="table table-stripped">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Xizmat nomi</th>
+                      <th>Holati</th>
+                      <th>Sanasi</th>
+                      <th>Yuklovchi</th>
+                      <th>Qabul qiluvchi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for upload in uploads %}
+                      <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td style="line-height: 20px;">{{upload.service|wordwrap:"50"|linebreaksbr}}</td>
+                        <td>{{upload.get_status_display }}</td>
+                        <td>{{upload.loaded_date}}</td>
+                        <td>{{upload.sender}}</td>
+                        <td>{{upload.reciever}}</td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

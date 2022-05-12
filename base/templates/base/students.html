@@ -1,0 +1,110 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-12 grid-margin">
+        <div class="row">
+          <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+            <h3 class="font-weight-bold">Prime Study</h3>
+            <h6 class="font-weight-normal mb-0">O'quvchilar</span></h6>
+          </div>
+          <div class="col-12 col-xl-4">
+           <div class="justify-content-end d-flex">
+            <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+              <a href="{% url 'create-student' %}">
+                <button class="btn btn-sm btn-light bg-primary" type="button">
+                  <i class="ti ti-plus font-weight-bold text-white"></i>
+                </button>
+              </a>
+            </div>
+           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12 grid-margin strech-card">
+            <div class="card">
+                <div class="p-4">
+                    <form action="{% url 'students' %}" method="GET">
+
+                        <div class="form-group">
+                            <label for="">Guruhni tanlang</label>
+                            <select name="group" id="" class="form-control" required>
+                                <option value="">Guruhni tanlang</option>
+                                {% for group in groups %}
+                                <option value="{{group.id}}">{{group}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button class="btn btn-primary btn-rounded" type="submit">Kirish</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% if view != '0' %}
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body">
+              <p class="card-title">O'quvchilar ro'yxati</p>
+              <div class="table-responsive">
+                 <table class="table table-striped">
+                     <thead>
+                         <tr>
+                             <th>#</th>
+                             <th>F.I.Sh</th>
+                             <!-- <th>Guruhlar</th> -->
+                             <th>Telefon</th>
+                             <!-- <th>Boshqa</th> -->
+                         </tr>
+                     </thead>
+                     <tbody>
+                        {% for student in group.students.all %}
+                        <tr>
+                             <td>{{forloop.counter}}</td>
+                             <td>{{student.name}}</td>
+                             <td>
+
+                              {% for group in groups %}
+                                {% if student in group.students.all%}
+                                   <div class="btn btn-primary btn-sm">
+                                    {{group}}
+                                   </div>
+                                {% endif %}
+                              {% endfor %}
+                              
+                                
+                             </td>
+                             <td>
+                                 {{student.phone}}
+                             </td>
+                             
+                             <td>
+                                 <a href="{% url 'edit-student' student.id %}"><i class="ti-pencil text-success font-weight-bold"></i></a>
+                                 <a href="{% url 'delete-student' student.id %}"><i class="ti-trash text-danger font-weight-bold"></i></a>
+                             </td>
+                         </tr>
+                         {% endfor %}
+  
+                     </tbody>
+                 </table>
+             </div>
+            </div>
+          </div>
+        </div>
+       
+      </div>
+
+      {% endif %}
+  </div>
+ 
+</div>
+{% endblock content %}

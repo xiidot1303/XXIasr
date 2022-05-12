@@ -1,0 +1,66 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-12 grid-margin">
+        <div class="row">
+          <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+            <h3 class="font-weight-bold">XXI ASR BUXGALTERIYA</h3>
+            <h6 class="font-weight-normal mb-0">SMS sozlamalari</span></h6>
+          </div>
+          <div class="col-12 col-xl-4">
+           <div class="justify-content-end d-flex">
+           
+           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+  
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-title">SMS shablonlar</p> 
+            <span><b>**nom - mijoz yoki xodmining nomi</b></span>
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Nom</th>
+                      <th>Matn</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for text in sms %}
+                      <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{text.name}}</td>
+                        <td style="line-height: 20px;">{{text.text|wordwrap:"50"|linebreaksbr}}</td>
+                        <td>
+                          <a href="{% url 'edit-sms' text.id %}">
+                            <i class="fa fa-pencil"></i>
+                          </a>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+
+          </div>
+        </div>
+      </div>
+     
+    </div>
+
+  </div>
+ 
+</div>
+{% endblock content %}

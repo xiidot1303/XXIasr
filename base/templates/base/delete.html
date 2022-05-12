@@ -1,0 +1,48 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+<img src="{% static 'photo.jpg' %}">
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-12 grid-margin">
+        <div class="row">
+          <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+            <h3 class="font-weight-bold">XXI ASR BUXGALTERIYA/h3>
+            <h6 class="font-weight-normal mb-0">Ma'lumotlarni o'chirish</span></h6>
+          </div>
+          <div class="col-12 col-xl-4">
+           <div class="justify-content-end d-flex">
+           
+           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-title">Ma'lumotlarni o'chirish</p>
+           <form action="" method="POST">
+               <input type='hidden' name='client' value='{{pk}}'>
+              {% csrf_token %}
+             <p>
+                 Siz <span class="text-danger">{{obj}}</span>ni o'chirmoqchimisiz ?
+             </p>
+             <a href="{% url 'home'%}">Ortga</a>
+              <button class="btn btn-primary btn-rounded" type="submit">O'chirish</button>
+            </form>
+          </div>
+        </div>
+      </div>
+     
+    </div>
+
+  </div>
+ 
+</div>
+{% endblock content %}

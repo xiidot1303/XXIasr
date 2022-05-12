@@ -1,0 +1,40 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-title">Topshiriqni yakunlash</p>
+          <form action="" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+            <div class="form-group">
+              <label for="">Izoh</label>
+              <textarea name="answer" cols="30" rows="10" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="">Fayl biriktirish</label>
+              <input type="file" name="file" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="">Holatni tanlang</label>
+              <select name="status" class="form-control">
+                <option value="0">Bajarilmagan</option>
+                <option value="5">Jarayonda</option>
+                <option value="10">Tugatish</option>
+              </select>
+            </div>
+            <a href="{% url 'home'%}">Ortga</a>
+              <button class="btn btn-primary btn-rounded" type="submit">Tasdiqlash</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}

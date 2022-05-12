@@ -1,0 +1,114 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-12 grid-margin">
+        <div class="row">
+          <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+            <h3 class="font-weight-bold">XXI ASR BUXGALTERIYA</h3>
+            <h6 class="font-weight-normal mb-0">Xizmatlarni kiritish</span></h6>
+          </div>
+          <div class="col-12 col-xl-4">
+           <div class="justify-content-end d-flex">
+           
+           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-title">Xizmatlarni kiritish</p>
+            <form action="" method="POST">
+              {% csrf_token %}
+              {% for field in form %}
+                <div class="form-group">
+                  <label for="">{{field.label}}</label><br>
+                  {{field}}
+                </div>
+              {% endfor %}
+              <button class="btn btn-primary btn-rounded" type="submit">Yangilash</button>
+            </form>
+          </div>
+        </div>
+      </div>
+     
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          
+            <div class="card-body">
+            <div class="card-title">To'lov tarixi</div>
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th style="width: 50px;">#</th>
+                        <th>Xizmat nomi</th>
+                        <th>Xizmat narxi</th>
+                        <th style="width: 80px;"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for row in services %}
+                        <tr>
+                          <td>{{forloop.counter}}</td>
+                          <td>{{row.name}}</td>
+                          <td>{{row.price}}</td>
+                          <td>
+                            <a href="{% url 'edit-service' row.id %}" class="btn btn-outline-success">
+                              <i class="fa fa-pencil"></i>
+                            </a>
+
+                            <a href="{% url 'delete-service' row.id %}" class="btn btn-outline-danger">
+                              <i class="fa fa-trash"></i>
+                            </a>
+
+                          </td>
+                          
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination">
+                    {% if services.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{services.previous_page_number}}">&#10094 Oldingi</a></li>
+                    {% endif %}
+                    {% for page in page_range %}
+                    
+                    {% if page == services.number %}
+                    <li class="page-item active"><a class="page-link" href="?page={{page}}">{{page}}</a></li>
+                    {% else %}
+                    <li class="page-item"><a class="page-link" href="?page={{page}}">{{page}}</a></li>
+                    {% endif %}
+                    {% endfor %}
+
+                    {% if services.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{services.next_page_number}}">Keyingi &#10095</a></li>
+                    {% endif %}
+
+                  </ul>
+                </nav>
+                
+          </div>
+        </div>
+      </div>
+     
+    </div>
+
+  </div>
+ 
+</div>
+{% endblock content %}

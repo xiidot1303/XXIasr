@@ -1,0 +1,101 @@
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <ul class="nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'home' %}">
+          <i class="icon-grid menu-icon"></i>
+          <span class="menu-title">Bosh sahifa</span>
+        </a>
+      </li>
+    
+     <li class="nav-item">
+        <a class="nav-link" href="{% url 'monitoring' %}">
+          <i class="icon-paper menu-icon"></i>
+          <span class="menu-title">Monitoring</span>
+        </a>
+      </li>
+      
+
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'upload' %}">
+          <i class="icon-menu menu-icon"></i>
+          <span class="menu-title">Xizmatlarni yuklash</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'task' %}">
+          <i class="icon-head menu-icon"></i>
+          <span class="menu-title">Topshiriqlar</span>
+        </a>
+      </li>
+
+      {% if profile.status == 'admin' %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'history' %}">
+          <i class="icon-clock menu-icon"></i>
+          <span class="menu-title">Xizmatlar tarixi</span>
+        </a>
+      </li>
+      {% endif %}
+      
+      {% if profile.status == 'admin' or profile.status == 'superuser' %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'telegram' %}">
+          <i class="icon-paper menu-icon"></i>
+          <span class="menu-title">Telegram</span>
+        </a>
+      </li>
+      {% endif %}
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+          <i class="icon-layout menu-icon"></i>
+          <span class="menu-title">Mijozlar</span>
+          <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="ui-basic" >
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item"> <a class="nav-link" href="{% url 'create-client' %}">Ro'yxatga olish</a></li>
+            <li class="nav-item"> <a class="nav-link" href="{% url 'yatt' %}">YaTT</a></li>
+            <li class="nav-item"> <a class="nav-link" href="{% url 'yuridik' %}">Yuridik</a></li>
+            <li class="nav-item"> <a class="nav-link" href="{% url 'jismoniy' %}">Jismoniy</a></li>
+            <li class="nav-item"> <a class="nav-link" href="{% url 'tanirovka' %}">Tanirovka</a></li>
+            <li class="nav-item"> <a class="nav-link" href="{% url 'auction' %}">Auksion</a></li>
+            <li class="nav-item"> <a class="nav-link" href="{% url 'teacher' %}">O'qituvchi</a></li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'notes' %}">
+          <i class="icon-clock menu-icon"></i>
+          <span class="menu-title">Eslatmalar</span>
+        </a>
+      </li>
+
+      {% if profile.status == 'admin' or profile.status == 'superuser' %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'sms' %}">
+          <i class="icon-cog menu-icon"></i>
+          <span class="menu-title">SMS sozlamalari</span>
+        </a>
+      </li>
+      {% endif %}
+
+      {% if profile.status == 'admin' %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'users' %}">
+          <i class="icon-head menu-icon"></i>
+          <span class="menu-title">Xodimlar</span>
+        </a>
+      </li>
+      {% endif %}
+
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'logout' %}">
+          <i class="icon-arrow-left menu-icon"></i>
+          <span class="menu-title">Chiqish</span>
+        </a>
+      </li>
+    </ul>
+  </nav>

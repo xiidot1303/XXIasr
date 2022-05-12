@@ -1,0 +1,48 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-12 grid-margin">
+        <div class="row">
+          <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+            <h3 class="font-weight-bold">Prime Study</h3>
+            <h6 class="font-weight-normal mb-0">O'quvchilar ro'yxatga olish</span></h6>
+          </div>
+          <div class="col-12 col-xl-4">
+           <div class="justify-content-end d-flex">
+           
+           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-title">O'quvchi ma'lumotlari</p>
+           <form action="" method="POST">
+              {% csrf_token %}
+              {% for field in form%}
+                <div class="form-group">
+                  <label for="">{{field.label}}</label><br>
+                  {{field}}
+                </div>
+              {% endfor %}
+              <button class="btn btn-primary btn-rounded" type="submit">Kiritish</button>
+            </form>
+          </div>
+        </div>
+      </div>
+     
+    </div>
+
+  </div>
+ 
+</div>
+{% endblock content %}

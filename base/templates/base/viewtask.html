@@ -1,0 +1,115 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-12 grid-margin">
+        <div class="row">
+          <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+            <h3 class="font-weight-bold">XXI ASR BUXGALTERIYA</h3>
+            <h6 class="font-weight-normal mb-0">Topshiriqlar</span></h6>
+          </div>
+        
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-title">Topshiriq</p>
+            <div class="row">
+              <div class="col-sm-6">
+                <ul>
+                  <li>Topshiriq matni - <b>{{task.text}}</b> 
+                    
+                  </li>
+                  <li>Berilgan sana - <b>{{task.given_date}}</b></li>
+                  <li>Topshiriq muddati - <b>{{task.duration}}</b></li>
+                  <li>
+                    Xodimlar 
+                    {% for user in task.user.all %}
+                      <div class="btn btn-sm btn-primary mb-1">{{user.name}}</div><br>
+                    {% endfor %}
+                  </li>
+                  <li>
+                    Mijozlar
+                    {% if task.client.all %}
+                    {% for client in task.client.all %}
+                      <div class="btn btn-sm btn-primary">{{client.name}}</div>
+                    {% endfor%}
+                    {% else %}
+                    <b>- Mijoz biriktirilmagan</b>
+                    {% endif %} 
+                  </li>
+                
+                </ul>
+              </div>
+              <div class="col-sm-6">
+               <ul>
+                <li>Topshiriq holati - 
+                  {% if task.status == '0' %}
+                    <div class="btn-sm btn-danger btn mb-1">
+                        Bajarilmagan 
+                    </div><br>
+                    {% elif task.status == '5' %}
+                    <div class="btn-sm btn-warning btn mb-1">
+                        Jarayonda 
+                    </div><br>
+                    {% elif task.status == '10' %}
+                    <div class="btn-sm btn-success btn mb-1">
+                        Tugatilgan
+                    </div><br>
+                    {% endif %}
+                </li>
+                <li>Muddat holati 
+
+                  {% if task.is_past_due %}
+                    <div class="btn btn-sm btn-danger">Muddati tugagan</div>
+                    {% else %}
+                    <div class="btn btn-sm btn-success">Muddati tugamagan</div>
+                    {% endif %}
+                </li>
+                <li>
+                  Biriktirilgan fayli
+                  {% if task.given_file %}
+                    <a href="{{ task.given_file.url }}" download><i class="fa fa-download text-success"></i></a>
+                  {% else %}
+                    <i class="fa fa-close text-danger"></i>
+                  {% endif %}
+                </li>
+                <li>
+                  Javob fayli
+                  {% if task.answer_file %}
+                    <a href="{{ task.answer_file.url }}" download><i class="fa fa-download text-success"></i></a>
+                  {% else %}
+                    <i class="fa fa-close text-danger"></i>
+                  {% endif %}
+                </li>
+                <li>
+                  Javob matni
+                  {% if task.answer_text %}
+                    <b>{{task.answer_text}}</b>
+                  {% else %}
+                    <i class="fa fa-close text-danger"></i>
+                  {% endif %}
+                </li>
+               </ul>
+              </div>
+            </div>
+            <a href="{% url 'task' %}" class="btn btn-primary btn-rounded">Ortga</a>
+          </div>
+        </div>
+      </div>
+     
+    </div>
+
+  </div>
+ 
+</div>
+{% endblock content %}

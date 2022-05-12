@@ -1,0 +1,30 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-title">Eslatma</p>
+          <form action="" method="POST" >
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="">Eslatma holatini tanlang</label>
+                <select name="status" class="form-control">
+                  <option value="5">Jarayonda</option>
+                  <option value="10">Bajarilgan</option>
+                </select>
+              </div>
+              <a href="{% url 'home'%}">Ortga</a>
+              <button class="btn btn-primary btn-rounded" type="submit">Tasdiqlash</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+{% endblock content %}
