@@ -210,7 +210,7 @@
                         <td style="display: flex; align-items: center ;">
                           {% if row.client.picture %}
                           <div class="profile-pics">
-                            <img style="width: 100%; height: 100%; border-radius: 0; transition: all 1s;" src="/app/{{row.client.picture.url}}" alt="">
+                            <img style="width: 100%; height: 100%; border-radius: 0; transition: all 1s;" src="/app{{row.client.picture.url}}" alt="">
                           </div>
                           <div class="img-text" style="line-height: 15px; padding-left: 15px;"><a class="text-white" href="{% url 'client' row.client.id %}">{{ row.client.name|wordwrap:"20"|linebreaksbr }}</a> </div>
                         
