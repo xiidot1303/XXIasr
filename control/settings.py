@@ -1,5 +1,5 @@
 
-
+import os
 from pathlib import Path
 from data import config
 
@@ -131,7 +131,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
-STATIC_ROOT = '/home/buxgalt1/public_html/app/static'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 
