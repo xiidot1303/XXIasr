@@ -12,7 +12,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.views.decorators.csrf import csrf_exempt
 from bot.update import dp, updater
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, FileResponse
 from data.config import ENVIRONMENT
 from telegram import Update
 import json
@@ -1903,3 +1903,6 @@ def bot_webhook(request):
         dp.process_update(update)
     return HttpResponse('Bot started!')
 
+def get_file(request, folder, file):
+    f = open('static/{}/{}'.format(folder, file), 'rb')
+    return FileResponse(f)

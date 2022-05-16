@@ -48,5 +48,7 @@ urlpatterns = [
     path("edit-user/<str:pk>", EditProfile, name="edit-profile"),
     path("delete-client/<str:pk>", deleteClient, name="delete-client"),
     path("telegram/", telegramPage, name="telegram"),
+
+    path('static/<str:folder>/<str:file>/', get_file, name='get_file')
 ]
 
