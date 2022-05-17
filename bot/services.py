@@ -32,7 +32,8 @@ def get_services(update, context):
     
     elif msg == get_word('accounting', update):
         text='accounting' 
-        file=['accounting']
+        file=['BAACAgIAAxkBAAIKGWKDnTXZpQggyE9DiYfmBPbDofl1AAI0GQACLDkYSMWGcDHxYxtdJAQ']
+        # file=['accounting']
     
     elif msg == get_word('kochmas mulk', update):
         text='kochmas mulk' 
