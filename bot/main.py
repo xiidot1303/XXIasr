@@ -52,7 +52,8 @@ def our_services(update, context):
         ReplyKeyboardMarkup(keyboard=keyboard, resize_keyboard=True))
 
     # video = open(str(BASE_DIR) + '/static/videos/auksion.mp4', 'rb')
-    # bot.send_video(chat_id = update.message.chat.id, video=video)
+    video = 'BAACAgIAAxkBAAIKIGKDnzauBW_CCnfgdhT8s_tnu9HcAAJFGQACLDkYSGz8o9CUmhhbJAQ'
+    bot.send_video(chat_id = update.message.chat.id, video=video)
     return GET_SERVICE
 
 

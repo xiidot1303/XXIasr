@@ -16,19 +16,24 @@ def get_services(update, context):
 
     if msg == get_word('car number', update):
         text='car number' 
-        file=['car_number', 'car_number2']
+        file=['BAACAgIAAxkBAAIKHGKDnmrrrnhU9OQsqlxBFOKqTGI7AAI_GQACLDkYSAIK4q1PetKcJAQ', 
+            'BAACAgIAAxkBAAIKHWKDnprjpk14euiGSuUpiGFx6qOKAAJAGQACLDkYSOx35BFFV70vJAQ']
     
     elif msg == get_word('tonirovka', update):
         text='tonirovka' 
-        file=['tonirovka']
+        file=['BAACAgIAAxkBAAIKIWKDn4aCHChgz7TOnpYq9YH767xmAAJIGQACLDkYSBjNWdNX9vTQJAQ']
+        # file=['tonirovka']
     
     elif msg == get_word('auction', update):
         text='auction' 
-        file=['auction']
+        file=['BAACAgIAAxkBAAIKGmKDngwZPR4gSrg2WDy5oq9p0ccaAAI8GQACLDkYSMqe7V_8JykiJAQ']
+        # file=['auction']
     
     elif msg == get_word('yagona darcha', update):
         text='yagona darcha' 
-        file=['yagona_darcha', 'yagona_darcha2']
+        file=['BAACAgIAAxkBAAIKImKDn7C-7l-eP1Z3pHgNizHgo6_2AAJJGQACLDkYSKNHh_mMYefUJAQ', 
+            'BAACAgIAAxkBAAIKI2KDn_A-Cq8maG6gYY_6FlW13XfwAAJLGQACLDkYSDYwsJCIeKsyJAQ']
+        # file=['yagona_darcha', 'yagona_darcha2']
     
     elif msg == get_word('accounting', update):
         text='accounting' 
@@ -37,7 +42,8 @@ def get_services(update, context):
     
     elif msg == get_word('kochmas mulk', update):
         text='kochmas mulk' 
-        file=['kochmas_mulk', 'kochmas_mulk2']
+        file=['BAACAgIAAxkBAAIKHmKDntBY7lxR_LE3noB_jz5w5egdAAJCGQACLDkYSGyO9-jQRqjbJAQ', 
+            'BAACAgIAAxkBAAIKH2KDnv4Y-JFq5-ZIUK85u3YIpdEHAAJEGQACLDkYSF29VvdVF2w-JAQ']
     
     elif msg == get_word('stamp', update):
         text='stamp' 
