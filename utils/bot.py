@@ -112,7 +112,8 @@ def send_service(update, context, text, files):
     bot = context.bot
     media_group = []
     for f in files:
-        video = open(str(BASE_DIR) + '/static/videos/{}.mp4'.format(f), 'rb')
+        # video = open(str(BASE_DIR) + '/static/videos/{}.mp4'.format(f), 'rb')
+        video = f
         media_group.append(InputMediaVideo(video))
     bot.send_message(update.message.chat.id, get_word('watch video below', update))
     bot.send_media_group(chat_id = update.message.chat.id, media = media_group)

@@ -40,7 +40,8 @@ def get_services(update, context):
     
     elif msg == get_word('stamp', update):
         text='stamp' 
-        file=['stamp']
+        file=['BAACAgIAAxkBAAIKF2KDl-xeD0Tj5OIprgbgjCk_eBGZAAMZAAIsORhICfgn0j_Nj8ckBA']
+        # file=['stamp']
     
     # elif msg == get_word('', update):
     #     text='' 
