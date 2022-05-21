@@ -162,7 +162,7 @@ def uploadPage(request):
 def createService(request):
     form = ServiceCreation()
     profile = Profile.objects.get(user=request.user)
-    services = Service.objects.all()
+    services = Service.objects.all().order_by('id')
     if "page" in request.GET:
         page = request.GET['page']
     else:
@@ -603,7 +603,7 @@ def createClient(request):
 @login_required(login_url='login')
 def YaTTPage(request):
     profile = Profile.objects.get(user=request.user)
-    clients = Client.objects.filter(type='ytt')
+    clients = Client.objects.filter(type='ytt').order_by('id')
     if "page" in request.GET:
         page = request.GET['page']
     else:
@@ -838,7 +838,7 @@ def YaTTPage(request):
 @login_required(login_url='login')
 def YuridikPage(request):
     profile = Profile.objects.get(user = request.user)
-    clients = Client.objects.filter(type='yuridik')
+    clients = Client.objects.filter(type='yuridik').order_by('id')
     if "page" in request.GET:
         page = request.GET['page']
     else:
@@ -1058,7 +1058,7 @@ def YuridikPage(request):
 
 @login_required(login_url='login')
 def JismoniyPage(request):
-    clients = Client.objects.filter(type='jismoniy')
+    clients = Client.objects.filter(type='jismoniy').order_by('id')
     profile = Profile.objects.get(user=request.user)
     key_access = Access.objects.get(name="key")
     if profile in key_access.user.all():
@@ -1280,7 +1280,7 @@ def JismoniyPage(request):
 @login_required(login_url='login')
 def tanirovkaPage(request):
     profile = Profile.objects.get(user=request.user)
-    clients = Client.objects.filter(type='tanirovka')
+    clients = Client.objects.filter(type='tanirovka').order_by('id')
     if "page" in request.GET:
         page = request.GET['page']
     else:
@@ -1461,7 +1461,7 @@ def tanirovkaPage(request):
 @login_required(login_url='login')
 def auctionPage(request):
     profile = Profile.objects.get(user=request.user)
-    clients = Client.objects.filter(type='auction')
+    clients = Client.objects.filter(type='auction').order_by('id')
     if "page" in request.GET:
         page = request.GET['page']
     else:
@@ -1630,7 +1630,7 @@ def auctionPage(request):
 @login_required(login_url='login')
 def teachersPage(request):
     profile = Profile.objects.get(user=request.user)
-    clients = Client.objects.filter(type='teacher')
+    clients = Client.objects.filter(type='teacher').order_by('id')
     if "page" in request.GET:
         page = request.GET['page']
     else:
