@@ -60,8 +60,10 @@ def confirmSerivce(request, pk):
                         }
                     ]
                 } 
-                
-                requests.post(url, json=data, headers=headers)
+                # try:
+                #     requests.post(url, json=data, headers=headers)
+                # except:
+                #     hey = True
                 messages.success(request, "Xizmat narxlandi :)")
                 return redirect("home")
             elif obj.status == '5':
@@ -93,7 +95,7 @@ def confirmSerivce(request, pk):
                     ]
                 } 
                 
-                requests.post(url, json=data, headers=headers)
+                # requests.post(url, json=data, headers=headers)
                 messages.success(request, "Xizmat tugatildi :)")
                 return redirect("home")
             else:
