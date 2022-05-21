@@ -150,7 +150,7 @@ def uploadPage(request):
                 ]
             } 
             
-            # requests.post(url, json=data, headers=headers)
+            requests.post(url, json=data, headers=headers)
             
          
             return redirect('upload')
