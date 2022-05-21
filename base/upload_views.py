@@ -21,6 +21,7 @@ def cancelService(request, pk):
 
 @login_required(login_url='login')
 def confirmSerivce(request, pk):
+    pk = int(pk)
     profile = Profile.objects.get(user=request.user)
     try:
         obj = Upload.objects.get(id=pk)
