@@ -28,7 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'base',
+    'base.apps.app',
 ]
 
 MIDDLEWARE = [
@@ -65,7 +65,7 @@ WSGI_APPLICATION = 'control.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-if config.ENVIRONMENT == 'production':
+if config.ENVIRONMENT == 'production' or config.ENVIRONMENT == 'local':
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
