@@ -52,16 +52,16 @@ def homePage(request):
     profile = Profile.objects.get(user=request.user)
     if profile.status == 'admin':
         uploads  = Upload.objects.all()
-        uploads_uncompleted = Upload.objects.filter(status='5', office=profile.office)
-        uploads_unpriced = Upload.objects.filter(status='0', office=profile.office)
-        tasks_completed  = Task.objects.filter(status='10', office=profile.office)
-        tasks_uncompleted = Task.objects.filter(Q(status='0', office=profile.office) | Q(status='5', office=profile.office))
+        uploads_uncompleted = Upload.objects.filter(status='5')
+        uploads_unpriced = Upload.objects.filter(status='0')
+        tasks_completed  = Task.objects.filter(status='10')
+        tasks_uncompleted = Task.objects.filter(Q(status='0') | Q(status='5'))
     elif profile.status == 'superuser':
         uploads  = Upload.objects.all()
         uploads_uncompleted = Upload.objects.filter(Q(status='5', office=profile.office) & Q(office=profile.office))
         uploads_unpriced = Upload.objects.filter(Q(status='0') & Q(office=profile.office))
-        tasks_completed  = Task.objects.filter(Q(status='5') & Q(user=profile))
-        tasks_uncompleted = Task.objects.filter(Q(user=profile) & Q(status='0') | Q(status='5'))
+        tasks_completed  = Task.objects.filter(Q(status='5', office=profile.office) & Q(user=profile))
+        tasks_uncompleted = Task.objects.filter(Q(user=profile) & Q(status='0', office=profile.office) | Q(status='5', office=profile.office))
     elif profile.status == 'user':
         uploads = ""
         uploads_uncompleted = Upload.objects.filter(Q(status='5') & Q(reciever=profile))
@@ -77,12 +77,12 @@ def homePage(request):
 @login_required(login_url='login')
 def monitoringPage(request):
     profile = Profile.objects.get(user=request.user)
-    if profile.status == 'superuser':
+    if profile.status == 'admin':
         result = Upload.objects.filter(Q(status=5) | Q(status=0))
         context = {'profile':profile, 'result':result}
         return render(request, 'base/monitoring.html', context)
 
-    elif profile.status == 'admin':
+    elif profile.status == 'superuser':
         result = Upload.objects.filter(Q(status=5, office=profile.office) | Q(status=0, office=profile.office))
         context = {'profile':profile, 'result':result}
         return render(request, 'base/monitoring.html', context)
