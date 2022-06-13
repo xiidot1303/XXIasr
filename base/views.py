@@ -621,10 +621,10 @@ def YaTTPage(request):
     pagType = True
 
     result = 20
-    # try:
-    #     paginator = Paginator(clients, result)
-    # except:
-    #     paginator = Paginator(clients, result)
+    try:
+        paginator = Paginator(clients, result)
+    except:
+        paginator = Paginator(clients, result)
     # try:
     #     clients = paginator.page(page)
     # except PageNotAnInteger:
