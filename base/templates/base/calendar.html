@@ -1,0 +1,64 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load functions %}
+
+
+{% block link %}
+<link rel="stylesheet" href="{% static 'css/calendar.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<!-- Main content -->
+<section class="content container-fluid">
+    <!-- <div class="row add-button">
+        <div class="col-xs-4">
+            <a href="" class="btn btn-flat bg-orange"><i class="fas fa-cogs"></i>Настройки</a>
+        </div>
+    </div> -->
+    <div class="container">
+        
+        <ul class="ul">
+            
+            {% for l in all_list %}
+                <li class="li">
+                    <article tabindex="0" class="article">
+                        <div class="outline"></div>
+                        <div class="dismiss"></div>
+                        <div class="binding"></div>
+                        <h1>{{ l }}</h1>
+                        <table>
+                            <tr>
+                            {% for day in all_list|index:l %}
+                            {% if forloop.counter == 11 or forloop.counter == 21 or forloop.counter == 31 %}
+                            </tr>
+                            <tr>
+                            {% else %}
+                            {% endif %}
+                            {% if day == 'None' %}
+                            <td><div class="day">{{ forloop.counter }}</div></td>
+                            {% else %}
+                            {% if day == 'Null' %}
+                            <td></td>
+                            {% else %}
+                            <td class="is-holiday">
+                                <div class="day">{{ forloop.counter }}</div>
+                                <div class="holiday">{{ day }}</div>
+                            </td>
+                            {% endif %}
+                            {% endif %}
+                            {% endfor %}
+                        </table>
+                    </article>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+<!-- /.content -->
+{% endblock %}
+
+
+{% block script %}
+<script src="{% static 'js/calendar_notes.js' %}"></script>    
+{% endblock %}

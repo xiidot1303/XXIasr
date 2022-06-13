@@ -8,7 +8,6 @@ import requests
 def alert_clients():
     # YATT guvohnoma
     for client in Client.objects.filter(Q(type='ytt') | Q(type='tanirovka') | Q(type='yuridik')):
-        print('fwfw')
         # identidy due date
         if client.guvohnoma_exp:
             due_date = client.guvohnoma_exp

@@ -166,14 +166,15 @@ class YuridikCreation(ModelForm):
             input_type = 'date'
         
         widgets = {
-            'key_exp':DateInput()
+            # 'key_exp':DateInput()
+            # 'key_exp': forms.DateInput(attrs={'type': 'date'}, format='%d-%m-%Y')
         }
         
     
 
     def __init__(self, *args, **kvargs):
         super(YuridikCreation, self).__init__(*args, **kvargs)
-
+        self.fields['key_exp'] = forms.DateField(input_formats=['%d/%m/%y'], widget=forms.DateInput(attrs={'type': "date"}))
         for name, field in self.fields.items():
             field.widget.attrs.update({'class': 'form-control'})
         self.fields['name'].widget.attrs.update({'required':'required'})
@@ -356,8 +357,12 @@ class NotesCreation(ModelForm):
             'comment':'Izoh'
         }
         
+        class DateInput(forms.DateInput):
+            input_type = 'date'
+            
+
         widgets = {
-            'period': forms.DateInput(),
+            'period': DateInput(),
         }
     
     def __init__(self, *args, **kvargs):

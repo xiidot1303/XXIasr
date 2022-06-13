@@ -4,6 +4,7 @@ from .models import Notes, Profile, Upload, Client, SMStext
 from django.shortcuts import redirect, render
 from .forms import AuctionCreation, JismoniyCreation, NotesCreation, TanirovkaCreation, TeacherCreation, YaTTCreation, YuridikCreation
 from django.contrib.auth.decorators import login_required
+from base.utils.message import *
 
 
 @login_required(login_url='login')
@@ -95,6 +96,9 @@ def confirmSerivce(request, pk):
                 } 
                 
                 requests.post(url, json=data, headers=headers)
+                # send message to client via telegram bot
+                bot_send_message(obj.client, text)
+        
                 messages.success(request, "Xizmat tugatildi :)")
                 return redirect("home")
             else:

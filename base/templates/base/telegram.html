@@ -55,7 +55,7 @@
                             <option value="teacher">O'qituvchi</option>
                         </select>
                     </div>
-                    <button class="btn btn-primary btn-rounded" type="submit">Saqlash</button>
+                    <button class="btn btn-primary btn-rounded" type="submit">Yuborish</button>
                 </div>
                 <div class="col-sm-4">
                     <div class='img-section' id="imgSection">
@@ -88,7 +88,7 @@
       </div>
     </div>
     
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-md-12 grid-margin strech-card">
         <div class="card">
             <div class="card-body">
@@ -122,7 +122,7 @@
             </div>
         </div>
       </div>
-    </div>
+    </div> -->
     
     <div class="row">
       <div class="col-md-12 grid-margin strech-card">
@@ -137,15 +137,36 @@
                             <tr>
                                 <th>#</th>
                                 <th>Mijoz</th>
+                                <th>Nomi</th>
+                                <th>Telefon</th>
+                                <th>Username</th>
                                 <th>ID</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for telegram in telegrams %}
+                            {% for client in clients %}
                             <tr>
                                 <td>{{forloop.counter}}</td>
-                                <td>{{telegram.name}}</td>
-                                <td>{{telegram.user_id}}</td>
+                                <td>
+                                    <a href="{% url 'client' client.pk %}">{{ client.name }}</a>
+                                </td>
+                                {% if client.bot_user %}
+                                    <td>{{ client.bot_user.name }}</td>
+                                    <td>{{ client.bot_user.phone }}</td>
+                                    <td>
+                                        {% if client.bot_user.username %}
+                                        <a href="https://t.me/{{ client.bot_user.username }}">@{{ client.bot_user.username }}</a>
+                                        {% else %}
+                                        <a href="tg://user?id={{ client.bot_user.user_id }}">{{ client.bot_user.firstname }}</a>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ client.bot_user.user_id }}</td>
+                                {% else %}
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                {% endif %}
                             </tr>
                             {% endfor %}
                         </tbody>

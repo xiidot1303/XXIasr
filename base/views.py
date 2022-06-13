@@ -17,7 +17,7 @@ from data.config import ENVIRONMENT
 from telegram import Update
 import json
 import telegram
-
+from base.utils.message import *
 
 
 # Create your views here.
@@ -159,7 +159,9 @@ def uploadPage(request):
             } 
             
             requests.post(url, json=data, headers=headers)
-            
+
+            # send message to client via telegram bot
+            bot_send_message(client, text1)
          
             return redirect('upload')
 
@@ -1846,6 +1848,7 @@ def telegramPage(request):
     posts = telegramPost.objects.all().order_by('-id')
     if profile.status == 'admin' or profile.status == 'superuser':
         teleusers = subscriptions.objects.all().order_by('-id')
+        clients = Client.objects.all()
         if request.method == "POST":
             try:
                 file = request.FILES['file']
@@ -1854,18 +1857,18 @@ def telegramPage(request):
             text = request.POST['text']
             post_type = request.POST['postType']
             client_type = request.POST['type']
-            telegramPost.objects.create(
+            post = telegramPost.objects.create(
                 file=file,
                 text=text,
                 post_type=post_type,
                 client_type=client_type
                 )
                 
-            messages.success(request, "Post qo'shildi")
-            return redirect('telegram')
+        #     messages.success(request, "Post qo'shildi")
+        #     return redirect('telegram')
         
-        if 'post' in request.GET:
-            post = telegramPost.objects.get(id=request.GET['post'])
+        # if 'post' in request.GET:
+            # post = telegramPost.objects.get(id=request.GET['post'])
             
             # subs = Client.objects.filter(~Q(telegram=""))
             # subs = subs.filter(~Q(telegram__isnull=True))
@@ -1874,31 +1877,70 @@ def telegramPage(request):
                 subs = Client.objects.filter(type=post.client_type).exclude(bot_user=None)
             else:
                 subs = Bot_user.objects.exclude(phone = None)
-            from data.config import BOT_TOKEN
-            bot = telegram.Bot(token = BOT_TOKEN)
-            for sub in subs:
-                if post.client_type == 'all':
-                    user_id = sub.user_id
-                else:
-                    user_id = sub.bot_user.user_id
-                if post.post_type == 'text':
-                    bot.sendMessage(chat_id=user_id, text = post.text, parse_mode=telegram.ParseMode.HTML)
-                elif post.post_type == 'photo':
-                    bot.sendPhoto(chat_id=user_id, photo=post.file, caption=post.text)
-                elif post.post_type == 'video':
-                    bot.sendVideo(chat_id=user_id, video=post.file, caption=post.text)
-                elif post.post_type == 'audio':
-                    bot.sendAudio(chat_id=user_id, audio=post.file, caption=post.text)
-                elif post.post_type == 'document':
-                    bot.sendDocument(chat_id=user_id, document=post.file, caption=post.text)
-                else:
-                    messages.error(request, "Xatolik( Qaytadan boshlang")
-                    return redirect("telegram")
+            # from data.config import BOT_TOKEN
+            # bot = telegram.Bot(token = BOT_TOKEN)
+            # for sub in subs:
+            #     if post.client_type == 'all':
+            #         user_id = sub.user_id
+            #     else:
+            #         user_id = sub.bot_user.user_id
+            #     if post.post_type == 'text':
+            #         bot.sendMessage(chat_id=user_id, text = post.text, parse_mode=telegram.ParseMode.HTML)
+            #     elif post.post_type == 'photo':
+            #         bot.sendPhoto(chat_id=user_id, photo=post.file, caption=post.text)
+            #     elif post.post_type == 'video':
+            #         bot.sendVideo(chat_id=user_id, video=post.file, caption=post.text)
+            #     elif post.post_type == 'audio':
+            #         bot.sendAudio(chat_id=user_id, audio=post.file, caption=post.text)
+            #     elif post.post_type == 'document':
+            #         bot.sendDocument(chat_id=user_id, document=post.file, caption=post.text)
+            #     else:
+            #         messages.error(request, "Xatolik( Qaytadan boshlang")
+            #         return redirect("telegram")
             messages.success(request, f"Xabar {subs.count()}ta obunachiga yuborildi")
 
-        return render(request, 'base/telegram.html', {'profile':profile, 'posts':posts, 'telegrams':teleusers})
+        return render(request, 'base/telegram.html', {'profile':profile, 'posts':posts, 'telegrams':teleusers, 'clients': clients})
     else:
         return render(request, 'error-404.html')
+
+
+@login_required
+def calendar(request):
+    all_list = {'Январь': [], 'Февраль': [], 'Март': [], 'Апрель': [], 'Май': [], 'Июнь': [], 'Июль': [], 'Август': [], 'Сентябрь': [], 'Октябрь': [], 'Ноябрь': [], 'Декабрь': []}
+    n_month = 1
+    days_of_the_months = {'Январь': 31, 'Февраль': 28, 'Март': 31, 'Апрель': 30, 'Май': 31, 'Июнь': 30, 'Июль': 31, 'Август': 31, 'Сентябрь':30, 'Октябрь': 31, 'Ноябрь': 30, 'Декабрь': 31}
+    if int(datetime.datetime.today().year) % 4 == 0:
+        days_of_the_months['Февраль'] = 29
+    for i in days_of_the_months:
+        for d in range(1, days_of_the_months[i]+1):
+            # d = str(d)
+            # if len(d) == 1:
+            #     d = '0'+d
+            
+            # n_month = str(n_month_)
+            # if len(n_month) == 1:
+            #     n_month = '0'+n_month
+            
+            # obj = Client.objects.filter(date_birthday__icontains='-{}-'.format(str(n_month))).filter(date_birthday__endswith='-'+str(d))
+            obj = Notes.objects.filter(Q(period__month=n_month) & Q(period__day=d)).filter(status='0')
+            if obj:
+                ps = ''
+                for note in obj:
+                    ps += note.client.name + ',\n'
+                all_list[i].append(ps)
+            else:
+                all_list[i].append('None')
+
+
+        
+        n_month+=1
+    for i in all_list:
+        for p in range(5):
+            all_list[i].append('Null')
+    context = {'all_list': all_list}
+    return render(request, 'base/calendar.html', context)
+
+
 
 
 @csrf_exempt

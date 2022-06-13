@@ -2,6 +2,18 @@
 {% load static %}
 
 
+
+{% block link %}
+
+
+<!-- Favicon -->
+<link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}" />
+
+<link rel="stylesheet" href="{% static 'assets/css/backend-plugin.min.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/backend.css' %}">  
+
+{% endblock %}
+
 {% block content %}
 
 <div class="main-panel">
@@ -103,7 +115,7 @@
             </div>
             </div>
            <div class="table-responsive">
-               <table class="table table-striped ytt" id="tasks">
+               <table class="table table-striped ytt data-table table-bordered" id="tasks">
                    <thead>
                        <tr>
                            <th style="width: 50px;">#</th>
@@ -151,7 +163,7 @@
                </table>
            </div>
            {% if pagType %}
-          <nav aria-label="Page navigation example">
+          <!-- <nav aria-label="Page navigation example">
             <ul class="pagination mt-3">
               {% if clients.has_previous %}
               <li class="page-item"><a class="page-link" href="?page={{clients.previous_page_number}}">&#10094 Oldingi</a></li>
@@ -170,7 +182,7 @@
               {% endif %}
 
             </ul>
-          </nav>
+          </nav> -->
           {% endif %}
           </div>
           
@@ -187,3 +199,40 @@
  
 </div>
 {% endblock content %}
+
+{% block script %}
+<script src="{% static 'assets/js/backend-bundle.min.js' %}"></script>
+<!-- Chart Custom JavaScript -->
+<script src="{% static 'assets/js/customizer.js' %}"></script>
+
+<script src="{% static 'assets/js/sidebar.js' %}"></script>
+
+<!-- Flextree Javascript-->
+<script src="{% static 'assets/js/flex-tree.min.js' %}"></script>
+<script src="{% static 'assets/js/tree.js"></script>
+
+<!-- Table Treeview JavaScript -->
+<script src="{% static 'assets/js/table-treeview.js' %}"></script>
+
+<!-- SweetAlert JavaScript -->
+<script src="{% static 'assets/js/sweetalert.js' %}"></script>
+
+<!-- Vectoe Map JavaScript -->
+<script src="{% static 'assets/js/vector-map-custom.js' %}"></script>
+
+<!-- Chart Custom JavaScript -->
+<!-- <script src="{% static 'assets/js/chart-custom.js' %}"></script> -->
+<script src="{% static 'assets/js/charts/01.js' %}"></script>
+<script src="{% static 'assets/js/charts/02.js' %}"></script>
+
+<!-- slider JavaScript -->
+<script src="{% static 'assets/js/slider.js' %}"></script>
+
+<!-- Emoji picker -->
+<script src="{% static 'assets/vendor/emoji-picker-element/index.js' %}" type="module"></script>
+
+
+<!-- app JavaScript -->
+<script src="{% static 'assets/js/app.js' %}"></script>
+
+{% endblock %}
