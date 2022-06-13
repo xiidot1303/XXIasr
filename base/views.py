@@ -1926,7 +1926,8 @@ def calendar(request):
             if obj:
                 ps = ''
                 for note in obj:
-                    ps += note.client.name + ',\n'
+                    if note.client:
+                        ps += note.client.name + ',\n'
                 all_list[i].append(ps)
             else:
                 all_list[i].append('None')
