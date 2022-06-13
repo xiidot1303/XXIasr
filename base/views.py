@@ -858,14 +858,14 @@ def YuridikPage(request):
     result = 20
     paginator = Paginator(clients, result)
 
-    try:
-        clients = paginator.page(page)
-    except PageNotAnInteger:
-        page=1
-        clients = paginator.page(page)
-    except:
-        page = paginator.num_pages
-        clients = paginator.page(page)
+    # try:
+    #     clients = paginator.page(page)
+    # except PageNotAnInteger:
+    #     page=1
+    #     clients = paginator.page(page)
+    # except:
+    #     page = paginator.num_pages
+    #     clients = paginator.page(page)
     leftIndex = int(page)-1
     if leftIndex < 1:
         leftIndex = 1
