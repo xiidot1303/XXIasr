@@ -621,18 +621,18 @@ def YaTTPage(request):
     pagType = True
 
     result = 20
-    try:
-        paginator = Paginator(clients, result)
-    except:
-        paginator = Paginator(clients, result)
-    try:
-        clients = paginator.page(page)
-    except PageNotAnInteger:
-        page=1
-        clients = paginator.page(page)
-    except:
-        page = paginator.num_pages
-        clients = paginator.page(page)
+    # try:
+    #     paginator = Paginator(clients, result)
+    # except:
+    #     paginator = Paginator(clients, result)
+    # try:
+    #     clients = paginator.page(page)
+    # except PageNotAnInteger:
+    #     page=1
+    #     clients = paginator.page(page)
+    # except:
+    #     page = paginator.num_pages
+    #     clients = paginator.page(page)
     leftIndex = int(page)-1
     if leftIndex < 1:
         leftIndex = 1
@@ -1084,14 +1084,14 @@ def JismoniyPage(request):
     result = 20
     paginator = Paginator(clients, result)
 
-    try:
-        clients = paginator.page(page)
-    except PageNotAnInteger:
-        page=1
-        clients = paginator.page(page)
-    except:
-        page = paginator.num_pages
-        clients = paginator.page(page)
+    # try:
+    #     clients = paginator.page(page)
+    # except PageNotAnInteger:
+    #     page=1
+    #     clients = paginator.page(page)
+    # except:
+    #     page = paginator.num_pages
+    #     clients = paginator.page(page)
     leftIndex = int(page)-1
     if leftIndex < 1:
         leftIndex = 1
@@ -1298,14 +1298,14 @@ def tanirovkaPage(request):
     pagType = True
     result = 20
     paginator = Paginator(clients, result)
-    try:
-        clients = paginator.page(page)
-    except PageNotAnInteger:
-        page=1
-        clients = paginator.page(page)
-    except:
-        page = paginator.num_pages
-        clients = paginator.page(page)
+    # try:
+    #     clients = paginator.page(page)
+    # except PageNotAnInteger:
+    #     page=1
+    #     clients = paginator.page(page)
+    # except:
+    #     page = paginator.num_pages
+    #     clients = paginator.page(page)
     leftIndex = int(page)-1
     if leftIndex < 1:
         leftIndex = 1
@@ -1481,14 +1481,14 @@ def auctionPage(request):
     result = 20
     paginator = Paginator(clients, result)
 
-    try:
-        clients = paginator.page(page)
-    except PageNotAnInteger:
-        page=1
-        clients = paginator.page(page)
-    except:
-        page = paginator.num_pages
-        clients = paginator.page(page)
+    # try:
+    #     clients = paginator.page(page)
+    # except PageNotAnInteger:
+    #     page=1
+    #     clients = paginator.page(page)
+    # except:
+    #     page = paginator.num_pages
+    #     clients = paginator.page(page)
     leftIndex = int(page)-1
     if leftIndex < 1:
         leftIndex = 1
@@ -1650,14 +1650,14 @@ def teachersPage(request):
     result = 20
     paginator = Paginator(clients, result)
 
-    try:
-        clients = paginator.page(page)
-    except PageNotAnInteger:
-        page=1
-        clients = paginator.page(page)
-    except:
-        page = paginator.num_pages
-        clients = paginator.page(page)
+    # try:
+    #     clients = paginator.page(page)
+    # except PageNotAnInteger:
+    #     page=1
+    #     clients = paginator.page(page)
+    # except:
+    #     page = paginator.num_pages
+    #     clients = paginator.page(page)
     leftIndex = int(page)-1
     if leftIndex < 1:
         leftIndex = 1
