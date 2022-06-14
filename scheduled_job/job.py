@@ -110,6 +110,7 @@ def send_tg_message(client, remaining_days):
     except:
         return 
     text = text.replace('**kun', str(remaining_days))
+    text = text.replace('**nom', client.name)
 
     bot = telegram.Bot(token = BOT_TOKEN)
     try:
