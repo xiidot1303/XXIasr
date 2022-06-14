@@ -78,19 +78,40 @@ def homePage(request):
 @login_required(login_url='login')
 def monitoringPage(request):
     profile = Profile.objects.get(user=request.user)
+
+
+    if 'filter' in request.GET:
+        date_from = request.GET['from']
+        if not date_from:
+            date_from = '1000-12-12'
+        date_to = request.GET['to']
+        if not date_to:
+            date_to = '3000-12-12'
+        office = request.GET['office']
+        status = request.GET['status']
+        
+        uploads = Upload.objects.filter(period__range=(date_from, date_to))
+        if office:
+            uploads = uploads.filter(office=office)
+        if status:
+            uploads = uploads.filter(status=status)
+
+
+    else:
+        uploads = Upload.objects.all()
     if profile.status == 'admin':
-        result = Upload.objects.filter(Q(status=5) | Q(status=0))
+        result = uploads.filter(Q(status=5) | Q(status=0))
         context = {'profile':profile, 'result':result}
         return render(request, 'base/monitoring.html', context)
 
     elif profile.status == 'superuser':
-        result = Upload.objects.filter(Q(status=5, office=profile.office) | Q(status=0, office=profile.office))
+        result = uploads.filter(Q(status=5, office=profile.office) | Q(status=0, office=profile.office))
         context = {'profile':profile, 'result':result}
         return render(request, 'base/monitoring.html', context)
 
 
     elif profile.status == 'user':
-        uncompleted = Upload.objects.filter(Q(status=5) | Q(status=0))
+        uncompleted = uploads.filter(Q(status=5) | Q(status=0))
         result = uncompleted.filter(reciever=profile)
         context = {'profile':profile, 'result':result}
         return render(request, 'base/monitoring.html', context)

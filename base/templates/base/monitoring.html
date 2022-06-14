@@ -29,13 +29,13 @@
             <div class="card-body">
             <div class="card-title">Filterlash</div>
             
-                <form action="" method="GET">
-                {% csrf_token %}
+                <form action="" method="get">
+                  <input type="hidden" name="filter">
                 <div class="row">
                   <div class="col-sm-6">
                     <div class="form-group">
                       <label for="">Muddatni tanlang (...) dan</label>
-                      <input type="date" name="from" class="form-control" required>
+                      <input type="date" name="from" class="form-control">
                     </div>
                     {% if profile.status == 'admin' or profile.status == 'superuser' %}
                     <div class="form-group">
@@ -61,7 +61,7 @@
                   <div class="col-sm-6">
                     <div class="form-group">
                       <label for="">Muddatni tanlang (...) gacha</label>
-                      <input type="date" name="to" class="form-control" required>
+                      <input type="date" name="to" class="form-control">
                     </div>
                     {% if profile.status == 'admin' or profile.status == 'superuser' %}
                     <div class="form-group">
