@@ -184,7 +184,11 @@ def NotesPage(request):
     if profile.status == 'admin' or profile.status == 'superuser':
         notes = Notes.objects.all().order_by('status')
     elif profile.status == 'user':
-        notes = Notes.objects.filter(user=profile).order_by('status')
+        notes = Notes.objects.filter(user=profile).exclude(status='10').order_by('status')
+    if 'filter' in request.GET:
+        date_from = request.GET['from']
+        date_to = request.GET['to']
+        notes = notes.filter(period__range=(date_from, date_to)).order_by('status')
     if request.method == "POST":
         form = NotesCreation(request.POST)
         if form.is_valid():
@@ -196,10 +200,6 @@ def NotesPage(request):
         else:
             messages.error(request, 'Qandaydir xatolik :( .')
             return redirect('notes')
-    if 'filter' in request.GET:
-        date_from = request.GET['from']
-        date_to = request.GET['to']
-        notes = Notes.objects.filter(period__range=(date_from, date_to)).order_by('status')
     context = {'form':form, 'notes':notes, 'profile':profile}
     return render(request, 'base/notes.html', context)
 
