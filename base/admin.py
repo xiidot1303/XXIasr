@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from base.models import SMS, Access, Notes, Profile, SMStext, Service, Task, Client, Upload, subscriptions,telegramPost
+from base.models import *
 
 # Register your models here.
 class ClientAdmin(admin.ModelAdmin):
@@ -16,3 +16,4 @@ admin.site.register(SMStext)
 admin.site.register(Notes)
 admin.site.register(subscriptions)
 admin.site.register(telegramPost)
+admin.site.register(Bot_user)

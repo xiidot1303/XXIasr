@@ -70,8 +70,8 @@ def homePage(request):
         tasks_completed  = Task.objects.filter(Q(status='5') & Q(user=profile))
         tasks_uncompleted = Task.objects.filter(Q(status='0') | Q(status='5'))
         tasks_uncompleted = tasks_uncompleted.filter(Q(user=profile))
-    notes_process = Notes.objects.filter(Q(status='5') | Q(user=profile))
-    notes_uncompleted = Notes.objects.filter(Q(status='0') | Q(user=profile))
+    notes_process = Notes.objects.filter(Q(status='5') & Q(user=profile))
+    notes_uncompleted = Notes.objects.filter(Q(status='0') & Q(user=profile))
     context = {'uploads':uploads, 'uploads_uncompleted':uploads_uncompleted,'uploads_unpriced':uploads_unpriced,'tasks_completed':tasks_completed,'tasks_uncompleted':tasks_uncompleted, 'profile':profile, 'notes_process':notes_process, 'notes_uncompleted':notes_uncompleted}
     return render(request, 'base/home.html', context)
 

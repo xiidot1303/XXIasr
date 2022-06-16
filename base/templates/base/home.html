@@ -73,24 +73,28 @@
             </a>
           </div>
           <div class="col-md-2 mb-4 stretch-card transparent">
-            <div class="card card-light-danger">
-              <div class="card-body">
+            <a href="{% url 'notes' %}">
+              <div class="card card-light-danger">
+                <div class="card-body">
                 <p class="mb-4">Eslatmalar <b> (tugatilmagan)</b></p>
                 <p class="fs-30 mb-2">
                   {{notes_uncompleted.count}}
                 </p>
               </div>
             </div>
-          </div>
-          <div class="col-md-2 mb-4 stretch-card transparent">
+          </a>
+        </div>
+        <div class="col-md-2 mb-4 stretch-card transparent">
+            <a href="{% url 'notes' %}">
             <div class="card card-light-danger">
               <div class="card-body">
-                <p class="mb-4">Topshiriqlar <b> (jarayonda)</b></p>
+                <p class="mb-4">Eslatmalar <b> (jarayonda)</b></p>
                 <p class="fs-30 mb-2">
                   {{notes_process.count}}
                 </p>
               </div>
             </div>
+            </a>
           </div>
           </div>
         </div>
