@@ -75,7 +75,7 @@ services_handler = ConversationHandler(
 
 dp.add_handler(MessageHandler(Filters.text(lang_dict['contacts']), contacts))
 dp.add_handler(MessageHandler(Filters.text(lang_dict['address']), address))
-
+dp.add_handler(MessageHandler(Filters.video, send_video_id))
 
 dp.add_handler(services_handler)
 dp.add_handler(cabinet_handler)
