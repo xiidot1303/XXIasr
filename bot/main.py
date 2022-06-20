@@ -52,8 +52,8 @@ def our_services(update, context):
         ReplyKeyboardMarkup(keyboard=keyboard, resize_keyboard=True))
 
     # video = open(str(BASE_DIR) + '/static/videos/auksion.mp4', 'rb')
-    video = 'BAACAgIAAxkBAAIKIGKDnzauBW_CCnfgdhT8s_tnu9HcAAJFGQACLDkYSGz8o9CUmhhbJAQ'
-    video = 'AAMCAgADGQEAAg2uYrB7RS5c6tJWD5pTB7B6GBN7pI8AAkUZAAIsORhIbPyj0JSaGFsBAAdtAAMoBA'
+    video = 'BAACAgIAAxkBAAINrmKwe0UuXOrSVg-aUwewehgTe6SPAAJFGQACLDkYSGz8o9CUmhhbKAQ'
+    # video = 'AAMCAgADGQEAAg2uYrB7RS5c6tJWD5pTB7B6GBN7pI8AAkUZAAIsORhIbPyj0JSaGFsBAAdtAAMoBA'
     bot.send_video(chat_id = update.message.chat.id, video=video)
     return GET_SERVICE
 
@@ -65,3 +65,6 @@ def contacts(update, context):
     pc_service = '<b>{}</b>: +998901962266'.format(get_word('pc service', update))
     msg = '{}\n\n{}\n\n{}\n\n{}'.format(main_office, car_number, cadastre, pc_service)
     update.message.reply_text(msg, parse_mode=telegram.ParseMode.HTML)
+
+def send_video_id(update, context):
+    update.message.reply_text(update.message.video[-1].file_id)
