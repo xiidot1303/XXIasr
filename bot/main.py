@@ -67,4 +67,4 @@ def contacts(update, context):
     update.message.reply_text(msg, parse_mode=telegram.ParseMode.HTML)
 
 def send_video_id(update, context):
-    update.message.reply_text(update.message.video[-1].file_id)
+    update.message.reply_text(update.message.video.file_id)
