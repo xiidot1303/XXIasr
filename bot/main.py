@@ -53,6 +53,7 @@ def our_services(update, context):
 
     # video = open(str(BASE_DIR) + '/static/videos/auksion.mp4', 'rb')
     video = 'BAACAgIAAxkBAAIKIGKDnzauBW_CCnfgdhT8s_tnu9HcAAJFGQACLDkYSGz8o9CUmhhbJAQ'
+    video = 'AAMCAgADGQEAAg2uYrB7RS5c6tJWD5pTB7B6GBN7pI8AAkUZAAIsORhIbPyj0JSaGFsBAAdtAAMoBA'
     bot.send_video(chat_id = update.message.chat.id, video=video)
     return GET_SERVICE
 
