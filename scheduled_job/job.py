@@ -11,23 +11,26 @@ def alert_clients():
         # identidy due date
         if client.guvohnoma_exp:
             due_date = client.guvohnoma_exp
+            sms_id = 7
             #check date
             if is_upcoming_due_date(due_date):
                 if is_upcoming_due_date(due_date) == 10:
-                    send_sms(client, is_upcoming_due_date(due_date))
-                send_tg_message(client, is_upcoming_due_date(due_date))
+                    send_sms(client, is_upcoming_due_date(due_date), sms_id)
+                send_tg_message(client, is_upcoming_due_date(due_date), sms_id)
         if client.key_exp:
             due_date = client.key_exp
+            sms_id = 8
         elif client.expiry_date:
             due_date = client.expiry_date
+            sms_id = 9
         else:
             continue
         
         #check date
         if is_upcoming_due_date(due_date):
             if is_upcoming_due_date(due_date) == 10:
-                send_sms(client, is_upcoming_due_date(due_date))
-            send_tg_message(client, is_upcoming_due_date(due_date))
+                send_sms(client, is_upcoming_due_date(due_date), sms_id)
+            send_tg_message(client, is_upcoming_due_date(due_date), sms_id)
                 
 
 
@@ -40,7 +43,7 @@ def is_upcoming_due_date(due_date):
         return False
 
 
-def send_sms(client, remaining_days):
+def send_sms(client, remaining_days, sms_id):
     rephone = client.phone1.replace(" ", "")
     rephone = rephone.replace("-","")
     rephone = rephone.replace(".","")
@@ -59,12 +62,12 @@ def send_sms(client, remaining_days):
     if rephone:
         numberid = rephone
 
-    if client.is_certificate_expired == 'in_ten_days':
-        sms_id = 7 # guvohnoma
-    elif client.is_key_expired == 'in_ten_days':
-        sms_id = 8 # kalit
-    elif client.is_t_expired == 'in_ten_days':
-        sms_id = 9 # tonirovla
+    # if client.is_certificate_expired == 'in_ten_days':
+    #     sms_id = 7 # guvohnoma
+    # elif client.is_key_expired == 'in_ten_days':
+    #     sms_id = 8 # kalit
+    # elif client.is_t_expired == 'in_ten_days':
+    #     sms_id = 9 # tonirovla
     try:
         text = SMStext.objects.get(pk=sms_id).text
     except:
@@ -97,13 +100,13 @@ def send_sms(client, remaining_days):
 
 
 
-def send_tg_message(client, remaining_days):
-    if client.is_certificate_expired == 'in_ten_days':
-        sms_id = 7 # guvohnoma
-    elif client.is_key_expired == 'in_ten_days':
-        sms_id = 8 # kalit
-    elif client.is_t_expired == 'in_ten_days':
-        sms_id = 9 # tonirovla
+def send_tg_message(client, remaining_days, sms_id):
+    # if client.is_certificate_expired == 'in_ten_days':
+    #     sms_id = 7 # guvohnoma
+    # elif client.is_key_expired == 'in_ten_days':
+    #     sms_id = 8 # kalit
+    # elif client.is_t_expired == 'in_ten_days':
+    #     sms_id = 9 # tonirovla
 
     try:
         text = SMStext.objects.get(pk=sms_id).text
