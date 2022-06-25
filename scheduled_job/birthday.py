@@ -7,20 +7,22 @@ import requests
 from base.utils import message
 
 
-today = date.today()
-day_and_month = ''
-if len(str(today.day)) == 1:
-    day_and_month += '0' + str(today.day)
-else:
-    day_and_month += str(today.day)
-if len(str(today.month)) == 1:
-    day_and_month += '0' + str(today.month)
-else:
-    day_and_month += str(today.month)
+
+def day_and_month():
+    today = date.today()
+    day_and_month_ = ''
+    if len(str(today.day)) == 1:
+        day_and_month_ += '0' + str(today.day)
+    else:
+        day_and_month_ += str(today.day)
+    if len(str(today.month)) == 1:
+        day_and_month_ += '0' + str(today.month)
+    else:
+        day_and_month_ += str(today.month)
+    return day_and_month_
 
 def send_congragulation():
-
-    for client in Client.objects.filter(jshshir__icontains = day_and_month):
+    for client in Client.objects.filter(jshshir__icontains = day_and_month()):
         if is_birthday(client.jshshir):
             try:
                 text = SMStext.objects.get(pk=10).text
@@ -35,6 +37,6 @@ def send_congragulation():
 
 def is_birthday(jshshir):
     if jshshir:
-        if jshshir[1:5] == day_and_month:
+        if jshshir[1:5] == day_and_month():
             return True
     return False
