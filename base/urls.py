@@ -25,6 +25,7 @@ urlpatterns = [
     path("create-client/", createClient, name="create-client"),
     path("yatt/", YaTTPage, name='yatt'),
     path("jismoniy/", JismoniyPage, name='jismoniy'),
+    path("governor/", GovernorPage, name='governor'),
     path("yuridik/", YuridikPage, name='yuridik'),
     path("tanirovka/", tanirovkaPage, name='tanirovka'),
     path("auction/", auctionPage, name='auction'),

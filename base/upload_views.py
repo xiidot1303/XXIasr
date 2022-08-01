@@ -2,7 +2,7 @@ import requests
 from django.contrib import messages
 from .models import Notes, Profile, Upload, Client, SMStext
 from django.shortcuts import redirect, render
-from .forms import AuctionCreation, JismoniyCreation, NotesCreation, TanirovkaCreation, TeacherCreation, YaTTCreation, YuridikCreation
+from .forms import *
 from django.contrib.auth.decorators import login_required
 from base.utils.message import *
 
@@ -139,6 +139,17 @@ def editClient(request, pk):
                 form.save()
                 messages.success(request, "Malumotlar yangilandi")
                 return redirect('jismoniy')
+            else:
+                messages.error(request, "Qandaydir xatolik :(")
+
+    elif client.type == 'governor':
+        form = GovernorCreation(instance=client)
+        if request.method == "POST":
+            form = GovernorCreation(request.POST, request.FILES, instance=client)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Malumotlar yangilandi")
+                return redirect('governor')
             else:
                 messages.error(request, "Qandaydir xatolik :(")
 

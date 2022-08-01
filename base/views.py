@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from django.db.models import Sum
-from base.forms import AuctionCreation, JismoniyCreation, ServiceCreation, TanirovkaCreation, TaskCreation, TeacherCreation, UploadForm, YaTTCreation, YuridikCreation
+from base.forms import *
 from .models import SMS, Access, Client, Notes, Profile, Service, Task, Upload, SMStext, telegramPost, subscriptions, Bot_user
 from django.db.models.query import Q
 from django.contrib import messages
@@ -518,6 +518,20 @@ def createClient(request):
                         client.type = 'jismoniy'
                         client.save()
                         messages.success(request, 'Jismoniy shaxs ro\'yxatga olindi')
+                elif 'bot_login' in form.errors.as_data():
+                    messages.error(request, 'Bunday login bilan allaqachon ro\'yxatdan o\'tilgan')
+                elif 'bot_user' in form.errors.as_data():
+                    messages.error(request, 'Bunday bot foydalanuvchisi boshqa bir mijozga biriktirilgan')
+        
+        if type == 'governor':
+            form = GovernorCreation()
+            if request.method == "POST":
+                form = GovernorCreation(request.POST, request.FILES)
+                if form.is_valid():
+                        client = form.save(commit=False)
+                        client.type = 'governor'
+                        client.save()
+                        messages.success(request, 'Hokim yordamchisi ro\'yxatga olindi')
                 elif 'bot_login' in form.errors.as_data():
                     messages.error(request, 'Bunday login bilan allaqachon ro\'yxatdan o\'tilgan')
                 elif 'bot_user' in form.errors.as_data():
@@ -1307,6 +1321,243 @@ def JismoniyPage(request):
 
   
     return render(request, 'base/jismoniy.html', context)
+
+
+@login_required(login_url='login')
+def GovernorPage(request):
+    clients = Client.objects.filter(type='governor').order_by('id')
+    profile = Profile.objects.get(user=request.user)
+    key_access = Access.objects.get(name="key")
+    if profile in key_access.user.all():
+        access = True
+    else:
+        access = False
+    if "page" in request.GET:
+        page = request.GET['page']
+    else:
+        page = 1
+    pagType = True
+
+    result = 20
+    paginator = Paginator(clients, result)
+
+    # try:
+    #     clients = paginator.page(page)
+    # except PageNotAnInteger:
+    #     page=1
+    #     clients = paginator.page(page)
+    # except:
+    #     page = paginator.num_pages
+    #     clients = paginator.page(page)
+    leftIndex = int(page)-1
+    if leftIndex < 1:
+        leftIndex = 1
+    rightIndex = (int(page)+2)
+    if rightIndex > paginator.num_pages:
+        rightIndex = paginator.num_pages+1
+    page_range = range(leftIndex, rightIndex)
+    context = {'clients':clients, 'page_range':page_range, 'paginator':paginator, 'pagType':pagType, 'profile':profile}
+
+    if 'filter' in request.GET:
+        try:
+            name = request.GET['name']
+        except:
+            name = ""
+        try:
+            stir = request.GET['stir']
+        except:
+            stir = ""
+        try:
+            tin = request.GET['tin']
+        except:
+            tin = ""
+        try:
+            cert = request.GET['certificate']
+        except:
+            cert = ""
+        try:
+            phone = request.GET['phone']
+        except:
+            phone = ""
+
+        try:
+            passport = request.GET['passport']
+        except:
+            passport =""
+        try:
+            key = request.GET['key']
+        except:
+            key = ""
+        try:
+            key_expiry = request.GET['key_expiry']
+        except:
+            key_expiry = ""
+        try:
+            workplace = request.GET['workplace']
+        except:
+            workplace = ""
+        
+        pagType = False
+
+        tins = False
+        query = Client.objects.filter(type__exact='governor')
+        
+        if name != "":
+            query = Client.objects.filter(Q(type__exact='governor') & Q(name__icontains=name))
+       
+        else:
+            query = Client.objects.filter(type__exact='governor')
+
+        if stir != "":
+            query = query.filter(tin__icontains=stir)
+
+        if tin != "":
+            query = query.filter(jshshir__icontains=tin)
+
+        if cert != "":
+            if cert == "True":
+                query = query.exclude(guvohnoma_file__exact="")
+            else:
+                query = query.filter(guvohnoma_file__exact="")
+        else:
+            query = query
+        
+        if phone != "":
+            if phone == 'true':
+                query = query.exclude(phone1__exact="")
+            elif phone == 'false':
+                query = query.filter(phone1__exact="")
+            else:
+                query = query
+        else:
+            query = query
+        
+
+        if passport != "":
+            if passport == 'true':
+                query = query.exclude(passport__exact="")
+            if passport == 'false':
+                query = query.filter(passport__exact="")
+            else:
+                query = query
+        else:
+            query = query
+
+        
+        if key != "":
+            if key == "true":
+                query = query.exclude(key__exact="")
+            if key =="false":
+                query = query.filter(key__exact="")
+            else:
+                query = query
+        else:
+            query=query
+
+        
+        if workplace != "":
+            if workplace == "true":
+                query = query.exclude(workplace__exact="")
+            if workplace =="false":
+                query = query.filter(workplace__exact="")
+            else:
+                query = query
+        else:
+            query=query
+
+
+        if key_expiry != "":
+            if key_expiry == "none":
+                query = query.filter(Q(key__exact="") | Q(key__contains=" ") | Q(key__isnull=True))
+            elif key_expiry == "in_ten_days":
+                today = datetime.date.today()+datetime.timedelta(days=1)
+                ten_days = today+datetime.timedelta(days=10)
+                query = query.filter(key_exp__range=(today, ten_days))
+            elif key_expiry == "in_a_month":
+                today = datetime.date.today()+datetime.timedelta(days=11)
+                ten_days = today+datetime.timedelta(days=20)
+                query = query.filter(key_exp__range=(today, ten_days))
+            elif key_expiry == "active":
+                today = datetime.date.today()+datetime.timedelta(days=10)
+                ten_days = today+datetime.timedelta(days=20)
+                query = query.filter(key_exp__gt=ten_days)
+            elif key_expiry =="inactive":
+                today = datetime.date.today()
+                query = query.filter(key_exp__lte=today)
+                
+            else:
+                query = query
+        
+        if request.method == "POST":
+            text = request.POST['text']
+            for reciever in query:
+                rephone = reciever.phone1.replace(" ", "")
+                rephone = rephone.replace("-","")
+                rephone = rephone.replace(".","")
+                rephone = rephone.replace(")","")
+                rephone = rephone.replace("(","")
+                if len(rephone) == 13:
+                    rephone = rephone
+                    sms_status = 10
+                elif len(rephone) == 9:
+                    rephone = '+998' + str(rephone)
+                    sms_status = 10
+                elif len(rephone) == 12 and rephone[0] == '9':
+                    rephone = '+' + str(rephone)
+                    sms_status = 10
+                elif len(rephone) == 0 or len(rephone) == 1:
+                    rephone = False
+                    sms_status = 0
+                else:
+                    rephone = False
+                    sms_status = 5
+
+                if rephone:
+                    numberid = rephone
+
+                    SMS.objects.create(
+                        client=reciever,
+                        text=text,
+                        status=sms_status
+                    )
+
+                    url = 'http://91.204.239.44/broker-api/send'
+                    headers = {'Content-type': 'application/json',  # Определение типа данных
+                            'Accept': 'text/plain',
+                            'Authorization': 'Basic eHhpYXNyOmJwOWJFTVA3ODI='}
+                    data = {
+                    "messages":
+                    [
+                    {
+                    "recipient":numberid,
+                    "message-id":"prime000019953",
+
+                        "sms":{
+
+                        "originator": "21ASR",
+                        "content": {
+                        "text": text
+                        }
+                        }
+                            }
+                        ]
+                    } 
+                    try:
+                        requests.post(url, json=data, headers=headers)
+                    except:
+                        messages.error(request, 'Internet bilan bog\'liq muammo :(')
+                else:
+                    SMS.objects.create(
+                        client=reciever,
+                        text=text,
+                        status=sms_status
+                    )
+                
+  
+        context = {'clients':query, 'pagType':pagType, 'access':access, 'profile':profile}
+
+  
+    return render(request, 'base/governor.html', context)
 
 @login_required(login_url='login')
 def tanirovkaPage(request):

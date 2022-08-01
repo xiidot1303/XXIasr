@@ -46,6 +46,7 @@ class Client(models.Model):
         ('tanirovka','Tanirovka'),
         ('auction','Auksion'),
         ('teacher',"O'qituvchi"),
+        ('governor', 'Hokim yordamchisi'),
     )
     type = models.CharField(choices=TYPE_CHOICES, max_length=255)
     SUB_CHOICES = (
@@ -78,6 +79,7 @@ class Client(models.Model):
     ustav = models.FileField(null=True, blank=True, upload_to="static/ustav/")
     selfy = models.FileField(null=True, blank=True, upload_to="static/selfy/")
     ruxsatnoma = models.FileField(null=True, blank=True, upload_to="static/ruxsatnoma/")
+    workplace = models.CharField(max_length=255, null=True, blank=True)
     texpas = models.FileField(null=True, blank=True, upload_to="static/texpas/")
     order1 = models.CharField(max_length=255, null=True, blank=True)
     order2 = models.CharField(max_length=255, null=True, blank=True)
