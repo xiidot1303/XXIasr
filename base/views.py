@@ -78,7 +78,8 @@ def homePage(request):
 @login_required(login_url='login')
 def monitoringPage(request):
     profile = Profile.objects.get(user=request.user)
-
+    users = Profile.objects.all().exclude(status = 'admin')
+    services = Service.objects.all()
 
     if 'filter' in request.GET:
         date_from = request.GET['from']
@@ -89,31 +90,37 @@ def monitoringPage(request):
             date_to = '3000-12-12'
         office = request.GET['office']
         status = request.GET['status']
+        user = request.GET['user']
+        service = request.GET['service']
         
         uploads = Upload.objects.filter(period__range=(date_from, date_to))
         if office:
             uploads = uploads.filter(office=office)
         if status:
             uploads = uploads.filter(status=status)
+        if user:
+            uploads = uploads.filter(reciever__id = user)
+        if service:
+            uploads = uploads.filter(service__id = service)
 
 
     else:
         uploads = Upload.objects.all()
     if profile.status == 'admin':
         result = uploads.filter(Q(status=5) | Q(status=0))
-        context = {'profile':profile, 'result':result}
+        context = {'profile':profile, 'result':result, 'users': users, 'services': services}
         return render(request, 'base/monitoring.html', context)
 
     elif profile.status == 'superuser':
         result = uploads.filter(Q(status=5, office=profile.office) | Q(status=0, office=profile.office))
-        context = {'profile':profile, 'result':result}
+        context = {'profile':profile, 'result':result, 'users': users, 'services': services}
         return render(request, 'base/monitoring.html', context)
 
 
     elif profile.status == 'user':
         uncompleted = uploads.filter(Q(status=5) | Q(status=0))
         result = uncompleted.filter(reciever=profile)
-        context = {'profile':profile, 'result':result}
+        context = {'profile':profile, 'result':result, 'services': services}
         return render(request, 'base/monitoring.html', context)
     else:
         return render(request, 'error-404.html')
