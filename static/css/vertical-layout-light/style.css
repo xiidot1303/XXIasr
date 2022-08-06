@@ -29029,6 +29029,8 @@ div.tagsinput span.tag a {
   right: 0;
   left: auto;
   top: 70px;
+  max-height: 400px;
+  overflow-x: auto;
 }
 
 .rtl .navbar .navbar-menu-wrapper .navbar-nav .nav-item.dropdown .navbar-dropdown {
