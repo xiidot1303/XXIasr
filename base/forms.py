@@ -386,7 +386,7 @@ class GovernorCreation(ModelForm):
         for name, field in self.fields.items():
             field.widget.attrs.update({'class': 'form-control'})
         self.fields['name'].widget.attrs.update({'required':'required'})
-        self.fields['jshshir'].widget.attrs.update({'required':'required'})
+        # self.fields['jshshir'].widget.attrs.update({'required':'required'})
         self.fields['phone1'].widget.attrs.update({'required':'required'})
         self.fields['bot_user'].widget.attrs.update({'class':'form-control js-example-basic-single'})
 
