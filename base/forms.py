@@ -9,7 +9,7 @@ from .models import Client, Notes, Profile, Service, Task, Upload
 class UploadForm(ModelForm):
     class Meta:
         model = Upload
-        fields = ['service', 'client','reciever', 'period', 'uploaded_file']
+        fields = ['service', 'client','reciever', 'period', 'uploaded_file', 'comment']
         
         class DateInput(forms.DateInput):
             input_type = 'date'
@@ -24,7 +24,8 @@ class UploadForm(ModelForm):
             'client':'Mijozni tanlang',
             'reciever':'Xodimni tanlang',
             'uploaded_file':'Fayl biriktirish',
-            'period':'Muddat'
+            'period':'Muddat',
+            'comment': 'Izoh',
         }
         
         

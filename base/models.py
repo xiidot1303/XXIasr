@@ -179,6 +179,7 @@ class Upload(models.Model):
     answer = models.TextField(max_length=350, null=True, blank=True)
     sender = models.ForeignKey(Profile, on_delete=models.PROTECT, related_name='sender')
     office = models.CharField(max_length=10)
+    comment = models.TextField(null=True, blank=True)
 
     class Meta:
         ordering = ['-status', 'period']
