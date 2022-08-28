@@ -14,17 +14,20 @@ def index(indexable, i):
 
 @register.filter
 def expired_dates(zero):
-    today = date.today() + timedelta(days=30)
+    today = date.today()
     today_text = '{}-{}-{}'.format(today.year, today.month, today.day)
+    month_later = today + timedelta(days=30)
+    month_later_text = '{}-{}-{}'.format(month_later.year, month_later.month, month_later.day)
 
 
-    by_key = Client.objects.filter(Q(type='ytt') | Q(type='yuridik'), key_exp__range = ['2000-10-10', today_text]).values(
+
+    by_key = Client.objects.filter(Q(type='ytt') | Q(type='yuridik'), key_exp__range = [today_text, month_later_text]).values(
         exp_date=F('key_exp'), exp_type=Value('key', output_field=CharField())).values()
     
-    by_guvohnoma = Client.objects.filter(type='ytt', guvohnoma_exp__range = ['2000-10-10', today_text]).values(
+    by_guvohnoma = Client.objects.filter(type='ytt', guvohnoma_exp__range = [today_text, month_later_text]).values(
         exp_date=F('guvohnoma_exp'), exp_type=Value('guvohnoma', output_field=CharField())).values()
     
-    by_expiry_date = Client.objects.filter(type='tanirovka', expiry_date__range = ['2000-10-10', today_text]).values(
+    by_expiry_date = Client.objects.filter(type='tanirovka', expiry_date__range = [today_text, month_later_text]).values(
         exp_date=F('expiry_date'), exp_type=Value('tonirovka', output_field=CharField())).values()
     
     all = list(chain(by_key, by_guvohnoma, by_expiry_date))
