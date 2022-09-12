@@ -599,6 +599,20 @@ def createClient(request):
                 elif 'bot_user' in form.errors.as_data():
                     messages.error(request, 'Bunday bot foydalanuvchisi boshqa bir mijozga biriktirilgan')
 
+        if type == 'auction2':
+            form = Auction2Creation()
+            if request.method == "POST":
+                form = Auction2Creation(request.POST, request.FILES)
+                if form.is_valid():
+                        client = form.save(commit=False)
+                        client.type = 'auction2'
+                        client.save()
+                        messages.success(request, 'Mijoz ro\'yxatga olindi')
+                elif 'bot_login' in form.errors.as_data():
+                    messages.error(request, 'Bunday login bilan allaqachon ro\'yxatdan o\'tilgan')
+                elif 'bot_user' in form.errors.as_data():
+                    messages.error(request, 'Bunday bot foydalanuvchisi boshqa bir mijozga biriktirilgan')
+
         if type == 'teacher':
             form = TeacherCreation()
             if request.method == "POST":
@@ -1915,6 +1929,157 @@ def auctionPage(request):
         context = {'clients':query, 'pagType':pagType, 'profile':profile}
 
     return render(request, 'base/auction.html', context)
+
+@login_required(login_url='login')
+def auction2Page(request):
+    profile = Profile.objects.get(user=request.user)
+    clients = Client.objects.filter(type='auction2').order_by('id')
+    if "page" in request.GET:
+        page = request.GET['page']
+    else:
+        page = 1
+    pagType = True
+
+    result = 20
+    paginator = Paginator(clients, result)
+
+    leftIndex = int(page)-1
+    if leftIndex < 1:
+        leftIndex = 1
+    rightIndex = (int(page)+2)
+    if rightIndex > paginator.num_pages:
+        rightIndex = paginator.num_pages+1
+    page_range = range(leftIndex, rightIndex)
+    context = {'clients':clients, 'page_range':page_range, 'paginator':paginator, 'pagType':pagType, 'profile':profile}
+
+    if 'filter' in request.GET:
+        try:
+            name = request.GET['name']
+        except:
+            name = ""
+            
+        try:
+            tin = request.GET['tin']
+        except:
+            tin = ""
+        
+    
+        try:
+            phone = request.GET['phone']
+        except:
+            phone = ""
+
+        try:
+            passport = request.GET['passport']
+        except:
+            passport = ""
+        
+        
+        pagType = False
+
+        tins = False
+        query = Client.objects.filter(type__exact='auction2')
+        
+        if name != "":
+            query = Client.objects.filter(Q(type__exact='auction2') & Q(name__icontains=name))
+         
+        else:
+            query = Client.objects.filter(type__exact='auction2')
+    
+        if tin != "":
+            query = query.filter(jshshir__icontains=tin)
+       
+        
+        if phone != "":
+            if phone == 'true':
+                query = query.exclude(phone1__exact="")
+            elif phone == 'false':
+                query = query.filter(phone1__exact="")
+            else:
+                query = query
+        else:
+            query = query
+        
+
+
+
+        if passport != "":
+            if passport == 'true':
+                query = query.exclude(passport__exact="")
+            elif passport == 'false':
+                query = query.filter(passport__exact="")
+            else:
+                query = query
+        else:
+            query = query
+        
+        if request.method == "POST":
+            text = request.POST['text']
+            for reciever in query:
+                rephone = reciever.phone1.replace(" ", "")
+                rephone = rephone.replace("-","")
+                rephone = rephone.replace(".","")
+                rephone = rephone.replace(")","")
+                rephone = rephone.replace("(","")
+                if len(rephone) == 13:
+                    rephone = rephone
+                    sms_status = 10
+                elif len(rephone) == 9:
+                    rephone = '+998' + str(rephone)
+                    sms_status = 10
+                elif len(rephone) == 12 and rephone[0] == '9':
+                    rephone = '+' + str(rephone)
+                    sms_status = 10
+                elif len(rephone) == 0 or len(rephone) == 1:
+                    rephone = False
+                    sms_status = 0
+                else:
+                    rephone = False
+                    sms_status = 5
+
+                if rephone:
+                    numberid = rephone
+
+                    SMS.objects.create(
+                        client=reciever,
+                        text=text,
+                        status=sms_status
+                    )
+
+                    url = 'http://91.204.239.44/broker-api/send'
+                    headers = {'Content-type': 'application/json',  # Определение типа данных
+                            'Accept': 'text/plain',
+                            'Authorization': 'Basic eHhpYXNyOmJwOWJFTVA3ODI='}
+                    data = {
+                    "messages":
+                    [
+                    {
+                    "recipient":numberid,
+                    "message-id":"prime000019953",
+
+                        "sms":{
+
+                        "originator": "21ASR",
+                        "content": {
+                        "text": text
+                        }
+                        }
+                            }
+                        ]
+                    }
+                    requests.post(url, json=data, headers=headers)
+                    
+                else:
+                    SMS.objects.create(
+                        client=reciever,
+                        text=text,
+                        status=sms_status
+                    )
+                
+  
+        context = {'clients':query, 'pagType':pagType, 'profile':profile}
+
+    return render(request, 'base/auction2.html', context)
 
 @login_required(login_url='login')
 def teachersPage(request):

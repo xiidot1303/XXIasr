@@ -327,6 +327,56 @@ class AuctionCreation(ModelForm):
         self.fields['bot_user'].widget.attrs.update({'class':'form-control js-example-basic-single'})
 
 
+class Auction2Creation(ModelForm):
+    class Meta:
+        model = Client
+        fields = ['picture', 'name',  'jshshir', 'auc_login', 
+            'auc_password', 'gov_login', 'gov_password',  'passport','phone1', 'phone2', 'phone3', 
+            'address', 'address2', 'start_price', 'end_price', 'up_to_price', 'zaklat', 'pledge', 
+            'overall_price', 'win_value', 'service_fee', 'overall_payment', 'bot_user', 'bot_login', 'bot_password', 
+            ]
+        labels = {
+            'picture':'Rasm',
+            'name': 'Buyurtmachi',
+            'jshshir': 'JSHSHIR',
+            'auc_login' : 'Auksion login',
+            'auc_password' : 'Auksion parol',
+            'gov_login' : 'id.gov login',
+            'gov_password' : 'id.gov parol',
+            'passport':'Pasport nusxasi',
+            'phone1' : 'Telefon',
+            'phone2' : 'Telefon 2',
+            'phone3' : 'Telefon 3',
+            'bot_user' : 'Telegram foydalanuvchisi',
+            'bot_login': 'Login',
+            'bot_password': 'Parol',
+            'address': 'Yashash manzili',
+            'address2': 'Mulk manzili',
+            'start_price': 'Mulk boshlang\'ich narxi',
+            'end_price': 'Mulk tugash narxi',
+            'up_to_price': 'Qancha summagacha o\'ynaladi',
+            'zaklat': 'Auksion zaklat summasi',
+            'pledge': 'Oldindan to\'lov',
+            'overall_price': 'Umumiy to\'lov',
+            'win_value': 'Yutib olingan summa',
+            'service_fee': 'Xizmat haqi',
+            'overall_payment': 'Jami to\'lov',
+
+        }
+     
+    def __init__(self, *args, **kvargs):
+        super(Auction2Creation, self).__init__(*args, **kvargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control'})
+        self.fields['name'].widget.attrs.update({'required':'required'})
+        self.fields['jshshir'].widget.attrs.update({'required':'required'})
+        self.fields['phone1'].widget.attrs.update({'required':'required'})
+        self.fields['auc_login'].widget.attrs.update({'required':'required'})
+        self.fields['auc_password'].widget.attrs.update({'required':'required'})
+        self.fields['bot_user'].widget.attrs.update({'class':'form-control js-example-basic-single'})
+
+
 
 class TeacherCreation(ModelForm):
     class Meta:

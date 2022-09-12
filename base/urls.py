@@ -28,7 +28,8 @@ urlpatterns = [
     path("governor/", GovernorPage, name='governor'),
     path("yuridik/", YuridikPage, name='yuridik'),
     path("tanirovka/", tanirovkaPage, name='tanirovka'),
-    path("auction/", auctionPage, name='auction'),
+    path("avtoraqam/", auctionPage, name='auction'),
+    path("auction/", auction2Page, name='auction2'),
     path("teacher/", teachersPage, name='teacher'),
 
 

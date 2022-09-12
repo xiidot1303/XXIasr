@@ -84,7 +84,10 @@
                   {% if client.order3%} - {{client.order3|car_number }} {% endif %}</div>
                 {% endif %}
 
-                
+                {% if client.address2 and client.type == 'auction2' %}
+                <div class="h5 mt-3">Mulk manzili : {{client.address2}}</div>
+                {% endif %}
+
                 {% if client.auc_login %}
                 <div class="h5 mt-3">ID : {{client.auc_login}} - {{client.auc_password }}</div>
                 {% endif %}

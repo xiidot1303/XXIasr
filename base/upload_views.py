@@ -175,6 +175,17 @@ def editClient(request, pk):
             else:
                 messages.error(request, "Qandaydir xatolik :(")
 
+    elif client.type == 'auction2':
+        form = Auction2Creation(instance=client)
+        if request.method == "POST":
+            form = Auction2Creation(request.POST, request.FILES, instance=client)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Malumotlar yangilandi")
+                return redirect('auction2')
+            else:
+                messages.error(request, "Qandaydir xatolik :(")
+
     elif client.type == 'teacher':
         form = TeacherCreation(instance=client)
         if request.method == "POST":
