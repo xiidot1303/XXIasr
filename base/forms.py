@@ -281,7 +281,10 @@ class AuctionCreation(ModelForm):
     class Meta:
         model = Client
         fields = ['picture', 'owner', 'name',  'jshshir', 'order1', 'order2', 'order3', 'auc_login', 
-            'auc_password', 'gov_login', 'gov_password',  'passport','phone1', 'phone2', 'phone3', 'bot_user', 'bot_login', 'bot_password']
+            'auc_password', 'gov_login', 'gov_password',  'passport','phone1', 'phone2', 'phone3', 
+            'address', 'pledge', 'start_price', 'sold_price', 'stock_market_price', 'service_fee',
+            'bot_user', 'bot_login', 'bot_password', 
+            ]
         labels = {
             'picture':'Rasm',
             'owner': 'Avtomobil egasi',
@@ -300,7 +303,14 @@ class AuctionCreation(ModelForm):
             'phone3' : 'Telefon 3',
             'bot_user' : 'Telegram foydalanuvchisi',
             'bot_login': 'Login',
-            'bot_password': 'Parol'
+            'bot_password': 'Parol',
+            'address': 'Yashash manzili',
+            'pledge': 'Oldindan to\'lov',
+            'start_price': 'Boshlang\'ich avtoraqam summasi',
+            'sold_price': 'Sotib olingan avtoraqam summasi',
+            'stock_market_price': 'Yakuniy birja tolovi',
+            'service_fee': 'Xizmat haqi',
+
         }
      
     def __init__(self, *args, **kvargs):

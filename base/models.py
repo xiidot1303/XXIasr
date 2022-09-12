@@ -44,7 +44,8 @@ class Client(models.Model):
         ('yuridik','Yuridik shaxs'),
         ('jismoniy','Jismoniy shaxs'),
         ('tanirovka','Tanirovka'),
-        ('auction','Auksion'),
+        ('auction','Avtoraqam'),
+        ('auction2','Auksion'),
         ('teacher',"O'qituvchi"),
         ('governor', 'Hokim yordamchisi'),
     )
@@ -68,6 +69,7 @@ class Client(models.Model):
     phone3 = models.CharField(max_length=255, null=True, blank=True)
     telegram = models.CharField(max_length=255, null=True, blank=True)
     address = models.CharField(max_length=255, null=True, blank=True)
+    address2 = models.CharField(max_length=255, null=True, blank=True)
     key = models.FileField(upload_to='static/keys', null=True, blank=True)
     key_exp = models.DateField(null=True, blank=True)
     passport = models.FileField(null=True, blank=True, upload_to="static/passport/")
@@ -90,6 +92,25 @@ class Client(models.Model):
     bot_password = models.CharField(max_length=255, null=True, blank=True)
     bot_user = models.OneToOneField('Bot_user', null=True, blank=True, on_delete=models.PROTECT)
 
+    # car number and auction
+    pledge = models.CharField(null=True, blank=True, max_length=32) # Залог
+    start_price = models.CharField(null=True, blank=True, max_length=32)
+    end_price = models.CharField(null=True, blank=True, max_length=32)
+    up_to_price = models.CharField(null=True, blank=True, max_length=32)
+    zaklat = models.CharField(null=True, blank=True, max_length=32)
+    sold_price = models.CharField(null=True, blank=True, max_length=32)
+    stock_market_price = models.CharField(null=True, blank=True, max_length=32)
+    service_fee = models.CharField(null=True, blank=True, max_length=32)
+    overall_price = models.CharField(null=True, blank=True, max_length=32)
+    win_value = models.CharField(null=True, blank=True, max_length=32)
+    overall_payment = models.CharField(null=True, blank=True, max_length=32)
+
+    def save(self, *args, **kwargs):
+        if self.type == 'auction':
+            self.overall_price = str(int(self.sold_price) + int(self.stock_market_price))
+            self.overall_payment = str(int(self.overall_price) + int(self.service_fee) - int(self.pledge))
+        super(Client, self).save(*args, **kwargs)
+        
 
     def __str__(self):
         if self.jshshir:
