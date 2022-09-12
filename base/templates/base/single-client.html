@@ -1,6 +1,6 @@
 {% extends 'main.html' %}
 {% load static %}
-
+{% load styles %}
 
 {% block content %}
 <div class="main-panel">
@@ -79,9 +79,9 @@
                 {% endif %}
 
                 {% if client.order1 or client.order2 or client.order3 %}
-                <div class="h5 mt-3">Buyurtma : {% if client.order1%} {{client.order1}} {% endif %}
-                  {% if client.order2%} - {{client.order2}} {% endif %}
-                  {% if client.order3%} - {{client.order3}} {% endif %}</div>
+                <div class="h5 mt-3">Buyurtma : {% if client.order1 %} {{client.order1|car_number }} {% endif %}
+                  {% if client.order2%} - {{client.order2|car_number }} {% endif %}
+                  {% if client.order3%} - {{client.order3|car_number }} {% endif %}</div>
                 {% endif %}
 
                 
