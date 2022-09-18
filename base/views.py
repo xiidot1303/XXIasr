@@ -18,6 +18,14 @@ from telegram import Update
 import json
 import telegram
 from base.utils.message import *
+from base.utils import services
+import os
+from control.settings import BASE_DIR
+from base.templatetags.styles import car_number
+from docx import Document
+from docx.enum.text import WD_ALIGN_PARAGRAPH
+from docx.enum.style import WD_STYLE_TYPE
+from docx.shared import Pt
 
 
 # Create your views here.
@@ -2385,8 +2393,84 @@ def calendar(request):
     context = {'all_list': all_list}
     return render(request, 'base/calendar.html', context)
 
+@login_required
+def get_auction_info_file(request, client_pk, type):
+    today = date.today()
+    day = today.day
+    month = services.get_uzb_month(today.month)
+    year = today.year
+    client = Client.objects.get(pk=client_pk)
+    # p = os.listdir(os.path.join(BASE_DIR, 'files/main'))
+    document = Document(os.path.join(BASE_DIR, 'files/main/auction.docx'))
+    changes_in_text = [
+        ('No', client.id), ('day', day), ('month', month), ('year', year), 
+        ('name', client.name), ('phone1', client.phone1), ('phone2', client.phone2 or ''), 
+        ('jshshir', client.jshshir), ('address2', client.address2), ('address1', client.address), 
+        ('start_price', client.start_price), ('end_price', client.end_price), ('up_to_price', client.up_to_price), 
+        ('pledge', client.pledge), ('overall_price', client.overall_price), ('win_value', client.win_value), 
+        ('service_fee', client.service_fee), ('overall_payment', client.overall_payment) 
+        ]
+    try:
+        for paragraph in document.paragraphs:
+            font = paragraph.style.font
+            font.size = Pt(14)
+            if paragraph.text == 'E-IJRO AUKSION':
+                paragraph.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            for text in changes_in_text:
+                paragraph.text = paragraph.text.replace('{'+text[0]+'}', str(text[1]))
+    except Exception as exp:
+        print(exp)
+    document.save('static/auction/{}.docx'.format(client.pk))
+    p = os.path.abspath('static/auction/{}.docx'.format(client.pk))
+    if type == 'word':
+        f = open(p, 'rb')
+    elif type == 'pdf':
+        os.system('unoconv -f pdf {}'.format(p))
+        f = open('static/auction/{}.pdf'.format(client.pk), 'rb')
+    return FileResponse(f)
 
+@login_required
+def get_carnumber_info_file(request, client_pk, type):
+    today = date.today()
+    day = today.day
+    month = services.get_uzb_month(today.month)
+    year = today.year
+    client = Client.objects.get(pk=client_pk)
+    # p = os.listdir(os.path.join(BASE_DIR, 'files/main'))
+    document = Document(os.path.join(BASE_DIR, 'files/main/carnumber.docx'))
+    changes_in_text = [
+        ('No', client.id), ('day', day), ('month', month), ('year', year), 
+        ('name', client.name), ('owner', client.owner), ('phone1', client.phone1), ('phone2', client.phone2 or ''), 
+        ('jshshir', client.jshshir), ('address2', client.address2), ('address', client.address), 
+        ('start_price', client.start_price), ('sold_price', client.sold_price), 
+        ('stock_market_price', client.stock_market_price), ('pledge', client.pledge), 
+        ('overall_price', client.overall_price), ('win_value', client.win_value), 
+        ('service_fee', client.service_fee), ('overall_payment', client.overall_payment) 
+        ]
+    try:
+        for paragraph in document.paragraphs:
+            font = paragraph.style.font
+            font.size = Pt(14)
+            for text in changes_in_text:
+                paragraph.text = paragraph.text.replace('{'+text[0]+'}', str(text[1]))
+        for table in document.tables:
+            for row in table.rows:
+                for cell in row.cells:
+                    for para in cell.paragraphs:
+                        para.text = para.text.replace('{order1}', car_number(client.order1) or '')
+                        para.text = para.text.replace('{order2}', car_number(client.order2) or '')
+                        para.text = para.text.replace('{order3}', car_number(client.order3) or '')
 
+    except Exception as exp:
+        print(exp)
+    document.save('static/auction/{}.docx'.format(client.pk))
+    p = os.path.abspath('static/auction/{}.docx'.format(client.pk))
+    if type == 'word':
+        f = open(p, 'rb')
+    elif type == 'pdf':
+        os.system('unoconv -f pdf {}'.format(p))
+        f = open('static/auction/{}.pdf'.format(client.pk), 'rb')
+    return FileResponse(f)
 
 @csrf_exempt
 def bot_webhook(request):

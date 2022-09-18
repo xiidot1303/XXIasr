@@ -2,6 +2,7 @@
 {% load static %}
 {% load styles %}
 
+
 {% block content %}
 <div class="main-panel">
   <div class="content-wrapper">
@@ -13,7 +14,22 @@
               <div class="float-left">
                 Mijoz sahifasi
               </div>
-              <div class="text-right">
+              <div class="text-right mb-3">
+                {% if client.type == 'auction2' %}
+                <a href="{% url 'get_auction_info_file' client.id 'pdf' %} " class="mr-4" target="_blank">
+                  <i class="fas fa-print"></i> Pechat
+                </a>
+                <a href="{% url 'get_auction_info_file' client.id 'word'  %}" class="mr-4" target="_blank">
+                  <i class="fas fa-file-alt"></i> Dokument
+                </a>
+                {% elif client.type == 'auction' %}
+                <a href="{% url 'get_carnumber_info_file' client.id 'pdf' %} " class="mr-4" target="_blank">
+                  <i class="fas fa-print"></i> Pechat
+                </a>
+                <a href="{% url 'get_carnumber_info_file' client.id 'word'  %}" class="mr-4" target="_blank">
+                  <i class="fas fa-file-alt"></i> Dokument
+                </a>
+                {% endif %}
                 <a href="{% url 'edit-client' client.id %}"><i class="fa fa-pencil"></i> O'zgartirish</a>
               </div>
             </div>

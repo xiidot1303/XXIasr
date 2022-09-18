@@ -53,6 +53,9 @@ urlpatterns = [
 
     path('calendar/', calendar, name='calendar'),
 
-    path('static/<str:folder>/<str:file>/', get_file, name='get_file')
+    path('static/<str:folder>/<str:file>/', get_file, name='get_file'),
+
+    path('get-auction-info/<int:client_pk>/<str:type>/', get_auction_info_file, name='get_auction_info_file'),
+    path('get-carnumber-info/<int:client_pk>/<str:type>/', get_carnumber_info_file, name='get_carnumber_info_file'),
 ]
 
