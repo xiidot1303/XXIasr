@@ -8,7 +8,14 @@
       <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
-            <p class="card-title">{% if view == 'sms' %} SMS Shablon {% elif view == 'createuser' %} Xodim {% else %} Mijoz {% endif %}</p>
+            <p class="card-title">
+              {% if view == 'sms' %} SMS Shablon 
+              {% elif view == 'create-template' %} Shablon yaratish 
+              {% elif view == 'template' %} Shablon 
+              {% elif view == 'createuser' %} Xodim 
+              {% else %} Mijoz 
+              {% endif %}
+            </p>
             <form action="" method="POST" enctype="multipart/form-data">
               {% csrf_token %}
               {% if view == 'sms' %}

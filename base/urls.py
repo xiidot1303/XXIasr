@@ -54,8 +54,13 @@ urlpatterns = [
     path('calendar/', calendar, name='calendar'),
 
     path('static/<str:folder>/<str:file>/', get_file, name='get_file'),
+    path('static/templates/<str:folder>/<str:file>/', get_template, name='get_template'),
 
     path('get-auction-info/<int:client_pk>/<str:type>/', get_auction_info_file, name='get_auction_info_file'),
     path('get-carnumber-info/<int:client_pk>/<str:type>/', get_carnumber_info_file, name='get_carnumber_info_file'),
+
+    path('templates', templates, name='templates'),
+    path('edit-template/<int:pk>/', TemplateEditView.as_view(), name='edit-template'),
+    path('create-template', TemplateCreateView.as_view(), name='create-template'),
 ]
 

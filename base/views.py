@@ -2,6 +2,8 @@ import datetime
 import requests
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import UpdateView, CreateView
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from django.db.models import Sum
@@ -2472,6 +2474,48 @@ def get_carnumber_info_file(request, client_pk, type):
         f = open('static/auction/{}.pdf'.format(client.pk), 'rb')
     return FileResponse(f)
 
+
+@login_required
+def templates(request):
+    user = request.user
+    profile = Profile.objects.get(user=user)
+    list = Template.objects.filter(user=user)
+    context = {'templates': list, 'profile': profile}
+    return render(request, 'base/templates.html', context)
+
+class TemplateEditView(LoginRequiredMixin, UpdateView):
+    model = Template
+    form_class = TemplateForm
+    template_name = 'base/forms.html'
+    success_url = '/templates'
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+    
+    def get_context_data(self, **kwargs):
+        profile = Profile.objects.get(user=self.request.user)
+        context = super().get_context_data(**kwargs)
+        context['profile'] = profile
+        context['view'] = 'template'
+        return context
+
+class TemplateCreateView(LoginRequiredMixin, CreateView):
+    model = Template
+    form_class = TemplateForm
+    template_name = 'base/forms.html'
+    success_url = '/templates'
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+    
+    def get_context_data(self, **kwargs):
+        profile = Profile.objects.get(user=self.request.user)
+        context = super().get_context_data(**kwargs)
+        context['profile'] = profile
+        context['view'] = 'create-template'
+        return context
+
+
 @csrf_exempt
 def bot_webhook(request):
 
@@ -2484,4 +2528,8 @@ def bot_webhook(request):
 
 def get_file(request, folder, file):
     f = open('static/{}/{}'.format(folder, file), 'rb')
+    return FileResponse(f)
+
+def get_template(request, folder, file):
+    f = open('static/templates/{}/{}'.format(folder, file), 'rb')
     return FileResponse(f)

@@ -3,7 +3,7 @@ from pyexpat import model
 from re import L
 from django import forms
 from django.forms import DateInput, ModelForm, fields, widgets
-from .models import Client, Notes, Profile, Service, Task, Upload
+from .models import Client, Notes, Profile, Service, Task, Upload, Template
 
 
 class UploadForm(ModelForm):
@@ -505,3 +505,19 @@ class ProfileCreation(ModelForm):
         for name, field in self.fields.items():
             field.widget.attrs.update({'class': 'form-control'})
         self.fields['name'].widget.attrs.update({'required':'required'})
+
+class TemplateForm(ModelForm):
+    class Meta:
+        model = Template
+        fields = ['title', 'comment', 'file']
+        labels = {
+            'title': 'Nom', 
+            'comment': 'Izoh', 
+            'file': "Fayl"
+        }
+    def __init__(self, *args, **kvargs):
+        super(TemplateForm, self).__init__(*args, **kvargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control'})
+        self.fields['title'].widget.attrs.update({'required':'required'})

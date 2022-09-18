@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 import uuid
 from django.db.models.signals import post_save
-import datetime    
+import datetime
 from datetime import date  
 
 # Create your models here.
@@ -313,3 +313,13 @@ class Bot_user(models.Model):
             return self.name + ' ' + str(self.phone)
         except:
             return super().__str__()
+
+def template_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/static/templates/user_<id>/<filename>
+    return 'static/templates/user_{0}/{1}'.format(instance.user.id, filename)
+
+class Template(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(null=True, blank=True, max_length=255)
+    comment = models.TextField(null=True, blank=True)
+    file = models.FileField(upload_to=template_directory_path, null=True, blank=True)

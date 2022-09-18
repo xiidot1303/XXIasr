@@ -88,6 +88,12 @@
           <span class="menu-title">Eslatmalar</span>
         </a>
       </li> -->
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'templates' %}">
+          <i class="icon-paper menu-icon"></i>
+          <span class="menu-title">Shablonlar</span>
+        </a>
+      </li>
 
       {% if profile.status == 'admin' or profile.status == 'superuser' %}
       <li class="nav-item">

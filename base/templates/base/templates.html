@@ -1,0 +1,76 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load functions %}
+
+{% block content %}
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-12 grid-margin">
+        <div class="row">
+          <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+            <h3 class="font-weight-bold">XXI ASR BUXGALTERIYA</h3>
+            <h6 class="font-weight-normal mb-0">Kerakli shablonlar</span></h6>
+          </div>
+          <div class="col-12 col-xl-4">
+           <div class="justify-content-end d-flex">
+            <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+                <a href="{% url 'create-template' %}">
+                  <button class="btn btn-sm btn-light bg-primary" type="button">
+                    <i class="ti ti-plus font-weight-bold text-white"></i>
+                  </button>
+                </a>
+              </div>
+           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+  
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-title">Shablonlar</p> 
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Nom</th>
+                      <th>Izoh</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for temp in templates %}
+                      <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>
+                          {{temp.title}}  
+                          [<a target="_blank" href="{{ temp.file }}">
+                            {{temp.file|filename}}
+                          </a>]
+                        </td>
+                        <td style="line-height: 20px;">{{temp.comment|wordwrap:"50"|linebreaksbr}}</td>
+                        <td>
+                          <a href="{% url 'edit-template' temp.id %}">
+                            <i class="fa fa-pencil"></i>
+                          </a>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+
+          </div>
+        </div>
+      </div>
+     
+    </div>
+
+  </div>
+ 
+</div>
+{% endblock content %}

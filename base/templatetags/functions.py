@@ -3,7 +3,7 @@ from base.models import Client
 from django.db.models import CharField, Value, F, Q
 from datetime import date, timedelta
 from itertools import chain
-
+import os
 
 register = template.Library()
 
@@ -11,7 +11,11 @@ register = template.Library()
 def index(indexable, i):
     return indexable[i]
 
-
+@register.filter
+def filename(value):
+    if value:
+        return os.path.basename(value.file.name)
+    return ''
 @register.filter
 def expired_dates(zero):
     today = date.today()
