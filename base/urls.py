@@ -1,7 +1,7 @@
 
 from django.urls import path
 
-from base.client_views import singleClient
+from base.client_views import singleClient, change_congragulation
 from base.upload_views import NotesPage, cancelService, confirmSerivce, editClient, editNote
 from base.views import *
 from .user_views import CreateProfile, DeleteProfile, EditProfile, Profiles
@@ -62,5 +62,7 @@ urlpatterns = [
     path('templates', templates, name='templates'),
     path('edit-template/<int:pk>/', TemplateEditView.as_view(), name='edit-template'),
     path('create-template', TemplateCreateView.as_view(), name='create-template'),
+
+    path('change-congragulation/<int:client_pk>/<str:status>/', change_congragulation, name='change_congragulation'),
 ]
 

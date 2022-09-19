@@ -88,6 +88,7 @@ class Client(models.Model):
     order3 = models.CharField(max_length=255, null=True, blank=True)
     auc_login = models.CharField(max_length=255, null=True, blank=True)
     auc_password = models.CharField(max_length=255, null=True, blank=True)
+    congragulate = models.BooleanField(null=True, blank=True, default=False)
     bot_login = models.CharField(max_length=255, null=True, blank=True, unique=True)
     bot_password = models.CharField(max_length=255, null=True, blank=True)
     bot_user = models.OneToOneField('Bot_user', null=True, blank=True, on_delete=models.PROTECT)

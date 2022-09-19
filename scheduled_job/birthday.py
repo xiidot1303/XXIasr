@@ -28,7 +28,8 @@ def send_congragulation():
                 text = SMStext.objects.get(pk=10).text
                 text = text.replace('**nom', client.name)
                 message.bot_send_message(client, text)
-                message.send_sms(client, text)
+                if client.congragulate:
+                    message.send_sms(client, text)
             except:
                 a=0
     

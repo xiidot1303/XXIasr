@@ -115,6 +115,9 @@ def editClient(request, pk):
         if request.method == "POST":
             form = YaTTCreation(request.POST, request.FILES, instance=client)
             if form.is_valid():
+                if client.sub_type == 'aylanma':
+                    client.congragulate = True
+                    client.save()
                 form.save()
                 messages.success(request, "Malumotlar yangilandi")
                 return redirect('yatt')

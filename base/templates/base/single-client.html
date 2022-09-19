@@ -14,7 +14,19 @@
               <div class="float-left">
                 Mijoz sahifasi
               </div>
+              <div class="float-left ml-5">
+              </div>
               <div class="text-right mb-3">
+                {% if client.congragulate %}
+                <a href="{% url 'change_congragulation' client.pk 'off' %}" class="mr-4">
+                  <button type="button" class="btn btn-success btn-sm">Tug'ilgan kun tabriknomasi yoniq</button>
+                </a>
+                {% else %}
+                <a href="{% url 'change_congragulation' client.pk 'on' %}" class="mr-4">
+                  <button type="button" class="btn btn-danger btn-sm">Tug'ilgan kun tabriknomasi o'chiq</button>
+                </a>
+                {% endif %}
+
                 {% if client.type == 'auction2' %}
                 <a href="{% url 'get_auction_info_file' client.id 'pdf' %} " class="mr-4" target="_blank">
                   <i class="fas fa-print"></i> Pechat

@@ -502,6 +502,8 @@ def createClient(request):
                 if form.is_valid():
                         client = form.save(commit=False)
                         client.type = 'ytt'
+                        if client.sub_type == 'aylanma':
+                            client.congragulate = True
                         client.save()
                         messages.success(request, 'YaTT ro\'yxatga olindi')
                 elif 'bot_login' in form.errors.as_data():
