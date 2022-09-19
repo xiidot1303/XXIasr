@@ -319,7 +319,7 @@ def taskPage(request):
             ]
         } 
                     
-        requests.post(url, json=data, headers=headers)
+        # requests.post(url, json=data, headers=headers) # Dont send sms to staffs
         if form.is_valid():
             ts = form.save(commit=False)
             ts.sender = profile.phone

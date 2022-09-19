@@ -62,7 +62,7 @@ def confirmSerivce(request, pk):
                     ]
                 } 
 
-                requests.post(url, json=data, headers=headers)
+                # requests.post(url, json=data, headers=headers) # dont send sms to staffs
 
                 messages.success(request, "Xizmat narxlandi :)")
                 return redirect("home")
