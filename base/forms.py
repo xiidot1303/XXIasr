@@ -138,11 +138,13 @@ class YuridikCreation(ModelForm):
     class Meta:
         model = Client
         
-        fields = ['picture', 'name', 'tin', 'gov_login', 'gov_password','director', 'director_tin', 'jshshir', 
-            'phone1', 'phone2', 'phone3', 'key', 'key_exp', 'guvohnoma_file', 'ustav','passport', 'selfy', 'bot_user', 'bot_login', 'bot_password']
+        fields = ['picture', 'name', 'yuridik_type', 'tin', 'gov_login', 'gov_password','director', 'director_tin', 'jshshir', 
+            'phone1', 'phone2', 'phone3', 'key', 'key_exp', 'guvohnoma_file', 'ustav','passport', 'selfy', 
+            'bot_user', 'bot_login', 'bot_password']
         labels = {
             'picture':'Rasm',
             'name': 'Nom',
+            'yuridik_type': 'Turi',
             'tin':'STIR',
             'gov_login' : 'id.gov login',
             'gov_password' : 'id.gov parol',
@@ -167,7 +169,7 @@ class YuridikCreation(ModelForm):
             input_type = 'date'
         
         widgets = {
-            'key_exp':DateInput()
+            'key_exp':DateInput(),
             # 'key_exp': forms.DateInput(attrs={'type': 'date'}, format='%d-%m-%Y')
         }
         

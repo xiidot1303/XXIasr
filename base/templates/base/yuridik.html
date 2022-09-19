@@ -134,6 +134,17 @@
                     </select>
                     
                   </div>
+                  <div class="form-group">
+                    <label for="">Turi bo'yicha</label>
+                    <select name="type" class="form-control">
+                      <option value="">Barcha</option>
+                      <option value="None">Turi kiritilmagan mijozlar</option>
+                      <option value="buxgalteriya">Buxgalteriya</option>
+                      <option value="hisobotchilar">Hisobotchilar</option>
+                      <option value="birrovchilar">Birrovchilar</option>
+                    </select>
+                    
+                  </div>
                 </div>
               </div>
               <button type="submit" class="btn btn-rounded btn-primary"><i class="fa fa-search"></i>  Aniqlash</button>
@@ -182,6 +193,7 @@
                            <th>Yuridik STIRi</th>
                            <th>Direktor</th>
                            <th>Telefon</th>
+                           <th>Turi</th>
                            <th>Guvohnoma</th>
                            <th>Pasport</th>
                            <th>Ustav</th>
@@ -214,6 +226,7 @@
                            <td>{{ client.tin }}</td>
                            <td>{{ client.director|wordwrap:"20"|linebreaksbr }} - {{ client.director_tin }}</td>
                            <td>{{ client.phone1|wordwrap:"15"|linebreaksbr }}</td>
+                           <td>{{ client.yuridik_type }}</td>
                            <td>
                              {% if client.guvohnoma_file %}
                               <a href="/app{{client.guvohnoma_file.url}}" download=""><i class="fa fa-download"></i></a>

@@ -504,6 +504,8 @@ def createClient(request):
                         client.type = 'ytt'
                         if client.sub_type == 'aylanma':
                             client.congragulate = True
+                        else:
+                            client.congragulate = True
                         client.save()
                         messages.success(request, 'YaTT ro\'yxatga olindi')
                 elif 'bot_login' in form.errors.as_data():
@@ -518,6 +520,12 @@ def createClient(request):
                 form = YuridikCreation(request.POST, request.FILES)
                 if form.is_valid():
                         client = form.save(commit=False)
+                        if client.yuridik_type == 'buxgalteriya':
+                            client.congragulate = True
+                        else:
+                            client.congragulate = False
+                        client.save()
+
                         client.type = 'yuridik'
                         client.save()
                         messages.success(request, 'Yuridik ro\'yxatga olindi')
@@ -954,6 +962,10 @@ def YuridikPage(request):
         except:
             name = ""
         try:
+            type = request.GET['type']
+        except:
+            type = ""
+        try:
             stir = request.GET['stir']
         except:
             stir = ""
@@ -993,6 +1005,12 @@ def YuridikPage(request):
 
         else:
             query = Client.objects.filter(type__exact='yuridik')
+        
+        if type != "":
+            if type == 'None':
+                query = query.filter(yuridik_type=None)
+            else:
+                query = query.filter(yuridik_type=type)
 
         if stir != "":
             query = query.filter(tin__icontains=stir)

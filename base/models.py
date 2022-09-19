@@ -55,6 +55,13 @@ class Client(models.Model):
         ('oddiy', 'Oddiy'),
     )
     sub_type = models.CharField(choices=SUB_CHOICES, max_length=255, null=True, blank=True)
+
+    YURIDIK_CHOICES = (
+        ('buxgalteriya', 'Buxgalteriya'),
+        ('hisobotchilar', 'Hisobotchilar'),
+        ('birrovchilar', 'Birrovchilar'),
+    )
+    yuridik_type = models.CharField(choices=YURIDIK_CHOICES, max_length=255, null=True, blank=True)
     gov_login = models.CharField(max_length=255, null=True, blank=True)
     gov_password = models.CharField(max_length=255, null=True, blank=True)
     jshshir = models.CharField(max_length=255, null=True, blank=True)

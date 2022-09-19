@@ -117,7 +117,9 @@ def editClient(request, pk):
             if form.is_valid():
                 if client.sub_type == 'aylanma':
                     client.congragulate = True
-                    client.save()
+                else:
+                    client.congragulate = False
+                client.save()
                 form.save()
                 messages.success(request, "Malumotlar yangilandi")
                 return redirect('yatt')
@@ -128,6 +130,11 @@ def editClient(request, pk):
         if request.method == "POST":
             form = YuridikCreation(request.POST, request.FILES, instance=client)
             if form.is_valid():
+                if client.yuridik_type == 'buxgalteriya':
+                    client.congragulate = True
+                else:
+                    client.congragulate = False
+                client.save()
                 form.save()
                 messages.success(request, "Malumotlar yangilandi")
                 return redirect('yuridik')
