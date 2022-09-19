@@ -115,8 +115,11 @@ class Client(models.Model):
 
     def save(self, *args, **kwargs):
         if self.type == 'auction':
-            self.overall_price = str(int(self.sold_price) + int(self.stock_market_price))
-            self.overall_payment = str(int(self.overall_price) + int(self.service_fee) - int(self.pledge))
+            try:
+                self.overall_price = str(int(self.sold_price) + int(self.stock_market_price))
+                self.overall_payment = str(int(self.overall_price) + int(self.service_fee) - int(self.pledge))
+            except Exception as e:
+                print(e)
         super(Client, self).save(*args, **kwargs)
         
 
