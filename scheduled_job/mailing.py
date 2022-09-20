@@ -19,16 +19,19 @@ def send_message():
             else:
                 user_id = sub.bot_user.user_id
             try:
+                if post.file:
+                    file = open(str(post.file), 'rb')
+                
                 if post.post_type == 'text':
                     bot.sendMessage(chat_id=user_id, text = post.text, parse_mode=telegram.ParseMode.HTML)
                 elif post.post_type == 'photo':
-                    bot.sendPhoto(chat_id=user_id, photo=post.file, caption=post.text)
+                    bot.sendPhoto(chat_id=user_id, photo=file, caption=post.text)
                 elif post.post_type == 'video':
-                    bot.sendVideo(chat_id=user_id, video=post.file, caption=post.text)
+                    bot.sendVideo(chat_id=user_id, video=file, caption=post.text)
                 elif post.post_type == 'audio':
-                    bot.sendAudio(chat_id=user_id, audio=post.file, caption=post.text)
+                    bot.sendAudio(chat_id=user_id, audio=file, caption=post.text)
                 elif post.post_type == 'document':
-                    bot.sendDocument(chat_id=user_id, document=post.file, caption=post.text)
+                    bot.sendDocument(chat_id=user_id, document=file, caption=post.text)
             except:
                 a = 0
         post.delete()
