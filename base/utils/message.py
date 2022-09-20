@@ -13,8 +13,9 @@ def bot_send_message(client, text):
     try:
         bot = telegram.Bot(token = BOT_TOKEN)
         bot.sendMessage(chat_id=user_id, text=text)
+        return 'success'
     except:
-        ok = True
+        return 'error'
     
 def send_sms(client, text):
 

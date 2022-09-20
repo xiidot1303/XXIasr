@@ -2,8 +2,25 @@ from django.contrib import messages
 from django.shortcuts import redirect, render
 from .models import Client, Profile, Access, Upload
 from django.contrib.auth.decorators import login_required
+from base.utils.message import *
 
 def singleClient(request, pk):
+    if request.method == 'POST':
+        data = request.POST
+        message = data['message'] or ' '
+        client = Client.objects.get(pk=pk)
+        via = data['via']
+        if via == 'sms' or via == 'both':
+            send_sms(client, message)
+            messages.success(request, 'Xabar foydalanuvchiga yuborildi')
+        if via == 'telegram' or via == 'both':
+            send_message = bot_send_message(client, message)
+            if send_message == 'success':
+                messages.success(request, 'Xabar foydalanuvchiga yuborildi')
+            else:
+                messages.error(request, 'Foydalanuvchi botga a\'zo emas')
+        return redirect(singleClient, pk=pk)
+
     profile = Profile.objects.get(user=request.user)
     key_access = Access.objects.get(name="key")
     if profile in key_access.user.all():
