@@ -334,7 +334,7 @@ class Auction2Creation(ModelForm):
         model = Client
         fields = ['picture', 'name',  'jshshir', 'auc_login', 
             'auc_password', 'gov_login', 'gov_password',  'passport','phone1', 'phone2', 'phone3', 
-            'address', 'address2', 'start_price', 'end_price', 'up_to_price', 'zaklat', 'pledge', 
+            'address', 'address2', 'start_price', 'up_to_price', 'zaklat', 'pledge', 
             'overall_price', 'win_value', 'service_fee', 'overall_payment', 'bot_user', 'bot_login', 'bot_password', 
             ]
         labels = {
@@ -355,7 +355,7 @@ class Auction2Creation(ModelForm):
             'address': 'Yashash manzili',
             'address2': 'Mulk manzili',
             'start_price': 'Mulk boshlang\'ich narxi',
-            'end_price': 'Mulk tugash narxi',
+            # 'end_price': 'Mulk tugash narxi',
             'up_to_price': 'Qancha summagacha o\'ynaladi',
             'zaklat': 'Auksion zaklat summasi',
             'pledge': 'Oldindan to\'lov',

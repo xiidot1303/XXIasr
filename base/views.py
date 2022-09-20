@@ -21,6 +21,7 @@ import json
 import telegram
 from base.utils.message import *
 from base.utils import services
+from base.utils.services import number_format as nf
 import os
 from control.settings import BASE_DIR
 from base.templatetags.styles import car_number
@@ -2428,9 +2429,9 @@ def get_auction_info_file(request, client_pk, type):
         ('No', client.id), ('day', day), ('month', month), ('year', year), 
         ('name', client.name), ('phone1', client.phone1), ('phone2', client.phone2 or ''), 
         ('jshshir', client.jshshir), ('address2', client.address2), ('address1', client.address), 
-        ('start_price', client.start_price), ('end_price', client.end_price), ('up_to_price', client.up_to_price), 
-        ('pledge', client.pledge), ('overall_price', client.overall_price), ('win_value', client.win_value), 
-        ('service_fee', client.service_fee), ('overall_payment', client.overall_payment) 
+        ('start_price', nf(client.start_price)), ('end_price', nf(client.end_price)), ('up_to_price', nf(client.up_to_price)), 
+        ('pledge', nf(client.pledge)), ('overall_price', nf(client.overall_price)), ('win_value', nf(client.win_value)), 
+        ('service_fee', nf(client.service_fee)), ('overall_payment', nf(client.overall_payment)) 
         ]
     try:
         for paragraph in document.paragraphs:
@@ -2464,10 +2465,10 @@ def get_carnumber_info_file(request, client_pk, type):
         ('No', client.id), ('day', day), ('month', month), ('year', year), 
         ('name', client.name), ('owner', client.owner), ('phone1', client.phone1), ('phone2', client.phone2 or ''), 
         ('jshshir', client.jshshir), ('address2', client.address2), ('address', client.address), 
-        ('start_price', client.start_price), ('sold_price', client.sold_price), 
-        ('stock_market_price', client.stock_market_price), ('pledge', client.pledge), 
-        ('overall_price', client.overall_price), ('win_value', client.win_value), 
-        ('service_fee', client.service_fee), ('overall_payment', client.overall_payment) 
+        ('start_price', nf(client.start_price)), ('sold_price', nf(client.sold_price)), 
+        ('stock_market_price', nf(client.stock_market_price)), ('pledge', nf(client.pledge)), 
+        ('overall_price', nf(client.overall_price)), ('win_value', nf(client.win_value)), 
+        ('service_fee', nf(client.service_fee)), ('overall_payment', nf(client.overall_payment)) 
         ]
     try:
         for paragraph in document.paragraphs:
@@ -2499,7 +2500,7 @@ def get_carnumber_info_file(request, client_pk, type):
 def templates(request):
     user = request.user
     profile = Profile.objects.get(user=user)
-    list = Template.objects.filter(user=user)
+    list = Template.objects.all()
     context = {'templates': list, 'profile': profile}
     return render(request, 'base/templates.html', context)
 
@@ -2535,6 +2536,12 @@ class TemplateCreateView(LoginRequiredMixin, CreateView):
         context['view'] = 'create-template'
         return context
 
+
+@login_required
+def template_delete(request, pk):
+    template = Template.objects.get(pk=pk)
+    template.delete()
+    return redirect(templates)
 
 @csrf_exempt
 def bot_webhook(request):

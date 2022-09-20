@@ -14,6 +14,7 @@
           </div>
           <div class="col-12 col-xl-4">
            <div class="justify-content-end d-flex">
+            {% if profile.status != 'user' %}
             <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
                 <a href="{% url 'create-template' %}">
                   <button class="btn btn-sm btn-light bg-primary" type="button">
@@ -21,6 +22,7 @@
                   </button>
                 </a>
               </div>
+              {% endif %}
            </div>
           </div>
         </div>
@@ -53,11 +55,16 @@
                           </a>]
                         </td>
                         <td style="line-height: 20px;">{{temp.comment|wordwrap:"50"|linebreaksbr}}</td>
+                        {% if profile.status != 'user' %}
                         <td>
                           <a href="{% url 'edit-template' temp.id %}">
                             <i class="fa fa-pencil"></i>
                           </a>
+                          <a href="{% url 'delete-template' temp.id %}" onclick="return confirm('Shablon o\'chishini tasdiqlaysizmi?');">
+                            <i class="fa fa-trash"></i>
+                          </a>
                         </td>
+                        {% endif %}
                       </tr>
                     {% endfor %}
                   </tbody>

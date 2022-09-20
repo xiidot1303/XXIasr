@@ -123,6 +123,7 @@
                         <th>Mijoz</th>
                         <th>Xizmat turi</th>
                         <th>Kiritilgan sana</th>
+                        <th>Izoh</th>
                         <th>Muddat</th>
                         <th>Qabul qiluvchi</th>
                         <th>Holati</th>
@@ -135,6 +136,7 @@
                           <td>{{row.client}}</td>
                           <td>{{row.service}}</td>
                           <td>{{row.loaded_date}}</td>
+                          <td title="{{ row.comment }}">.-.-.-.</td>
                           <td>{{row.period}}</td>
                           <td>{{row.reciever}}</td>
                           <td>{{row.get_status_display }}</td>
@@ -166,6 +168,7 @@
                       <th>Holat</th>
                       <th>Xizmat turi</th>
                       <th>Kiritilgan sana</th>
+                      <th>Izoh</th>
                       <th>Muddat</th>
                       <th>Qabul qiluvchi</th>
                       <th>Yuklovchi</th>
@@ -200,6 +203,7 @@
                         <td>
                           {{row.loaded_date}}
                         </td>
+                        <td title="{{ row.comment }}">.-.-.-.</td>
                         <td>{{row.period}}</td>
                         <td>
                           {{row.reciever}}
@@ -248,6 +252,7 @@
                         <td>
                           {{row.loaded_date}}
                         </td>
+                        <td title="{{ row.comment }}">.-.-.-.</td>
                         <td>{{row.period}}</td>
                         <td>
                           {{row.reciever}}
