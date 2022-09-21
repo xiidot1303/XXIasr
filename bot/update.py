@@ -25,59 +25,62 @@ else: # in local computer
     dp = updater.dispatcher
 
 
-login_handler = ConversationHandler(
-    entry_points=[CommandHandler('start', start)],
-    states = {
-        SELECT_LANG: [MessageHandler(Filters.text(['UZ 🇺🇿', 'RU 🇷🇺']), select_lang)],
-        SEND_NAME: [MessageHandler(Filters.text, send_name)],
-        SEND_CONTACT: [MessageHandler(Filters.all, send_contact)],
-    },
-    fallbacks= [],
-    name='login',
-    persistent=True,
-)
+dp.add_handler(CommandHandler('start', start, pass_user_data=True))
+dp.add_handler(MessageHandler(Filters.text, message, pass_user_data=True))
 
-settings_handler = ConversationHandler(
-    entry_points=[MessageHandler(Filters.text(lang_dict['settings']), settings)],
-    states = {
-        ALL_SETTINGS: [MessageHandler(Filters.text, all_settings)],
-        LANG_SETTINGS: [CallbackQueryHandler(lang_settings), CommandHandler('start', lang_settings)],
-        PHONE_SETTINGS: [MessageHandler(Filters.all, phone_settings)],
-        NAME_SETTINGS: [MessageHandler(Filters.text, name_settings)],
-    }, 
-    fallbacks=[],
-    name='settings',
-    persistent=True,
-)
+# login_handler = ConversationHandler(
+#     entry_points=[CommandHandler('start', start)],
+#     states = {
+#         SELECT_LANG: [MessageHandler(Filters.text(['UZ 🇺🇿', 'RU 🇷🇺']), select_lang)],
+#         SEND_NAME: [MessageHandler(Filters.text, send_name)],
+#         SEND_CONTACT: [MessageHandler(Filters.all, send_contact)],
+#     },
+#     fallbacks= [],
+#     name='login',
+#     persistent=True,
+# )
 
-cabinet_handler = ConversationHandler(
-    entry_points=[MessageHandler(Filters.text(lang_dict['cabinet']), cabinet)],
-    states = {
-        GET_LOGIN: [MessageHandler(Filters.text, get_login)],
-        GET_PASSWORD: [MessageHandler(Filters.text, get_password)],
-        MY_CABINET: [MessageHandler(Filters.text, my_cabinet)],
-    },
-    fallbacks=[],
-    name='cabinet',
-    persistent=True
-)
+# settings_handler = ConversationHandler(
+#     entry_points=[MessageHandler(Filters.text(lang_dict['settings']), settings)],
+#     states = {
+#         ALL_SETTINGS: [MessageHandler(Filters.text, all_settings)],
+#         LANG_SETTINGS: [CallbackQueryHandler(lang_settings), CommandHandler('start', lang_settings)],
+#         PHONE_SETTINGS: [MessageHandler(Filters.all, phone_settings)],
+#         NAME_SETTINGS: [MessageHandler(Filters.text, name_settings)],
+#     }, 
+#     fallbacks=[],
+#     name='settings',
+#     persistent=True,
+# )
 
-services_handler = ConversationHandler(
-    entry_points=[MessageHandler(Filters.text(lang_dict['our services']), our_services)],
-    states = {
-        GET_SERVICE: [MessageHandler(Filters.text, get_services)],
-    },
-    fallbacks=[],
-    name='services',
-    persistent=True,
-)
+# cabinet_handler = ConversationHandler(
+#     entry_points=[MessageHandler(Filters.text(lang_dict['cabinet']), cabinet)],
+#     states = {
+#         GET_LOGIN: [MessageHandler(Filters.text, get_login)],
+#         GET_PASSWORD: [MessageHandler(Filters.text, get_password)],
+#         MY_CABINET: [MessageHandler(Filters.text, my_cabinet)],
+#     },
+#     fallbacks=[],
+#     name='cabinet',
+#     persistent=True
+# )
+
+# services_handler = ConversationHandler(
+#     entry_points=[MessageHandler(Filters.text(lang_dict['our services']), our_services)],
+#     states = {
+#         GET_SERVICE: [MessageHandler(Filters.text, get_services)],
+#     },
+#     fallbacks=[],
+#     name='services',
+#     persistent=True,
+# )
 
 
-dp.add_handler(MessageHandler(Filters.text(lang_dict['contacts']), contacts))
-dp.add_handler(MessageHandler(Filters.text(lang_dict['address']), address))
-# dp.add_handler(MessageHandler(Filters.video, send_video_id))
+# dp.add_handler(MessageHandler(Filters.text(lang_dict['contacts']), contacts))
+# dp.add_handler(MessageHandler(Filters.text(lang_dict['address']), address))
+# # dp.add_handler(MessageHandler(Filters.video, send_video_id))
 
-dp.add_handler(services_handler)
-dp.add_handler(cabinet_handler)
-dp.add_handler(settings_handler)
-dp.add_handler(login_handler)
+# dp.add_handler(services_handler)
+# dp.add_handler(cabinet_handler)
+# dp.add_handler(settings_handler)
+# dp.add_handler(login_handler)

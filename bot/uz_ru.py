@@ -115,7 +115,18 @@ lang_dict = {
 
     'pc service': ["""👨🏼‍💻 Kompyuter xizmati""", """👨🏼‍💻 Компьютерные услуги"""],
 
-    '': ["""""", """"""],
+    'hello text': [
+        """Assalomu aleykum xurmatli mijoz! Siz XXI ASR XIZMATLARI MARKAZI RASMIY BOTIGA TASHRIF BUYURDINGIZ! Murojaatingizni shu yerda yozib qoldiring! Tez orada javob qaytaramiz!\n
+Ofis ma'lumotlar uchun:  +998557012100
+Menedjer Sultonmurod:   +998992231112
+Avtoraqam:                         +998992231118
+Kadastr xizmatlari:            +998992231115
+Kompyuter xizmatlari:     +998901962266
+Telegram manzil: @asr_21bot
+Bizning Manzillar: <a href="https://www.google.com/maps/place/21-ASR+Buxgalteriya+xizmatlari/@39.4178555,67.2393289,288m/data=!3m1!1e3!4m5!3m4!1s0x0:0x396e65b95616bf89!8m2!3d39.4176281!4d67.2395654">1-ofis: Urgut Soliq inspeksiyasi ro'parasida</a>
+2-Ofis: Kompyuter xizmatlari Iqtisod kolleji kirish qismida!
+<a href="https://www.google.com/maps/place/XXI-ASR+BUXGALTERIYA/@39.4284763,67.2381326,604m/data=!3m1!1e3!4m12!1m6!3m5!1s0x0:0x396e65b95616bf89!2s21-ASR+Buxgalteriya+xizmatlari!8m2!3d39.4176281!4d67.2395654!3m4!1s0x0:0x73c169c913177a83!8m2!3d39.4287011!4d67.2387442">3-Ofis: Urgut Davlat xizmatlari markazi ro'parasida</a>""", 
+        """."""],
 
     '': ["""""", """"""],
 

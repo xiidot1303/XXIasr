@@ -309,7 +309,7 @@ class telegramPost(models.Model):
     
 
 class Bot_user(models.Model):
-    user_id = models.IntegerField(null=True)
+    user_id = models.BigIntegerField(null=True)
     name = models.CharField(null=True, blank=True, max_length=200)
     username = models.CharField(null=True, blank=True, max_length=200)
     firstname = models.CharField(null=True, blank=True, max_length=500)
@@ -321,7 +321,9 @@ class Bot_user(models.Model):
     password = models.CharField(max_length=255, null=True, blank=True)
     def __str__(self) -> str:
         try:
-            return self.name + ' ' + str(self.phone)
+            first = self.name or self.firstname
+            second = self.phone or self.username or ''
+            return first + ' ' + second
         except:
             return super().__str__()
 
@@ -334,3 +336,8 @@ class Template(models.Model):
     title = models.CharField(null=True, blank=True, max_length=255)
     comment = models.TextField(null=True, blank=True)
     file = models.FileField(upload_to=template_directory_path, null=True, blank=True)
+
+class msg(models.Model):
+    msg_id = models.BigIntegerField(null=True, blank=True)
+    forward_msg_id = models.BigIntegerField(null=True, blank=True)
+    user_id = models.BigIntegerField(null=True, blank=True)

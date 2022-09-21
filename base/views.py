@@ -2324,6 +2324,7 @@ def telegramPage(request):
     if profile.status == 'admin' or profile.status == 'superuser':
         teleusers = subscriptions.objects.all().order_by('-id')
         clients = Client.objects.all()
+        bot_users = Bot_user.objects.all()
         if request.method == "POST":
             try:
                 file = request.FILES['file']
@@ -2374,10 +2375,15 @@ def telegramPage(request):
             #         return redirect("telegram")
             messages.success(request, f"Xabar {subs.count()}ta obunachiga yuborildi")
 
-        return render(request, 'base/telegram.html', {'profile':profile, 'posts':posts, 'telegrams':teleusers, 'clients': clients})
+        return render(request, 'base/telegram.html', {'profile':profile, 'posts':posts, 'telegrams':teleusers, 'bot_users': bot_users})
     else:
         return render(request, 'error-404.html')
 
+class BotuserEditView(LoginRequiredMixin, UpdateView):
+    model = Bot_user
+    form_class = Bot_userForm
+    template_name = 'base/forms.html'
+    success_url = '/telegram'
 
 @login_required
 def calendar(request):

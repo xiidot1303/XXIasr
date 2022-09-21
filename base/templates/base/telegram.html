@@ -136,37 +136,35 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Mijoz</th>
+                                <th>Ismi</th>
                                 <th>Nomi</th>
                                 <th>Telefon</th>
                                 <th>Username</th>
-                                <th>ID</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for client in clients %}
+                            {% for bu in bot_users %}
                             <tr>
                                 <td>{{forloop.counter}}</td>
                                 <td>
-                                    <a href="{% url 'client' client.pk %}">{{ client.name }}</a>
+                                    <a>{{ bu.name }}</a>
                                 </td>
-                                {% if client.bot_user %}
-                                    <td>{{ client.bot_user.name }}</td>
-                                    <td>{{ client.bot_user.phone }}</td>
+                                    <td>{{ bu.firstname }}</td>
+                                    <td>{{ bu.phone }}</td>
                                     <td>
-                                        {% if client.bot_user.username %}
-                                        <a href="https://t.me/{{ client.bot_user.username }}">@{{ client.bot_user.username }}</a>
+                                        {% if bu.username %}
+                                        <a target="_blank" href="https://t.me/{{ bu.username }}">@{{ bu.username }}</a>
                                         {% else %}
-                                        <a href="tg://user?id={{ client.bot_user.user_id }}">{{ client.bot_user.firstname }}</a>
+                                        <!-- <a href="tg://user?id={{ bu.user_id }}">{{ bu.firstname }}</a> -->
                                         {% endif %}
                                     </td>
-                                    <td>{{ client.bot_user.user_id }}</td>
-                                {% else %}
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                {% endif %}
+                                    <td>
+                                        <a href="{% url 'edit-botuser' bu.id %}">
+                                            <i class="fa fa-pencil"></i>
+                                          </a>
+                                    </td>
+
                             </tr>
                             {% endfor %}
                         </tbody>
