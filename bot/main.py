@@ -15,7 +15,7 @@ def start(update, context):
         update.message.reply_text('Assalom alaykum!\nSiz ushbu bot adminisiz')
     else:
         # notify admin that new user registred
-        text = "<b>Yangi foydalanuvchi</b>\n\nNom: {}\nUsername: {}".format(
+        text = "<b>Yangi foydalanuvchi</b>\n\nNom: {}\nUsername: @{}".format(
             update.message.chat.first_name,
             update.message.chat.username or '',
         )
