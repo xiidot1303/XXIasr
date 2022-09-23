@@ -132,7 +132,7 @@
                     Mijozlar
                 </div>
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table table-striped ytt data-table table-bordered">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -355,3 +355,44 @@
  
 </div>
 {% endblock content %}
+
+
+{% block script %}
+
+
+    
+<!-- <script src="{% static 'assets/js/backend-bundle.min.js' %}"></script> -->
+<!-- Chart Custom JavaScript -->
+<script src="{% static 'assets/js/customizer.js' %}"></script>
+
+<script src="{% static 'assets/js/sidebar.js' %}"></script>
+
+<!-- Flextree Javascript-->
+<script src="{% static 'assets/js/flex-tree.min.js' %}"></script>
+<script src="{% static 'assets/js/tree.js"></script>
+
+<!-- Table Treeview JavaScript -->
+<script src="{% static 'assets/js/table-treeview.js' %}"></script>
+
+<!-- SweetAlert JavaScript -->
+<script src="{% static 'assets/js/sweetalert.js' %}"></script>
+
+<!-- Vectoe Map JavaScript -->
+<script src="{% static 'assets/js/vector-map-custom.js' %}"></script>
+
+<!-- Chart Custom JavaScript -->
+<!-- <script src="{% static 'assets/js/chart-custom.js' %}"></script> -->
+<script src="{% static 'assets/js/charts/01.js' %}"></script>
+<script src="{% static 'assets/js/charts/02.js' %}"></script>
+
+<!-- slider JavaScript -->
+<script src="{% static 'assets/js/slider.js' %}"></script>
+
+<!-- Emoji picker -->
+<script src="{% static 'assets/vendor/emoji-picker-element/index.js' %}" type="module"></script>
+
+
+<!-- app JavaScript -->
+<script src="{% static 'assets/js/app.js' %}"></script>
+
+{% endblock %}
