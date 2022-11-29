@@ -48,6 +48,7 @@ class Client(models.Model):
         ('auction2','Auksion'),
         ('teacher',"O'qituvchi"),
         ('governor', 'Hokim yordamchisi'),
+        ('taxi', 'Taxi litsenziya'),
     )
     type = models.CharField(choices=TYPE_CHOICES, max_length=255)
     SUB_CHOICES = (

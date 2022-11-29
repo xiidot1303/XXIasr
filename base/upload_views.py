@@ -152,6 +152,17 @@ def editClient(request, pk):
             else:
                 messages.error(request, "Qandaydir xatolik :(")
 
+    elif client.type == 'taxi':
+        form = TaxiCreation(instance=client)
+        if request.method == "POST":
+            form = TaxiCreation(request.POST, request.FILES, instance=client)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Malumotlar yangilandi")
+                return redirect('taxi')
+            else:
+                messages.error(request, "Qandaydir xatolik :(")
+
     elif client.type == 'governor':
         form = GovernorCreation(instance=client)
         if request.method == "POST":

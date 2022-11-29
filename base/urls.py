@@ -31,6 +31,7 @@ urlpatterns = [
     path("avtoraqam/", auctionPage, name='auction'),
     path("auction/", auction2Page, name='auction2'),
     path("teacher/", teachersPage, name='teacher'),
+    path("taxi/", TaxiPage, name='taxi'),
 
 
     path("cancel-serivce/<str:pk>", cancelService, name='cancel-service'),

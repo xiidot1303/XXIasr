@@ -235,6 +235,51 @@ class JismoniyCreation(ModelForm):
         self.fields['bot_user'].widget.attrs.update({'class':'form-control js-example-basic-single'})
 
 
+class TaxiCreation(ModelForm):
+    class Meta:
+        model = Client
+        fields = ['picture', 'name', 'tin', 'gov_login', 'gov_password', 'jshshir', 'phone1', 'phone2', 
+            'phone3', 'key', 'key_exp', 'passport', 'selfy', 'bot_login', 'bot_password', 'bot_user']
+        labels = {
+            'picture':'Rasm',
+            'name': 'Nom',
+            'tin':'STIR',
+            'gov_login' : 'id.gov login',
+            'gov_password' : 'id.gov parol',
+            'jshshir': 'JSHSHIR',
+            'phone1' : 'Telefon',
+            'phone2' : 'Telefon 2',
+            'phone3' : 'Telefon 3',
+            'bot_user' : 'Telegram foydalanuvchisi',
+            'key': 'Kalit',
+            'key_exp':'Kalit muddati',
+            'passport':'Pasport',
+            'selfy':'Selfi',
+            'bot_login': 'Login',
+            'bot_password': 'Parol',
+        }
+        
+        class DateInput(forms.DateInput):
+            input_type = 'date'
+            
+        widgets = {
+            'key_exp':DateInput()
+        }
+
+        
+       
+
+    def __init__(self, *args, **kvargs):
+        super(TaxiCreation, self).__init__(*args, **kvargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control'})
+        self.fields['name'].widget.attrs.update({'required':'required'})
+        self.fields['jshshir'].widget.attrs.update({'required':'required'})
+        self.fields['phone1'].widget.attrs.update({'required':'required'})
+        self.fields['bot_user'].widget.attrs.update({'class':'form-control js-example-basic-single'})
+
+
 
 class TanirovkaCreation(ModelForm):
     class Meta:
