@@ -269,7 +269,9 @@ class TaxiCreation(ModelForm):
             input_type = 'date'
             
         widgets = {
-            'key_exp':DateInput()
+            'key_exp':DateInput(),
+            'expiry_date':DateInput(),
+            'given_date':DateInput(),
         }
 
         
