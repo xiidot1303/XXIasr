@@ -238,17 +238,18 @@ class JismoniyCreation(ModelForm):
 class TaxiCreation(ModelForm):
     class Meta:
         model = Client
-        fields = ['picture', 'name', 'owner', 'tex_number', 'text_series', 'given_date', 'expiry_date', 
+        fields = ['picture', 'name', 'owner', 'tex_number', 'text_series', 'ruxsatnoma', 'given_date', 'expiry_date', 
             'tin', 'gov_login', 'gov_password', 'jshshir', 'phone1', 'phone2', 
             'phone3', 'key', 'key_exp', 'passport', 'selfy', 'bot_login', 'bot_password', 'bot_user']
         labels = {
             'picture':'Rasm',
             'name': 'Nom',
             'owner': 'Avtomobil egasi',
-            'tex_number':'Tex pasport raqami',
+            'tex_number':'Avtomashina raqami',
             'text_series': 'Tex pasport seriyasi',
             'given_date':'Ruxsatnoma berilgan sanasi',
             'expiry_date':'Ruxsatnoma tugash sanasi',
+            'ruxsatnoma': 'Litsenziya',
             'tin':'STIR',
             'gov_login': 'id.gov login',
             'gov_password' : 'id.gov parol',

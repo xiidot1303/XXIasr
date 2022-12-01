@@ -196,7 +196,11 @@
                 {% endif %}
 
                 {% if client.expiry_date %}
-                Tanirovka - 
+                {% if client.type == 'taxi' %}
+                Litsenziya muddati - 
+                {% else %}
+                Tanirovka -
+                {% endif %} 
                   {% if client.is_t_expired == 'in_ten_days' %}
                   <div class="btn btn-warning btn-sm">10 kun</div>
                   {% elif client.is_t_expired == 'in_a_month' %}
@@ -217,7 +221,12 @@
                 {% endif %}
                 {% if client.ruxsatnoma %}
                 <div class="h5 mt-3">
-                  Ruxsatnoma : <a href="/app{{client.ruxsatnoma.url}}" download><i class="fa fa-download"></i></a>
+                  {% if client.type == 'taxi' %}
+                  Litsenziya:
+                  {% else %}
+                  Ruxsatnoma: 
+                  {% endif %}
+                  <a href="/app{{client.ruxsatnoma.url}}" download><i class="fa fa-download"></i></a>
                 </div>
                 {% endif %}
             </div>
