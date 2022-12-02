@@ -8,7 +8,7 @@ env.read_env()
 ENVIRONMENT=env.str("ENVIRONMENT")
 
 SECRET_KEY=env.str("SECRET_KEY")
-DEBUG = env.str("DEBUG")
+DEBUG = env.str("DEBUG") or False
 ALLOWED_HOSTS = env.str("ALLOWED_HOSTS").split(",")
 
 BOT_TOKEN = env.str("BOT_TOKEN")  # Bot toekn
