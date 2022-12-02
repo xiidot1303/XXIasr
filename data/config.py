@@ -6,7 +6,11 @@ env.read_env()
 
 # .env fayl ichidan quyidagilarni o'qiymiz
 ENVIRONMENT=env.str("ENVIRONMENT")
+
 SECRET_KEY=env.str("SECRET_KEY")
+DEBUG = env.str("DEBUG")
+ALLOWED_HOSTS = env.str("ALLOWED_HOSTS").split(",")
+
 BOT_TOKEN = env.str("BOT_TOKEN")  # Bot toekn
 ADMINS = env.list("ADMINS")  # adminlar ro'yxati
 IP = env.str("ip")  # Xosting ip manzili
