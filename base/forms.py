@@ -290,6 +290,61 @@ class TaxiCreation(ModelForm):
 
 
 
+class IshonchnomaCreation(ModelForm):
+    class Meta:
+        model = Client
+        fields = ['picture', 'proxy_owner', 'owner', 'tex_number', 'text_series', 'ishonchnoma', 'given_date', 'expiry_date', 
+            'gov_login', 'gov_password', 'jshshir', 'phone1', 'phone2', 
+            'phone3', 'key', 'key_exp', 'passport', 'selfy', 'bot_login', 'bot_password', 'bot_user']
+        labels = {
+            'picture':'Rasm',
+            'proxy_owner': 'Ishonchnoma oluvchi',
+            'owner': 'Avtomobil egasi',
+            'tex_number':'Avtomashina raqami',
+            'text_series': 'Tex pasport seriyasi',
+            'given_date':'Ishonchnoma berilgan sanasi',
+            'expiry_date':'Ishonchnoma tugash sanasi',
+            'ishonchnoma': 'Ishonchnoma',
+            'gov_login': 'id.gov login',
+            'gov_password' : 'id.gov parol',
+            'jshshir': 'JSHSHIR',
+            'phone1' : 'Telefon',
+            'phone2' : 'Telefon 2',
+            'phone3' : 'Telefon 3',
+            'bot_user' : 'Telegram foydalanuvchisi',
+            'key': 'Kalit',
+            'key_exp':'Kalit muddati',
+            'passport':'Pasport',
+            'selfy':'Selfi',
+            'bot_login': 'Login',
+            'bot_password': 'Parol',
+        }
+        
+        class DateInput(forms.DateInput):
+            input_type = 'date'
+            
+        widgets = {
+            'key_exp':DateInput(),
+            'expiry_date':DateInput(),
+            'given_date':DateInput(),
+        }
+
+        
+       
+
+    def __init__(self, *args, **kvargs):
+        super(IshonchnomaCreation, self).__init__(*args, **kvargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control'})
+        self.fields['proxy_owner'].widget.attrs.update({'required':'required'})
+        self.fields['owner'].widget.attrs.update({'required':'required'})
+        self.fields['jshshir'].widget.attrs.update({'required':'required'})
+        self.fields['phone1'].widget.attrs.update({'required':'required'})
+        self.fields['bot_user'].widget.attrs.update({'class':'form-control js-example-basic-single'})
+
+
+
 class TanirovkaCreation(ModelForm):
     class Meta:
         model = Client

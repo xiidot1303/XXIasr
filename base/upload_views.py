@@ -163,6 +163,17 @@ def editClient(request, pk):
             else:
                 messages.error(request, "Qandaydir xatolik :(")
 
+    elif client.type == 'ishonchnoma':
+        form = IshonchnomaCreation(instance=client)
+        if request.method == "POST":
+            form = IshonchnomaCreation(request.POST, request.FILES, instance=client)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Malumotlar yangilandi")
+                return redirect('ishonchnoma')
+            else:
+                messages.error(request, "Qandaydir xatolik :(")
+
     elif client.type == 'governor':
         form = GovernorCreation(instance=client)
         if request.method == "POST":

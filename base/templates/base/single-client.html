@@ -53,7 +53,13 @@
                   {% else %}
                   <img style="width: 100%; border-radius: 50%;" src="{% static 'profile/profile-default.jpg'%}" alt=""><br>
                   {% endif %}
-                  <div class="h5 mt-3" style="line-height: 25px;">F.I.Sh.: {{client.name}}</div>
+                  <div class="h5 mt-3" style="line-height: 25px;">F.I.Sh.: 
+                    {% if client.name %}
+                    {{client.name}}
+                    {% else %}
+                    {{ client.owner }}
+                    {% endif %}
+                  </div>
                 </div>
               </div>
 
@@ -98,8 +104,18 @@
                 <div class="h5 mt-3">Ega : {{client.owner}}</div>
                 {% endif %}
 
+                {% if client.proxy_owner %}
+                <div class="h5 mt-3">Ishonchnoma oluvchi : {{client.proxy_owner}}</div>
+                {% endif %}
+
                 {% if client.tex_number %}
-                <div class="h5 mt-3">Tex pasport raqam : {{client.tex_number}}</div>
+                <div class="h5 mt-3">
+                  {% if client.type == 'ishonchnoma' %}
+                  Avtomashina raqami :
+                  {% else %}
+                  Tex pasport raqam : 
+                  {% endif %}
+                  {{client.tex_number}}</div>
                 {% endif %}
 
                 {% if client.text_series %}
@@ -198,6 +214,8 @@
                 {% if client.expiry_date %}
                 {% if client.type == 'taxi' %}
                 Litsenziya muddati - 
+                {% elif client.type == 'ishonchnoma' %}
+                Ishonchnoma muddati
                 {% else %}
                 Tanirovka -
                 {% endif %} 
@@ -219,6 +237,13 @@
                   Texpasport : <a href="/app{{client.texpas.url}}" download><i class="fa fa-download"></i></a>
                 </div>
                 {% endif %}
+
+                {% if client.ishonchnoma %}
+                <div class="h5 mt-3">
+                  Ishonchnoma : <a href="/app{{client.ishonchnoma.url}}" download><i class="fa fa-download"></i></a>
+                </div>
+                {% endif %}
+                
                 {% if client.ruxsatnoma %}
                 <div class="h5 mt-3">
                   {% if client.type == 'taxi' %}

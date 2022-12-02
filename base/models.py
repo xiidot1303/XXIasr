@@ -49,6 +49,7 @@ class Client(models.Model):
         ('teacher',"O'qituvchi"),
         ('governor', 'Hokim yordamchisi'),
         ('taxi', 'Taxi litsenziya'),
+        ('ishonchnoma', 'Ishonchnoma'),
     )
     type = models.CharField(choices=TYPE_CHOICES, max_length=255)
     SUB_CHOICES = (
@@ -113,6 +114,10 @@ class Client(models.Model):
     overall_price = models.CharField(null=True, blank=True, max_length=32)
     win_value = models.CharField(null=True, blank=True, max_length=32)
     overall_payment = models.CharField(null=True, blank=True, max_length=32)
+
+
+    proxy_owner = models.CharField(max_length=255, null=True, blank=True)
+    ishonchnoma = models.FileField(null=True, blank=True, upload_to="static/ishonchnoma/")
 
     def save(self, *args, **kwargs):
         if self.type == 'auction':

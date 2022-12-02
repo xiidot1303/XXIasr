@@ -32,6 +32,7 @@ urlpatterns = [
     path("auction/", auction2Page, name='auction2'),
     path("teacher/", teachersPage, name='teacher'),
     path("taxi/", TaxiPage, name='taxi'),
+    path("ishonchnoma/", IshonchnomaPage, name='ishonchnoma'),
 
 
     path("cancel-serivce/<str:pk>", cancelService, name='cancel-service'),
