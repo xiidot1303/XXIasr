@@ -5,6 +5,7 @@ from django.shortcuts import redirect, render
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from base.utils.message import *
+from base.utils.services import create_key
 
 
 @login_required(login_url='login')
@@ -110,6 +111,7 @@ def confirmSerivce(request, pk):
 @login_required(login_url='login')
 def editClient(request, pk):
     client = Client.objects.get(id=pk)
+    profile=Profile.objects.get(user=request.user)
     if client.type == 'ytt':
         form = YaTTCreation(instance=client)
         if request.method == "POST":
@@ -121,6 +123,7 @@ def editClient(request, pk):
                     client.congragulate = False
                 client.save()
                 form.save()
+                create_key(client.pk, profile)
                 messages.success(request, "Malumotlar yangilandi")
                 return redirect('yatt')
             else:
@@ -136,6 +139,7 @@ def editClient(request, pk):
                     client.congragulate = False
                 client.save()
                 form.save()
+                create_key(client.pk, profile)
                 messages.success(request, "Malumotlar yangilandi")
                 return redirect('yuridik')
             else:
@@ -147,6 +151,7 @@ def editClient(request, pk):
             form = JismoniyCreation(request.POST, request.FILES, instance=client)
             if form.is_valid():
                 form.save()
+                create_key(client.pk, profile)
                 messages.success(request, "Malumotlar yangilandi")
                 return redirect('jismoniy')
             else:
@@ -158,6 +163,7 @@ def editClient(request, pk):
             form = TaxiCreation(request.POST, request.FILES, instance=client)
             if form.is_valid():
                 form.save()
+                create_key(client.pk, profile)
                 messages.success(request, "Malumotlar yangilandi")
                 return redirect('taxi')
             else:
@@ -169,6 +175,7 @@ def editClient(request, pk):
             form = IshonchnomaCreation(request.POST, request.FILES, instance=client)
             if form.is_valid():
                 form.save()
+                create_key(client.pk, profile)
                 messages.success(request, "Malumotlar yangilandi")
                 return redirect('ishonchnoma')
             else:
@@ -180,6 +187,7 @@ def editClient(request, pk):
             form = GovernorCreation(request.POST, request.FILES, instance=client)
             if form.is_valid():
                 form.save()
+                create_key(client.pk, profile)
                 messages.success(request, "Malumotlar yangilandi")
                 return redirect('governor')
             else:
@@ -191,6 +199,7 @@ def editClient(request, pk):
             form = TanirovkaCreation(request.POST, request.FILES, instance=client)
             if form.is_valid():
                 form.save()
+                create_key(client.pk, profile)
                 messages.success(request, "Malumotlar yangilandi")
                 return redirect('tanirovka')
             else:
@@ -202,6 +211,7 @@ def editClient(request, pk):
             form = AuctionCreation(request.POST, request.FILES, instance=client)
             if form.is_valid():
                 form.save()
+                create_key(client.pk, profile)
                 messages.success(request, "Malumotlar yangilandi")
                 return redirect('auction')
             else:
@@ -213,6 +223,7 @@ def editClient(request, pk):
             form = Auction2Creation(request.POST, request.FILES, instance=client)
             if form.is_valid():
                 form.save()
+                create_key(client.pk, profile)
                 messages.success(request, "Malumotlar yangilandi")
                 return redirect('auction2')
             else:
@@ -224,11 +235,12 @@ def editClient(request, pk):
             form = TeacherCreation(request.POST, request.FILES, instance=client)
             if form.is_valid():
                 form.save()
+                create_key(client.pk, profile)
                 messages.success(request, "Malumotlar yangilandi")
                 return redirect('teacher')
             else:
                 messages.error(request, "Qandaydir xatolik :(")
-
+    
     context = {'form':form}
     return render(request, 'base/forms.html', context)
 

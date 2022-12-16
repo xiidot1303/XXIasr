@@ -1,7 +1,7 @@
 import datetime
 import requests
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import UpdateView, CreateView
 from django.contrib.auth.models import User
@@ -21,7 +21,7 @@ import json
 import telegram
 from base.utils.message import *
 from base.utils import services
-from base.utils.services import number_format as nf
+from base.utils.services import number_format as nf, handle_uploaded_file
 import os
 from control.settings import BASE_DIR
 from base.templatetags.styles import car_number
@@ -676,6 +676,11 @@ def createClient(request):
                     messages.error(request, 'Bunday login bilan allaqachon ro\'yxatdan o\'tilgan')
                 elif 'bot_user' in form.errors.as_data():
                     messages.error(request, 'Bunday bot foydalanuvchisi boshqa bir mijozga biriktirilgan')
+       
+        from base.utils.services import create_key
+        if request.method == "POST":
+            # create key
+            create_key(client.pk, profile)
 
         context = {'view':True, 'form':form, 'profile':profile}
         
@@ -712,7 +717,7 @@ def createClient(request):
             
         context = {'checked':True, 'clients':checked, 'profile':profile}
 
-            
+        
         
     return render(request, 'base/createclient.html', context)
 
@@ -3022,6 +3027,73 @@ def template_delete(request, pk):
     template.delete()
     return redirect(templates)
 
+@login_required
+def keys(request, active_type='all'):
+    profile = Profile.objects.get(user=request.user)
+    if request.method == 'POST':
+        files = request.FILES
+        for file in request.FILES.getlist('files'):
+            *args, file_format = str(file).split('.')
+            if file_format == 'pfx':
+                file_path = handle_uploaded_file(file)
+                f = open(file_path, 'rb')
+                symbols = "QWERTYUIOPLKJHGFDSAZXCVBNMqwertyuiopasdfghjklmnbvcxz.,';:-=+1234567890"
+                all_text = f.read()
+                # print(all_text)
+                text = ''
+                for i in all_text:
+                    i = chr(i)
+                    # try:
+                    if str(i) in symbols:
+                        text += str(i)
+                    # except:
+                    #     None
+                try:
+                    info_list = text.split(',')
+                    name = info_list[1].split('=')[1]
+                    surname = info_list[2].split('=')[1]
+                    validto = info_list[11].split('=')[1][:10]
+                    jshshir = info_list[8].split('=')[1]
+                    year, month, day = map(int, validto.split('.'))
+                    
+                    if not Key.objects.filter(jshshir=jshshir, key_exp__year=year, key_exp__month=month, key_exp__day=day):
+                        Key.objects.create(
+                            added_by = profile,
+                            name = surname + ' ' + name,
+                            jshshir = jshshir,
+                            key = file_path,
+                            key_exp = date(year, month, day)
+                        )
+                        messages.success(request, "Kalit muvaffaqiyatli qo'shildi")
+                    else:
+                        messages.success(request, "Bu kalit allaqachon yuklangan")
+
+                except:
+                    messages.error(request, "Faylni o'qishda xatolik")
+                    
+
+            else:
+                messages.error(request, "Noto'g'ri fayl {}".format(file))
+    
+    query = Key.objects.all().order_by('key_exp')
+    types = list(Key.TYPE_CHOICES)
+    typejons = list(Key.TYPE_CHOICES)
+    types.insert(0, ('all', 'Barcha'))
+    types.append((None, 'Tur kiritilmagan'))
+    context = {'keys': query, 'types': types, 'typejons': typejons, 'active_type': active_type, 'profile': profile}
+    return render(request, 'base/keys.html', context)
+
+
+@login_required
+@permission_required('base.change_key')
+def change_key_type(request, key_pk, type, active_type):
+    key_obj = Key.objects.get(pk=key_pk)
+    key_obj.type = type
+    key_obj.save()
+    return redirect(keys, active_type=active_type)
+
+
+
 @csrf_exempt
 def bot_webhook(request):
 
@@ -3039,3 +3111,4 @@ def get_file(request, folder, file):
 def get_template(request, folder, file):
     f = open('static/templates/{}/{}'.format(folder, file), 'rb')
     return FileResponse(f)
+

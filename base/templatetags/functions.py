@@ -80,3 +80,24 @@ def define_label(obj):
         label = 'bg-dark'
     return label
     
+@register.filter
+def filter_keys_by_type(keys, type):
+    if type[0] == 'all':
+        return keys
+    return keys.filter(type=type[0])
+
+@register.filter
+def type_readable(type):
+    TYPE_CHOICES = {
+        'ytt': 'YaTT',
+        'yuridik': 'Yuridik shaxs',
+        'jismoniy': 'Jismoniy shaxs',
+        'tanirovka':'Tanirovka',
+        'auction':'Avtoraqam',
+        'auction2':'Auksion',
+        'teacher':"O'qituvchi",
+        'governor': 'Hokim yordamchisi',
+        'taxi': 'Taxi litsenziya',
+        'ishonchnoma': 'Ishonchnoma',
+    }
+    return TYPE_CHOICES[type]

@@ -66,6 +66,10 @@ urlpatterns = [
     path('create-template', TemplateCreateView.as_view(), name='create-template'),
     path('delete-template/<int:pk>/', template_delete, name='delete-template'),
     
+    path('keys', keys, name='keys'),
+    path('keys/<str:active_type>/', keys),
+    path('keys/change-type/<int:key_pk>/<str:type>/<str:active_type>/', change_key_type, name='change_key_type'),
+
     path('edit-botuser/<int:pk>/', BotuserEditView.as_view(), name='edit-botuser'),
 
     path('change-congragulation/<int:client_pk>/<str:status>/', change_congragulation, name='change_congragulation'),

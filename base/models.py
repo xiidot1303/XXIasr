@@ -4,6 +4,7 @@ import uuid
 from django.db.models.signals import post_save
 import datetime
 from datetime import date  
+import os
 
 # Create your models here.
 class Profile(models.Model):
@@ -126,8 +127,11 @@ class Client(models.Model):
                 self.overall_payment = str(int(self.overall_price) + int(self.service_fee) - int(self.pledge))
             except Exception as e:
                 print(e)
+
         super(Client, self).save(*args, **kwargs)
         
+    def filename(self):
+        return os.path.basename(self.file.name)
 
     def __str__(self):
         if self.jshshir:
@@ -347,3 +351,24 @@ class msg(models.Model):
     msg_id = models.BigIntegerField(null=True, blank=True)
     forward_msg_id = models.BigIntegerField(null=True, blank=True)
     user_id = models.BigIntegerField(null=True, blank=True)
+
+class Key(models.Model):
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, blank=True, null=True, related_name='key_client')
+    TYPE_CHOICES = (
+        ('ytt','YaTT'),
+        ('yuridik','Yuridik shaxs'),
+        ('jismoniy','Jismoniy shaxs'),
+        ('tanirovka','Tanirovka'),
+        ('auction','Avtoraqam'),
+        ('auction2','Auksion'),
+        ('teacher',"O'qituvchi"),
+        ('governor', 'Hokim yordamchisi'),
+        ('taxi', 'Taxi litsenziya'),
+        ('ishonchnoma', 'Ishonchnoma'),
+    )
+    type = models.CharField(choices=TYPE_CHOICES, max_length=255, blank=True, null=True)
+    jshshir = models.CharField(max_length=255, null=True, blank=True)
+    added_by = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, blank=True)
+    name = models.CharField(max_length=255)
+    key = models.FileField(upload_to='static/keys', null=True, blank=True)
+    key_exp = models.DateField(null=True, blank=True)

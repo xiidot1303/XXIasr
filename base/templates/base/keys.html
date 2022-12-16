@@ -1,0 +1,203 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load functions %}
+
+{% block link %}
+
+
+<!-- Favicon -->
+<link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}" />
+
+<link rel="stylesheet" href="{% static 'assets/css/backend-plugin.min.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/backend.css' %}">  
+
+{% endblock %}
+
+
+{% block content %}
+
+
+
+<div class="main-panel">
+    <div class="content-wrapper">
+      <div class="row">
+        <div class="col-md-12 grid-margin">
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+          <div class="row">
+            <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+              <h3 class="font-weight-bold">XXI ASR BUXGALTERIYA</h3>
+              <h6 class="font-weight-normal mb-0">Kalitlar</span></h6>
+            </div>
+            <div class="col-12 col-xl-4">
+             <div class="justify-content-end d-flex">
+              {% if perms.base.add_key %}
+              <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+                  <a href="">
+                    <!-- <button class="btn btn-sm btn-light bg-primary" type="button">
+                      <i class="ti ti-plus font-weight-bold text-white"></i>
+                    </button> -->
+                  </a>
+                  <div class="form-group">
+                    <input class="form-contro" type="file" name="files" id="files" multiple>
+                    <!-- <label class="custom-file-label" for="customFile">Choose file</label> -->
+                  </div>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+   
+      <div class="row">
+    
+      
+      <!-- start tabs -->
+        <ul class="nav nav-pills" id="pills-tab" role="tablist">
+          {% for type in types %}
+          <li class="nav-item mb-1">
+             <a class="nav-link {% if type|index:0 == active_type %}active{%endif%}" id="pills-{{ type|index:0 }}-tab" 
+              data-toggle="pill" href="#pills-{{ type|index:0 }}" role="tab" aria-controls="pills-{{ type|index:0 }}" aria-selected="false">
+              {{ type|index:1 }}
+            </a>
+          </li>
+          
+          {% endfor %}
+        </ul>
+        <!-- end tabs -->
+        
+
+
+      
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+
+          <div class="card-body tab-content" id="pills-tabContent-2">
+            {% for type in types %}
+            
+            <div class="table-responsive tab-pane fade show {% if type|index:0 == active_type %}active{%endif%}"
+            id="pills-{{ type|index:0 }}" aria-labelledby="pills-{{ type|index:0 }}-tab" role="tabpanel">
+            
+                <p class="card-title">Kalitlar - {{ type|index:1 }} mijozlar</p> 
+                
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Mijoz</th>
+                      <th>Tur</th>
+                      <th>Qo'shdi</th>
+                      <th>Muddat</th>
+                      <th>Kalit</th>
+                      <!-- <th></th> -->
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for key in keys|filter_keys_by_type:type %}
+                      <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>
+                          {% if key.client %}
+                          <a href="{% url 'client' key.client.pk %}" target="_blank">
+                              {{ key.name }}
+                          </a>
+                          {% else %}
+                              {{ key.name }}
+                          {% endif %}
+                        </td>
+                        <td>
+                          <div class="btn-group" role="group">
+                            <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false" style="padding: 1px 5px;"> 
+                            {% if key.type %}
+                              {{ key.type|type_readable }}
+                            {% else %}
+                            -----
+                            {% endif %}
+                            
+                            </button>
+                            {% if perms.base.change_key %}
+                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                              {% for typejon in typejons %} 
+                              <a class="dropdown-item" href="{% url 'change_key_type' key.pk typejon|index:0 type|index:0 %}">
+                                {{ typejon|index:1 }}
+                              </a>
+                              {% endfor %}
+                        
+                            </div>
+                            {% endif %}
+                         </div>
+
+                        </td>
+                        <td>{{ key.added_by.name }}</td>
+                        <td>{{ key.key_exp|date:"d.m.Y" }}</td>
+                        <td>
+                          {% if perms.base.view_key %}
+                          <a href="/app{{ key.key.url }}" download class="text-success"><i class="fa fa-download"></i></a>
+                          {% endif %}
+                      </td>
+                        
+
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              {% endfor %}
+          </div>
+        </div>
+      </div>
+      </div>
+
+
+       
+  
+    </div>
+   
+  </div>
+
+{% endblock %}
+
+
+{% block script %}
+
+
+    
+<!-- <script src="{% static 'assets/js/backend-bundle.min.js' %}"></script> -->
+<!-- Chart Custom JavaScript -->
+<script src="{% static 'assets/js/customizer.js' %}"></script>
+
+<script src="{% static 'assets/js/sidebar.js' %}"></script>
+
+<!-- Flextree Javascript-->
+<script src="{% static 'assets/js/flex-tree.min.js' %}"></script>
+<script src="{% static 'assets/js/tree.js"></script>
+
+<!-- Table Treeview JavaScript -->
+<script src="{% static 'assets/js/table-treeview.js' %}"></script>
+
+<!-- SweetAlert JavaScript -->
+<script src="{% static 'assets/js/sweetalert.js' %}"></script>
+
+<!-- Vectoe Map JavaScript -->
+<script src="{% static 'assets/js/vector-map-custom.js' %}"></script>
+
+<!-- Chart Custom JavaScript -->
+<!-- <script src="{% static 'assets/js/chart-custom.js' %}"></script> -->
+<script src="{% static 'assets/js/charts/01.js' %}"></script>
+<script src="{% static 'assets/js/charts/02.js' %}"></script>
+
+<!-- slider JavaScript -->
+<script src="{% static 'assets/js/slider.js' %}"></script>
+
+<!-- Emoji picker -->
+<script src="{% static 'assets/vendor/emoji-picker-element/index.js' %}" type="module"></script>
+
+
+<!-- app JavaScript -->
+<script src="{% static 'assets/js/app.js' %}"></script>
+
+{% endblock %}
