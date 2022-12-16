@@ -3028,7 +3028,7 @@ def template_delete(request, pk):
     return redirect(templates)
 
 @login_required
-def keys(request, active_type='all'):
+def keys(request, active_type=None):
     profile = Profile.objects.get(user=request.user)
     if request.method == 'POST':
         files = request.FILES
@@ -3077,10 +3077,10 @@ def keys(request, active_type='all'):
     
     query = Key.objects.all().order_by('key_exp')
     types = list(Key.TYPE_CHOICES)
-    typejons = list(Key.TYPE_CHOICES)
-    types.insert(0, ('all', 'Barcha'))
-    types.append((None, 'Tur kiritilmagan'))
-    context = {'keys': query, 'types': types, 'typejons': typejons, 'active_type': active_type, 'profile': profile}
+    
+    # types.insert(0, ('all', 'Barcha'))
+    types.insert(0, (None, 'Tur kiritilmagan'))
+    context = {'keys': query, 'types': types, 'active_type': active_type, 'profile': profile}
     return render(request, 'base/keys.html', context)
 
 

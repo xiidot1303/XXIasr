@@ -99,5 +99,6 @@ def type_readable(type):
         'governor': 'Hokim yordamchisi',
         'taxi': 'Taxi litsenziya',
         'ishonchnoma': 'Ishonchnoma',
+        None: '-----'
     }
     return TYPE_CHOICES[type]

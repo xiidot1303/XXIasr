@@ -108,24 +108,56 @@
                               {{ key.name }}
                           {% endif %}
                         </td>
-                        <td>
-                          <div class="btn-group" role="group">
+                        <td style="padding-right: 80px;">
+                          <div class="btn-group" role="group" style="position: absolute;">
                             <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false" style="padding: 1px 5px;"> 
-                            {% if key.type %}
+                            aria-haspopup="true" aria-expanded="false" style="padding: 1px 5px; bottom: 10px; margin-right: 30px;"> 
                               {{ key.type|type_readable }}
-                            {% else %}
-                            -----
-                            {% endif %}
-                            
+                          
                             </button>
                             {% if perms.base.change_key %}
                             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                              {% for typejon in typejons %} 
-                              <a class="dropdown-item" href="{% url 'change_key_type' key.pk typejon|index:0 type|index:0 %}">
-                                {{ typejon|index:1 }}
+                               
+                              <a class="dropdown-item" href="{% url 'change_key_type' key.pk 'ytt' type|index:0 %}">
+                                YaTT
                               </a>
-                              {% endfor %}
+                               
+                              <a class="dropdown-item" href="{% url 'change_key_type' key.pk 'yuridik' type|index:0 %}">
+                                Yuridk shaxs
+                              </a>
+                               
+                              <a class="dropdown-item" href="{% url 'change_key_type' key.pk 'jismoniy' type|index:0 %}">
+                                Jismoniy shaxs
+                              </a>
+                               
+                              <a class="dropdown-item" href="{% url 'change_key_type' key.pk 'tanirovka' type|index:0 %}">
+                                Tanirovka
+                              </a>
+                               
+                              <a class="dropdown-item" href="{% url 'change_key_type' key.pk 'auction' type|index:0 %}">
+                                Avtoraqam
+                              </a>
+                               
+                              <a class="dropdown-item" href="{% url 'change_key_type' key.pk 'auction2' type|index:0 %}">
+                                Auksion
+                              </a>
+                               
+                              <a class="dropdown-item" href="{% url 'change_key_type' key.pk 'teacher' type|index:0 %}">
+                                O'qituvchi
+                              </a>
+                               
+                              <a class="dropdown-item" href="{% url 'change_key_type' key.pk 'governor' type|index:0 %}">
+                                Hokim yordamchisi
+                              </a>
+                               
+                              <a class="dropdown-item" href="{% url 'change_key_type' key.pk 'taxi' type|index:0 %}">
+                                Taxi litsenziya
+                              </a>
+                               
+                              <a class="dropdown-item" href="{% url 'change_key_type' key.pk 'ishonchnoma' type|index:0 %}">
+                                Ishonchnoma
+                              </a>
+
                         
                             </div>
                             {% endif %}

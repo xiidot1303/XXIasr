@@ -5,6 +5,10 @@ from base.models import *
 # Register your models here.
 class ClientAdmin(admin.ModelAdmin):
     search_fields = ['name']
+
+class KeyAdmin(admin.ModelAdmin):
+    list_display = ['client', 'name', 'type', 'key_exp']
+
 admin.site.register(Task)
 admin.site.register(Access)
 admin.site.register(Profile)
@@ -18,4 +22,4 @@ admin.site.register(subscriptions)
 admin.site.register(telegramPost)
 admin.site.register(Bot_user)
 admin.site.register(Template)
-admin.site.register(Key)
+admin.site.register(Key, KeyAdmin)
