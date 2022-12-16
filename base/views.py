@@ -3090,8 +3090,8 @@ def change_key_type(request, key_pk, type, active_type):
     key_obj = Key.objects.get(pk=key_pk)
     key_obj.type = type
     key_obj.save()
-    return redirect(keys, active_type=active_type)
-
+    # return redirect(keys, active_type=active_type)
+    return redirect(request.META.get('HTTP_REFERER'))
 
 
 @csrf_exempt
