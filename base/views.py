@@ -14,7 +14,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.views.decorators.csrf import csrf_exempt
 from bot.update import dp, updater
-from django.http.response import HttpResponse, FileResponse
+from django.http.response import HttpResponse, FileResponse, Http404
 from data.config import ENVIRONMENT
 from telegram import Update
 import json
@@ -29,7 +29,7 @@ from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.enum.style import WD_STYLE_TYPE
 from docx.shared import Pt
-
+from django.core.exceptions import PermissionDenied
 
 # Create your views here.
 def loginPage(request):
@@ -61,6 +61,14 @@ def  logoutPage(request):
 
 @login_required(login_url='login')
 def homePage(request):
+    # check ip address
+    ip = services.get_user_ip(request)
+    from data.config import ALLOWED_IPS
+    print(ALLOWED_IPS)
+    if not ip in ALLOWED_IPS:
+        logout(request)
+        raise PermissionDenied
+
     profile = Profile.objects.get(user=request.user)
     if profile.status == 'admin':
         uploads  = Upload.objects.all()

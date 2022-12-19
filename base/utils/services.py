@@ -32,3 +32,12 @@ def handle_uploaded_file(f):
         for chunk in f.chunks():
             destination.write(chunk)
     return f'static/keys/{f}'
+
+
+def get_user_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip

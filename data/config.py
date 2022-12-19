@@ -10,6 +10,7 @@ ENVIRONMENT=env.str("ENVIRONMENT")
 SECRET_KEY=env.str("SECRET_KEY")
 DEBUG = env.str("DEBUG") or False
 ALLOWED_HOSTS = env.str("ALLOWED_HOSTS").split(",")
+ALLOWED_IPS = env.str("ALLOWED_IPS").split(",")
 
 BOT_TOKEN = env.str("BOT_TOKEN")  # Bot toekn
 ADMINS = env.list("ADMINS")  # adminlar ro'yxati
