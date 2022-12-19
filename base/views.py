@@ -1668,12 +1668,9 @@ def IshonchnomaPage(request):
     context = {'clients':clients, 'page_range':page_range, 'paginator':paginator, 'pagType':pagType, 'profile':profile}
 
     if 'filter' in request.GET:
+
         try:
-            name = request.GET['proxy_owner']
-        except:
-            name = ""
-        try:
-            name = request.GET['owner']
+            name = request.GET['name']
         except:
             name = ""
         try:
