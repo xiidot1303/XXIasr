@@ -293,13 +293,13 @@ class TaxiCreation(ModelForm):
 class IshonchnomaCreation(ModelForm):
     class Meta:
         model = Client
-        fields = ['picture', 'proxy_owner', 'owner', 'tex_number', 'text_series', 'ishonchnoma', 'given_date', 'expiry_date', 
+        fields = ['picture', 'proxy_owner', 'name', 'tex_number', 'text_series', 'ishonchnoma', 'given_date', 'expiry_date', 
             'gov_login', 'gov_password', 'jshshir', 'phone1', 'phone2', 
             'phone3', 'key', 'key_exp', 'passport', 'selfy', 'bot_login', 'bot_password', 'bot_user']
         labels = {
             'picture':'Rasm',
             'proxy_owner': 'Ishonchnoma oluvchi',
-            'owner': 'Avtomobil egasi',
+            'name': 'Avtomobil egasi',
             'tex_number':'Avtomashina raqami',
             'text_series': 'Tex pasport seriyasi',
             'given_date':'Ishonchnoma berilgan sanasi',
@@ -338,7 +338,7 @@ class IshonchnomaCreation(ModelForm):
         for name, field in self.fields.items():
             field.widget.attrs.update({'class': 'form-control'})
         self.fields['proxy_owner'].widget.attrs.update({'required':'required'})
-        self.fields['owner'].widget.attrs.update({'required':'required'})
+        self.fields['name'].widget.attrs.update({'required':'required'})
         self.fields['jshshir'].widget.attrs.update({'required':'required'})
         self.fields['phone1'].widget.attrs.update({'required':'required'})
         self.fields['bot_user'].widget.attrs.update({'class':'form-control js-example-basic-single'})
