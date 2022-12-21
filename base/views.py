@@ -3121,11 +3121,18 @@ def keys(request, active_type=None):
             messages.error(request, error_messages)
 
     query = Key.objects.all().order_by('key_exp')
-    types = list(Key.TYPE_CHOICES)
     
-    # types.insert(0, ('all', 'Barcha'))
-    types.insert(0, (None, 'Tur kiritilmagan'))
-    context = {'keys': query, 'types': types, 'active_type': active_type, 'profile': profile}
+    # determine types
+    if active_type == 'all':
+        types = [('all', 'Barcha')]
+        type_links = list(Key.TYPE_CHOICES)
+        type_links.insert(0, (None, 'Tur kiritilmagan'))
+    else:
+        types = list(Key.TYPE_CHOICES)
+        types.insert(0, (None, 'Tur kiritilmagan'))
+        type_links = [('all', 'Barcha')]
+    
+    context = {'keys': query, 'types': types, 'type_links': type_links, 'active_type': active_type, 'profile': profile}
     return render(request, 'base/keys.html', context)
 
 

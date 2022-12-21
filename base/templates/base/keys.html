@@ -67,6 +67,17 @@
           </li>
           
           {% endfor %}
+          
+          {% for type in type_links %}
+          <li class="nav-item mb-1">
+             <a class="nav-link {% if type|index:0 == active_type %}active{%endif%}" id="pills-{{ type|index:0 }}-tab" 
+              href="{% url 'keys_by_type' type|index:0 %}">
+              {{ type|index:1 }}
+            </a>
+          </li>
+          
+          {% endfor %}
+
         </ul>
         <!-- end tabs -->
         
@@ -84,11 +95,12 @@
             
                 <p class="card-title">Kalitlar - {{ type|index:1 }} mijozlar</p> 
                 
-                <table class="table">
+                <table class="table table-striped ytt data-table table-bordered">
                   <thead>
                     <tr>
                       <th>#</th>
                       <th>Mijoz</th>
+                      <th>STIR</th>
                       <th>Tur</th>
                       <th>Qo'shdi</th>
                       <th>Muddat</th>
@@ -109,6 +121,7 @@
                               {{ key.name }}
                           {% endif %}
                         </td>
+                        <td>{{ key.inn }}</td>
                         <td style="padding-right: 80px;">
                           <div class="btn-group" role="group" style="position: absolute;">
                             <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
