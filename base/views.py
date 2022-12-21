@@ -3100,7 +3100,8 @@ def keys(request, active_type=None):
                             jshshir = jshshir,
                             inn = uid,
                             key = file_path,
-                            key_exp = date(year, month, day)
+                            key_exp = date(year, month, day),
+                            type = type_
                         )
                         success_messages += '+'
                     else:
