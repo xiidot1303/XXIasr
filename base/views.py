@@ -65,7 +65,7 @@ def homePage(request):
     ip = services.get_user_ip(request)
     from data.config import ALLOWED_IPS
 
-    if not ip in ALLOWED_IPS or not '*' in ALLOWED_IPS:
+    if not ip in ALLOWED_IPS and not '*' in ALLOWED_IPS:
         logout(request)
         raise PermissionDenied
 
