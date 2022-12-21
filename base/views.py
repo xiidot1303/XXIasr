@@ -3037,6 +3037,9 @@ def keys(request, active_type=None):
     profile = Profile.objects.get(user=request.user)
     if request.method == 'POST':
         files = request.FILES
+        success_messages = ''
+        error_messages = ''
+
         for file in request.FILES.getlist('files'):
             *args, file_format = str(file).split('.')
             if file_format == 'pfx':
@@ -3044,42 +3047,77 @@ def keys(request, active_type=None):
                 f = open(file_path, 'rb')
                 symbols = "QWERTYUIOPLKJHGFDSAZXCVBNMqwertyuiopasdfghjklmnbvcxz.,';:-=+1234567890"
                 all_text = f.read()
-                # print(all_text)
                 text = ''
                 for i in all_text:
                     i = chr(i)
-                    # try:
-                    if str(i) in symbols:
-                        text += str(i)
-                    # except:
-                    #     None
+                    try:
+                        if str(i) in symbols:
+                            text += str(i)
+                    except:
+                        None
                 try:
                     info_list = text.split(',')
-                    name = info_list[1].split('=')[1]
-                    surname = info_list[2].split('=')[1]
-                    validto = info_list[11].split('=')[1][:10]
-                    jshshir = info_list[8].split('=')[1]
-                    year, month, day = map(int, validto.split('.'))
+                    for i in text.split(','):
+                        if not 'name=' in i:
+                            info_list.remove(i)
+                        else:
+                            break
                     
+                    # print(info_list)
+
+                    if 'businesscategory=' in info_list[10]: # Yuridk
+                        type_ = 'yuridik'
+
+                    elif 'o==' in info_list[5]: # Jismoniy
+                        type_ = 'jismoniy'
+   
+                    elif 'o=' in info_list[5]: # YaTT
+                        type_ = 'ytt'
+
+                    else:
+                        type_ = None
+                    
+                    name = info_list[0].split('=')[1]
+                    surname = info_list[1].split('=')[1]
+                    uid = None
+                    for i in info_list[2:20]:
+                        if 'validto=' in i:
+                            validto = i.split('=')[1][:10]
+                        elif '1.2.860.3.16.1.2=' in i:
+                            jshshir = i.split('=')[1]
+                        elif 'uid=' in i:
+                            uid = i.split('=')[1]
+                    if not uid:
+                        uid = jshshir
+
+                    year, month, day = map(int, validto.split('.'))
+                    print(type_, name, surname, validto, jshshir, uid) # check all values are available
+
                     if not Key.objects.filter(jshshir=jshshir, key_exp__year=year, key_exp__month=month, key_exp__day=day):
                         Key.objects.create(
                             added_by = profile,
                             name = surname + ' ' + name,
                             jshshir = jshshir,
+                            inn = uid,
                             key = file_path,
                             key_exp = date(year, month, day)
                         )
-                        messages.success(request, "Kalit muvaffaqiyatli qo'shildi")
+                        success_messages += '+'
                     else:
-                        messages.success(request, "Bu kalit allaqachon yuklangan")
+                        error_messages += "Bu kalit allaqachon yuklangan {}\n".format(file)
 
                 except:
-                    messages.error(request, "Faylni o'qishda xatolik")
-                    
-
+                    error_messages += "Faylni o'qishda xatolik {}\n".format(file)
+            
             else:
-                messages.error(request, "Noto'g'ri fayl {}".format(file))
+                error_messages += "Noto'g'ri fayl {}\n".format(file)
     
+    # messages
+    if success_messages:
+        messages.success(request, "Kalitlar muvaffaqiyatli qo'shildi")
+    if error_messages:
+        messages.error(request, error_messages)
+
     query = Key.objects.all().order_by('key_exp')
     types = list(Key.TYPE_CHOICES)
     

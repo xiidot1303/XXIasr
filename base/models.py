@@ -368,6 +368,7 @@ class Key(models.Model):
     )
     type = models.CharField(choices=TYPE_CHOICES, max_length=255, blank=True, null=True)
     jshshir = models.CharField(max_length=255, null=True, blank=True)
+    inn = models.CharField(max_length=255, null=True, blank=True)
     added_by = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, blank=True)
     name = models.CharField(max_length=255)
     key = models.FileField(upload_to='static/keys', null=True, blank=True)

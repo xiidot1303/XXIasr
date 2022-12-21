@@ -23,7 +23,7 @@ def create_key(client_pk, profile):
         if not Key.objects.filter(key=client.key, client__pk=client.pk, key_exp=client.key_exp):
             Key.objects.create(
                 client=client, type=client.type, added_by=profile,
-                name=client.name, key=client.key, key_exp=client.key_exp, jshshir=client.jshshir
+                name=client.name, key=client.key, key_exp=client.key_exp, jshshir=client.jshshir, inn = client.tin
             )
 
 
