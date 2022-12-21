@@ -3034,6 +3034,7 @@ def template_delete(request, pk):
 
 @login_required
 def keys(request, active_type=None):
+    active_type = None if active_type == 'None' else active_type
     profile = Profile.objects.get(user=request.user)
     if request.method == 'POST':
         files = request.FILES
@@ -3113,11 +3114,11 @@ def keys(request, active_type=None):
             else:
                 error_messages += "Noto'g'ri fayl {}\n".format(file)
     
-    # messages
-    if success_messages:
-        messages.success(request, "Kalitlar muvaffaqiyatli qo'shildi")
-    if error_messages:
-        messages.error(request, error_messages)
+        # messages
+        if success_messages:
+            messages.success(request, "Kalitlar muvaffaqiyatli qo'shildi")
+        if error_messages:
+            messages.error(request, error_messages)
 
     query = Key.objects.all().order_by('key_exp')
     types = list(Key.TYPE_CHOICES)
