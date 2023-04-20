@@ -149,7 +149,7 @@
                           
                             <td>
                               <a href="{% url 'edit-client' client.id %}"><i class="fa fa-pencil"></i></a>
-                            {% if profile.status == 'admin' %} <a href="{% url 'delete-client' client.id %}"><i class="fa fa-trash"></i></a> {% endif %}
+                            {% if profile.status == 'admin' %} <a href="{% url 'delete-client' client.id %}"  onclick="return confirm(&#39;Siz {{ client.name }} nomli mijozni o\'chirmoqchimisiz?&#39;)"><i class="fa fa-trash"></i></a> {% endif %}
                             </td>
                        </tr>
                        {% endfor %}

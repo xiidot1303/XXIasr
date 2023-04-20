@@ -2949,16 +2949,14 @@ def editSMS(request, pk):
 def deleteClient(request, pk):
     profile = Profile.objects.get(user = request.user)
     if profile.status == 'admin':
-        if request.method == "POST":
-            try:
-                delclient = Client.objects.get(id=request.POST['client'])
-            except:
-                messages.error(request, 'Mijoz topilmadi :(')
-                return redirect(request.META.get('HTTP_REFERER'))
-            delclient.delete()
-            messages.success(request, "Ma'lumot o'chirildi ;(")
-            return redirect('create-client')
-        return render(request, 'base/delete.html', {'pk':pk})
+        try:
+            delclient = Client.objects.get(id=pk)
+        except:
+            messages.error(request, 'Mijoz topilmadi :(')
+            return redirect(request.META.get('HTTP_REFERER'))
+        delclient.delete()
+        messages.success(request, "Ma'lumot o'chirildi ;(")
+        return redirect(request.META.get('HTTP_REFERER'))
     else:
         return render(request, 'error-404.html')
 
