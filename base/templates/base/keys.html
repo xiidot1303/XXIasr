@@ -105,7 +105,7 @@
                       <th>Qo'shdi</th>
                       <th>Muddat</th>
                       <th>Kalit</th>
-                      <!-- <th></th> -->
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -183,6 +183,16 @@
                         <td>
                           {% if perms.base.view_key %}
                           <a href="/app{{ key.key.url }}" download class="text-success"><i class="fa fa-download"></i></a>
+
+                          {% endif %}
+                      </td>
+                        <td>
+                          {% if perms.base.delete_key %}
+                          <a href="{% url 'delete_key' key.pk %}" class="btn btn-danger" 
+                          onclick="return confirm(&#39;Kalitni o\'chirmoqchimisiz?&#39;)"
+                          >
+                            <i class="fa fa-trash" style="margin-right: 0;"></i></a>
+
                           {% endif %}
                       </td>
                         

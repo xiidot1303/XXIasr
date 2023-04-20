@@ -3306,6 +3306,13 @@ def change_key_type(request, key_pk, type, active_type):
     key_obj.save()
     return redirect(keys, active_type=active_type)
 
+@login_required(login_url='login')
+@permission_required('base.delete_key')
+def delete_key(request, key_pk):
+    key_obj = Key.objects.get(pk=key_pk)
+    key_obj.delete()
+    return redirect(request.META.get('HTTP_REFERER'))
+
 
 @csrf_exempt
 def bot_webhook(request):
