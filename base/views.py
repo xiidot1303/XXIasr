@@ -163,6 +163,8 @@ def uploadPage(request):
             upload = form.save(commit=False)
             upload.office = profile.office
             upload.sender = sender
+            # narxlashni bekor qilish
+            upload.status = 5
             upload.save()
             shablon1 = SMStext.objects.get(id=4).text
             text1=shablon1.replace("**nom", client.name)
