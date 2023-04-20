@@ -221,9 +221,6 @@ class JismoniyCreation(ModelForm):
             'key_exp':DateInput()
         }
 
-        
-       
-
     def __init__(self, *args, **kvargs):
         super(JismoniyCreation, self).__init__(*args, **kvargs)
 
@@ -559,6 +556,55 @@ class GovernorCreation(ModelForm):
             field.widget.attrs.update({'class': 'form-control'})
         self.fields['name'].widget.attrs.update({'required':'required'})
         # self.fields['jshshir'].widget.attrs.update({'required':'required'})
+        self.fields['phone1'].widget.attrs.update({'required':'required'})
+        self.fields['bot_user'].widget.attrs.update({'class':'form-control js-example-basic-single'})
+
+
+
+class AviakassaCreation(ModelForm):
+    class Meta:
+        model = Client
+        fields = ['picture', 'name', 'phone1', 'phone2', 'passport', 'fly_direction', 'brom_date', 'fly_date', 'jshshir',
+            'ticket', 'ticket_price', 'ticket_selled_price', 'profit', 'discount', 'bot_login', 'bot_password', 'bot_user']
+        labels = {
+            'picture':'Rasm',
+            'name': 'Nom',
+            'jshshir': 'JSHSHIR',
+            'phone1' : 'Telefon',
+            'phone2' : 'Telefon 2',
+            'phone3' : 'Telefon 3',
+            'fly_direction': 'Parvoz yo\'nalishi', 
+            'brom_date': 'Brom sanasi', 
+            'fly_date': 'Uchish sanasi', 
+            'passport':'Pasport',
+            'ticket': 'Chipta', 
+            'ticket_price': 'Chipta narxi', 
+            'ticket_selled_price': 'Sotilgan narxi', 
+            'profit': 'Olingan foyda', 
+            'discount': 'Berilgan chegirma', 
+            'bot_user' : 'Telegram foydalanuvchisi',
+            'bot_login': 'Login',
+            'bot_password': 'Parol',
+        }
+        
+        class DateInput(forms.DateInput):
+            input_type = 'date'
+            
+        widgets = {
+            'brom_date':DateInput(),
+            'fly_date':DateInput()
+        }
+
+        
+       
+
+    def __init__(self, *args, **kvargs):
+        super(AviakassaCreation, self).__init__(*args, **kvargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control'})
+        self.fields['name'].widget.attrs.update({'required':'required'})
+        self.fields['jshshir'].widget.attrs.update({'required':'required'})
         self.fields['phone1'].widget.attrs.update({'required':'required'})
         self.fields['bot_user'].widget.attrs.update({'class':'form-control js-example-basic-single'})
 

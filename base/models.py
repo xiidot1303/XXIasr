@@ -51,6 +51,7 @@ class Client(models.Model):
         ('governor', 'Hokim yordamchisi'),
         ('taxi', 'Taxi litsenziya'),
         ('ishonchnoma', 'Ishonchnoma'),
+        ('aviakassa', 'Aviakassa va tur'),
     )
     type = models.CharField(choices=TYPE_CHOICES, max_length=255)
     SUB_CHOICES = (
@@ -116,9 +117,17 @@ class Client(models.Model):
     win_value = models.CharField(null=True, blank=True, max_length=32)
     overall_payment = models.CharField(null=True, blank=True, max_length=32)
 
-
     proxy_owner = models.CharField(max_length=255, null=True, blank=True)
     ishonchnoma = models.FileField(null=True, blank=True, upload_to="static/ishonchnoma/")
+
+    fly_direction = models.CharField(max_length=255, null=True, blank=True)
+    brom_date = models.DateField(null=True, blank=True)
+    fly_date = models.DateField(null=True, blank=True)
+    ticket = models.FileField(null=True, blank=True, upload_to="static/ticket/")
+    ticket_price = models.CharField(max_length=255, null=True, blank=True)
+    ticket_selled_price = models.CharField(max_length=255, null=True, blank=True)
+    profit = models.CharField(max_length=255, null=True, blank=True)
+    discount = models.CharField(max_length=255, null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if self.type == 'auction':
@@ -188,9 +197,6 @@ class Client(models.Model):
                 return 'inactive'
         else:
             return 'not_found'
-
-
-
 
 
 class Service(models.Model):

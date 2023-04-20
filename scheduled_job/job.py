@@ -7,7 +7,10 @@ import requests
 
 def alert_clients():
     # YATT guvohnoma
-    for client in Client.objects.filter(Q(type='ytt') | Q(type='tanirovka') | Q(type='yuridik') | Q(type='taxi')):
+    for client in Client.objects.filter(
+        Q(type='ytt') | Q(type='tanirovka') | Q(type='yuridik') | 
+        Q(type='taxi') | Q(type='aviakassa')
+        ):
         # identidy due date
         if client.guvohnoma_exp:
             due_date = client.guvohnoma_exp
@@ -26,6 +29,15 @@ def alert_clients():
         elif client.expiry_date:
             due_date = client.expiry_date
             sms_id = 9
+        elif client.fly_date:
+            due_date = client.fly_date
+            sms_id = 12
+            #check date
+            if is_upcoming_due_date(due_date):
+                if is_upcoming_due_date(due_date) == 1:
+                    send_sms(client, is_upcoming_due_date(due_date), sms_id)
+                    send_tg_message(client, is_upcoming_due_date(due_date), sms_id)
+            continue
         else:
             continue
         

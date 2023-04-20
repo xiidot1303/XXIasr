@@ -240,6 +240,18 @@ def editClient(request, pk):
                 return redirect('teacher')
             else:
                 messages.error(request, "Qandaydir xatolik :(")
+                
+    elif client.type == 'aviakassa':
+        form = AviakassaCreation(instance=client)
+        if request.method == "POST":
+            form = AviakassaCreation(request.POST, request.FILES, instance=client)
+            if form.is_valid():
+                form.save()
+                create_key(client.pk, profile)
+                messages.success(request, "Malumotlar yangilandi")
+                return redirect('aviakassa')
+            else:
+                messages.error(request, "Qandaydir xatolik :(")
     
     context = {'form':form}
     return render(request, 'base/forms.html', context)
