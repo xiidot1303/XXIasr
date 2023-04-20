@@ -177,8 +177,13 @@
                   </thead>
                   <tbody>
                     {% for row in result %}
-                    {% if row.status == '0' %}
+                      {% if row.status == '0' %}
                       <tr class="bg-warning">
+                      {% elif row.status == '5' %}
+                      <tr class="bg-danger text-white">
+                      {% elif row.status == '10' %}
+                      <tr class="bg-success">
+                      {% endif %}
                         <td>{{forloop.counter}}</td>
                         <td style="display: flex; align-items: center ;">
                           {% if row.client.picture %}
@@ -226,8 +231,8 @@
                           {% endif %}
                         </td>
                       </tr>
-                    {% elif row.status == '5'%}
-                      <tr class="bg-danger text-white">
+                    
+                      <!-- <tr class="bg-danger text-white">
                         <td>{{forloop.counter}}</td>
                         <td style="display: flex; align-items: center ;">
                           {% if row.client.picture %}
@@ -275,8 +280,8 @@
                             </a>  
                           {% endif %}
                         </td>
-                      </tr>
-                    {% endif %}
+                      </tr> -->
+
                     {% endfor %}
                   </tbody>
             </table>
