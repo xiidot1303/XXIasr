@@ -3028,7 +3028,7 @@ class BotuserEditView(LoginRequiredMixin, UpdateView):
     template_name = 'base/forms.html'
     success_url = '/telegram'
 
-@login_required
+@login_required(login_url='login')
 def calendar(request):
     all_list = {'Январь': [], 'Февраль': [], 'Март': [], 'Апрель': [], 'Май': [], 'Июнь': [], 'Июль': [], 'Август': [], 'Сентябрь': [], 'Октябрь': [], 'Ноябрь': [], 'Декабрь': []}
     n_month = 1
@@ -3065,7 +3065,7 @@ def calendar(request):
     context = {'all_list': all_list}
     return render(request, 'base/calendar.html', context)
 
-@login_required
+@login_required(login_url='login')
 def get_auction_info_file(request, client_pk, type):
     today = date.today()
     day = today.day
@@ -3101,7 +3101,7 @@ def get_auction_info_file(request, client_pk, type):
         f = open('static/auction/{}.pdf'.format(client.pk), 'rb')
     return FileResponse(f)
 
-@login_required
+@login_required(login_url='login')
 def get_carnumber_info_file(request, client_pk, type):
     today = date.today()
     day = today.day
@@ -3145,7 +3145,7 @@ def get_carnumber_info_file(request, client_pk, type):
     return FileResponse(f)
 
 
-@login_required
+@login_required(login_url='login')
 def templates(request):
     user = request.user
     profile = Profile.objects.get(user=user)
@@ -3158,6 +3158,7 @@ class TemplateEditView(LoginRequiredMixin, UpdateView):
     form_class = TemplateForm
     template_name = 'base/forms.html'
     success_url = '/templates'
+    login_url = 'login'
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
@@ -3174,6 +3175,7 @@ class TemplateCreateView(LoginRequiredMixin, CreateView):
     form_class = TemplateForm
     template_name = 'base/forms.html'
     success_url = '/templates'
+    login_url = 'login'
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
@@ -3186,13 +3188,13 @@ class TemplateCreateView(LoginRequiredMixin, CreateView):
         return context
 
 
-@login_required
+@login_required(login_url='login')
 def template_delete(request, pk):
     template = Template.objects.get(pk=pk)
     template.delete()
     return redirect(templates)
 
-@login_required
+@login_required(login_url='login')
 def keys(request, active_type=None):
     active_type = None if active_type == 'None' else active_type
     profile = Profile.objects.get(user=request.user)
@@ -3296,7 +3298,7 @@ def keys(request, active_type=None):
     return render(request, 'base/keys.html', context)
 
 
-@login_required
+@login_required(login_url='login')
 @permission_required('base.change_key')
 def change_key_type(request, key_pk, type, active_type):
     key_obj = Key.objects.get(pk=key_pk)
