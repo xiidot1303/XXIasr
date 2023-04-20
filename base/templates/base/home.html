@@ -101,7 +101,7 @@
       </div>
     
     {% if profile.status == 'admin' or profile.status == 'superuser' or profile.status == 'user' %}
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
@@ -179,9 +179,10 @@
         </div>
       </div>
      
-    </div>
+    </div> -->
     {% endif %}
 
+    <!-- start uncompleted uploads -->
     <div class="row">
       <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
@@ -258,8 +259,89 @@
           </div>
         </div>
       </div>
-     
     </div>
+    <!-- end uncompleted uploads -->
+
+    <!-- start  notes -->
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-title">Eslatmalar | Tugatilmagan</p>
+            {% if notes.count > 0 %}
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Mavzu</th>
+                    <th>Muddati</th>
+                    <th>Holati</th>
+                    <th>Mijoz</th>
+                    <th>Xizmat turi</th>
+                    <th>To'lov</th>
+                    <th>To'langan</th>
+                    <th>Izoh</th>                  
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for note in notes|slice:":10" %}
+                    <tr>
+                      <td>{{forloop.counter}}</td>
+                      {% if profile.status == 'admin' or profile.status == 'superuser'%}
+                      <!-- <td>{{note.user}}</td> -->
+                      {% endif %}
+                      <td style="line-height: 25px;">{{note.text|wordwrap:"20"|linebreaksbr }}</td>
+                      <td>{{note.period}}</td>
+                      <td>{{note.get_status_display}}</td>
+                      {% if note.client %}
+                      <td style="display: flex; align-items: center ;">
+                          {% if client.picture %}
+                              <div class="profile-pics">
+                                  <img style="width: 100%; height: 100%; border-radius: 0; transition: all 1s;" src="/app{{note.client.picture.url}}" alt="">
+                              </div>
+                              <div class="img-text" style="line-height: 15px; padding-left: 15px;"><a class="" href="{% url 'client' note.client.id %}">{{ note.client|wordwrap:"20"|linebreaksbr }}</a> </div>
+                              {% else %}
+                              <div class="profile-pics">
+                                  <img style="width: 100%; height: 100%; border-radius: 0; transition: all 1s;" src="{% static 'profile/profile-default.jpg' %}" alt="">
+                              </div>
+                              <div class="img-text" style="line-height: 15px; padding-left: 15px;"><a class="" href="{% url 'client' note.client.id %}">{{ note.client|wordwrap:"20"|linebreaksbr }}</a></div>
+                          {% endif %}
+                      </td>
+                      {% else %}
+                      <td>-</td>
+                      {% endif %}
+                      {% if note.service %}
+                      <td style="line-height: 25px;">{{note.service|wordwrap:"20"|linebreaksbr }}</td>
+                      {% else %}
+                      <td>-</td>
+                      {% endif %}
+                      <td>{{note.payment}}</td>
+                      <td>{{note.payed}}</td>
+                      <td style="line-height: 25px;">{{note.comment|wordwrap:"20"|linebreaksbr}}</td>
+                      <td>
+                          {% if note.user == profile %}
+                            {% if note.status == '0' or note.status == '5' %}
+                            <a href="{% url 'note' note.id %}"><i class="fa fa-pencil"></i></a>
+                            {% endif %}
+                          {% endif %}
+                      </td>
+      </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+            {% else %}
+            <div class="text-center text-danger">
+              Tugatilmagan eslatmalar mavjud emas
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- start notes -->
 
   </div>
  
