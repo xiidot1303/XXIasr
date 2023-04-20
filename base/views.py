@@ -107,9 +107,9 @@ def monitoringPage(request):
         date_to = request.GET['to']
         if not date_to:
             date_to = '3000-12-12'
-        office = request.GET['office']
+        office = request.GET['office'] if 'office' in request.GET else ''
         status = request.GET['status']
-        user = request.GET['user']
+        user = request.GET['user'] if 'user' in request.GET else ''
         service = request.GET['service']
         
         uploads = Upload.objects.filter(Q(period__range=(date_from, date_to)) | Q(period=None))
