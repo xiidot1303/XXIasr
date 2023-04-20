@@ -83,6 +83,8 @@ class Client(models.Model):
     address2 = models.CharField(max_length=255, null=True, blank=True)
     key = models.FileField(upload_to='static/keys', null=True, blank=True)
     key_exp = models.DateField(null=True, blank=True)
+    key2 = models.FileField(upload_to='static/keys', null=True, blank=True)
+    key_exp2 = models.DateField(null=True, blank=True)
     passport = models.FileField(null=True, blank=True, upload_to="static/passport/")
     owner = models.CharField(max_length=255, null=True, blank=True)
     tex_number = models.CharField(max_length=255, null=True, blank=True)

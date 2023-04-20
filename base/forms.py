@@ -140,7 +140,7 @@ class YuridikCreation(ModelForm):
         
         fields = ['picture', 'name', 'yuridik_type', 'tin', 'gov_login', 'gov_password','director', 'director_tin', 'jshshir', 
             'phone1', 'phone2', 'phone3', 'key', 'key_exp', 'guvohnoma_file', 'ustav','passport', 'selfy', 
-            'bot_user', 'bot_login', 'bot_password']
+            'bot_user', 'bot_login', 'bot_password', 'key2', 'key_exp2']
         labels = {
             'picture':'Rasm',
             'name': 'Nom',
@@ -157,6 +157,8 @@ class YuridikCreation(ModelForm):
             'bot_user' : 'Telegram foydalanuvchisi',
             'key':'Kalit',
             'key_exp':'Kalit muddati',
+            'key2':'Kalit (Jismoniy)',
+            'key_exp2':'Kalit muddati (Jismoniy)',
             'guvohnoma_file':'Guvohnoma fayli',
             'ustav':'Ustav',
             'passport':'Pasport',
