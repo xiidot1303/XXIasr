@@ -32,6 +32,7 @@ def confirmSerivce(request, pk):
         return render(request, 'error-404.html')
     if profile.status == 'admin' or profile.status == 'superuser' or obj.reciever == profile:
         if request.method == "POST":
+            redirect_url = request.POST['redirect_url'] if 'redirect_url' in request.POST else 'home'
             if obj.status == '0':
                 obj.payment = request.POST['price']
                 obj.status = '5'
@@ -66,7 +67,7 @@ def confirmSerivce(request, pk):
                 # requests.post(url, json=data, headers=headers) # dont send sms to staffs
 
                 messages.success(request, "Xizmat narxlandi :)")
-                return redirect("home")
+                return redirect(redirect_url)
             elif obj.status == '5':
                 obj.status = '10'
                 obj.save()
@@ -101,10 +102,10 @@ def confirmSerivce(request, pk):
                 bot_send_message(obj.client, text)
         
                 messages.success(request, "Xizmat tugatildi :)")
-                return redirect("home")
+                return redirect(redirect_url)
             else:
                 return render(request, 'error-404.html')
-        return render(request, 'base/confirm.html', {'obj':obj, 'profile':profile})
+        return render(request, 'base/confirm.html', {'obj':obj, 'profile':profile, 'redirect_url': request.META.get('HTTP_REFERER')})
     else:
         return render(request, 'error-404.html')
 

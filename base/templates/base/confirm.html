@@ -22,8 +22,9 @@
             <div class="form-group">
               <label for="">Summa</label>
               <input type="text" name="price" class="form-control">
+              <input type="hidden" name="redirect_url" value="{{ redirect_url }}">
             </div>
-            <a href="{% url 'home'%}">Ortga</a>
+            <a href="{{ redirect_url }}">Ortga</a>
               <button class="btn btn-primary btn-rounded" type="submit">Tasdiqlash</button>
             </form>
           </div>
@@ -47,11 +48,12 @@
             <p>
               Izoh - <i>{{obj.comment}}</i>
           </p>
-            <a href="{% url 'home'%}">Ortga</a>
-            <a href="{% url 'cancel-service' obj.pk %}">
-              <button class="btn btn-danger btn-rounded" type="submit">Bekor qilish</button>
+            <a href="{{ redirect_url }}">Ortga</a>
+            <a href="{% url 'cancel-service' obj.pk %}" class="btn btn-danger btn-rounded">
+              Bekor qilish
             </a>
               <button class="btn btn-primary btn-rounded" type="submit">Tasdiqlash</button>
+              <input type="hidden" name="redirect_url" value="{{ redirect_url }}">
             </form>
           </div>
         </div>
@@ -82,11 +84,12 @@
         <p>
           Izoh - <i>{{obj.comment}}</i>
         </p>
-        <a href="{% url 'home'%}">Ortga</a>
-        <a href="{% url 'cancel-service' obj.pk %}">
-          <button class="btn btn-danger btn-rounded" type="submit">Bekor qilish</button>
+        <a href="{{ redirect_url }}">Ortga</a>
+        <a href="{% url 'cancel-service' obj.pk %}" class="btn btn-danger btn-rounded">
+          Bekor qilish
         </a>
           <button class="btn btn-primary btn-rounded" type="submit">Tasdiqlash</button>
+          <input type="hidden" name="redirect_url" value="{{ redirect_url }}">
         </form>
       </div>
     </div>
