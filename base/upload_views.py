@@ -260,14 +260,23 @@ def editClient(request, pk):
 def NotesPage(request):
     form = NotesCreation()
     profile = Profile.objects.get(user=request.user)
-    if profile.status == 'admin' or profile.status == 'superuser':
-        notes = Notes.objects.all().order_by('status')
-    elif profile.status == 'user':
-        notes = Notes.objects.filter(user=profile).exclude(status='10').order_by('status')
+    notes = Notes.objects.all()
     if 'filter' in request.GET:
         date_from = request.GET['from']
+        if not date_from:
+            date_from = '1000-12-12'
         date_to = request.GET['to']
-        notes = notes.filter(period__range=(date_from, date_to)).order_by('status')
+        if not date_to:
+            date_to = '3000-12-12'
+        notes = notes.filter(period__range=(date_from, date_to)).order_by('status', 'period')
+        status = request.GET['status']
+        if status:
+            notes = notes.filter(status=status)
+    
+    if profile.status == 'admin' or profile.status == 'superuser':
+        notes = notes.order_by('status', 'period')
+    elif profile.status == 'user':
+        notes = notes.filter(user=profile).order_by('status', 'period')
     if request.method == "POST":
         form = NotesCreation(request.POST)
         if form.is_valid():
