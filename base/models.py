@@ -381,3 +381,20 @@ class Key(models.Model):
     name = models.CharField(max_length=255)
     key = models.FileField(upload_to='static/keys', null=True, blank=True)
     key_exp = models.DateField(null=True, blank=True)
+
+    @property
+    def is_active(self):
+        if self.expiry_date:
+            dates = datetime.datetime.strptime(str(self.expiry_date), "%Y-%m-%d").date()
+            today = datetime.date.today()
+            subs =  dates -today
+            if subs.days >=1 and subs.days <=10:
+                return True
+            elif subs.days >10 and subs.days <=30:
+                return True
+            elif subs.days > 30:
+                return True
+            else:
+                return False
+        else:
+            return None

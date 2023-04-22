@@ -3283,7 +3283,17 @@ def keys(request, active_type=None):
             messages.error(request, error_messages)
 
     query = Key.objects.all().order_by('key_exp')
-    
+    status = ''
+    if 'filter' in request.GET:
+        status = request.GET['status']
+        today = datetime.datetime.today()
+        if status == 'active':
+            tomorrow = today + datetime.timedelta(days=1)
+            query = query.filter(key_exp__range = [tomorrow.strftime("%Y-%m-%d"), '3000-12-12'])
+        elif status == 'inactive':
+            query = query.filter(key_exp__range = ['1000-12-12', today.strftime("%Y-%m-%d")])
+        elif status == 'none':
+            query = query.filter(key_exp = None)
     # determine types
     if active_type == 'all':
         types = [('all', 'Barcha')]
@@ -3294,7 +3304,10 @@ def keys(request, active_type=None):
         types.insert(0, (None, 'Tur kiritilmagan'))
         type_links = [('all', 'Barcha')]
     
-    context = {'keys': query, 'types': types, 'type_links': type_links, 'active_type': active_type, 'profile': profile}
+    context = {
+        'keys': query, 'types': types, 'type_links': type_links, 
+        'active_type': active_type, 'profile': profile, 'status': status,
+        }
     return render(request, 'base/keys.html', context)
 
 

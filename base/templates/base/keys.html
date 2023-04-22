@@ -52,10 +52,44 @@
           </form>
         </div>
       </div>
-   
-      <div class="row">
-    
       
+      <!-- start filter -->
+      <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+          <div class="card">
+              
+              <div class="card-body">
+              <div class="card-title">Filterlash</div>
+              
+                  <form action="" method="get">
+                    <input type="hidden" name="filter">
+                  <div class="row">
+                    <div class="col-sm-6">
+
+                      <div class="form-group">
+                        <label for="">Holati</label>
+                        <select name="status" class="form-control">
+                          <option value="" {% if status == "" %}selected{%endif%}>Barchasi</option>
+                          <option value="active" {% if status == "active" %}selected{%endif%}>Tugamagan</option>
+                          <option value="inactive" {% if status == "inactive" %}selected{%endif%}>Tugagan</option>
+                          <option value="none" {% if status == "none" %}selected{%endif%}>Kiritilmagan</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                    </div>
+                  </div>
+                  <button class="btn btn-primary btn-rounded" type="submit">Aniqlash</button>
+                  </form>
+            </div>
+          </div>
+        </div>
+       
+      </div>
+      <!-- start filter -->
+
+
+      <div class="row">
       <!-- start tabs -->
         <ul class="nav nav-pills" id="pills-tab" role="tablist">
           {% for type in types %}
