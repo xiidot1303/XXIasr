@@ -522,6 +522,10 @@ def createClient(request):
                 if form.is_valid():
                         client = form.save(commit=False)
                         client.type = 'ytt'
+                        if Client.objects.filter(type=client.type, jshshir=client.jshshir):
+                            messages.error(request, 'Ushbu mijoz allaqachon ro\'yxatga olingan')
+                            context = {'view':True, 'form':form, 'profile':profile}
+                            return render(request, 'base/createclient.html', context)
                         if client.sub_type == 'aylanma':
                             client.congragulate = True
                         else:
@@ -547,6 +551,10 @@ def createClient(request):
                         client.save()
 
                         client.type = 'yuridik'
+                        if Client.objects.filter(type=client.type, jshshir=client.jshshir):
+                            messages.error(request, 'Ushbu mijoz allaqachon ro\'yxatga olingan')
+                            context = {'view':True, 'form':form, 'profile':profile}
+                            return render(request, 'base/createclient.html', context)
                         client.save()
                         messages.success(request, 'Yuridik ro\'yxatga olindi')
                 elif 'bot_login' in form.errors.as_data():
@@ -563,6 +571,10 @@ def createClient(request):
                 if form.is_valid():
                         client = form.save(commit=False)
                         client.type = 'jismoniy'
+                        if Client.objects.filter(type=client.type, jshshir=client.jshshir):
+                            messages.error(request, 'Ushbu mijoz allaqachon ro\'yxatga olingan')
+                            context = {'view':True, 'form':form, 'profile':profile}
+                            return render(request, 'base/createclient.html', context)
                         client.save()
                         messages.success(request, 'Jismoniy shaxs ro\'yxatga olindi')
                 elif 'bot_login' in form.errors.as_data():
@@ -577,6 +589,10 @@ def createClient(request):
                 if form.is_valid():
                         client = form.save(commit=False)
                         client.type = 'taxi'
+                        if Client.objects.filter(type=client.type, jshshir=client.jshshir):
+                            messages.error(request, 'Ushbu mijoz allaqachon ro\'yxatga olingan')
+                            context = {'view':True, 'form':form, 'profile':profile}
+                            return render(request, 'base/createclient.html', context)
                         client.save()
                         messages.success(request, 'Taxi litsenziya ro\'yxatga olindi')
                 elif 'bot_login' in form.errors.as_data():
@@ -606,6 +622,10 @@ def createClient(request):
                 if form.is_valid():
                         client = form.save(commit=False)
                         client.type = 'governor'
+                        if Client.objects.filter(type=client.type, jshshir=client.jshshir):
+                            messages.error(request, 'Ushbu mijoz allaqachon ro\'yxatga olingan')
+                            context = {'view':True, 'form':form, 'profile':profile}
+                            return render(request, 'base/createclient.html', context)
                         client.save()
                         messages.success(request, 'Hokim yordamchisi ro\'yxatga olindi')
                 elif 'bot_login' in form.errors.as_data():
@@ -620,6 +640,10 @@ def createClient(request):
                 if form.is_valid():
                         client = form.save(commit=False)
                         client.type = 'tanirovka'
+                        if Client.objects.filter(type=client.type, jshshir=client.jshshir):
+                            messages.error(request, 'Ushbu mijoz allaqachon ro\'yxatga olingan')
+                            context = {'view':True, 'form':form, 'profile':profile}
+                            return render(request, 'base/createclient.html', context)
                         client.owner = request.POST['owner']
                         client.tex_number = request.POST['tex_number']
                         client.text_series = request.POST['text_series']
@@ -689,6 +713,10 @@ def createClient(request):
                 if form.is_valid():
                         client = form.save(commit=False)
                         client.type = 'teacher'
+                        if Client.objects.filter(type=client.type, jshshir=client.jshshir):
+                            messages.error(request, 'Ushbu mijoz allaqachon ro\'yxatga olingan')
+                            context = {'view':True, 'form':form, 'profile':profile}
+                            return render(request, 'base/createclient.html', context)
                         client.save()
                         messages.success(request, 'Mijoz ro\'yxatga olindi')
                 elif 'bot_login' in form.errors.as_data():
