@@ -254,6 +254,18 @@ def editClient(request, pk):
             else:
                 messages.error(request, "Qandaydir xatolik :(")
     
+    elif client.type == 'daromad12':
+        form = Daromad12Creation(instance=client)
+        if request.method == "POST":
+            form = Daromad12Creation(request.POST, request.FILES, instance=client)
+            if form.is_valid():
+                form.save()
+                create_key(client.pk, profile)
+                messages.success(request, "Malumotlar yangilandi")
+                return redirect('daromad12')
+            else:
+                messages.error(request, "Qandaydir xatolik :(")
+    
     context = {'form':form}
     return render(request, 'base/forms.html', context)
 

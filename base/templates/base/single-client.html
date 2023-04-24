@@ -163,6 +163,12 @@
                 {% if client.discount %}
                 <div class="h5 mt-3">Berilgan chegirma : {{client.discount}}</div>
                 {% endif %}
+                {% if client.card %}
+                <div class="h5 mt-3">Karta ma'lumotlari : {{client.card}}</div>
+                {% endif %}
+                {% if client.period %}
+                <div class="h5 mt-3">Ariza muddati : {{client.period}}</div>
+                {% endif %}
 
               </div>
 
@@ -230,6 +236,18 @@
                 {% if client.ticket %}
                 <div class="h5 mt-3">
                   Chipta : <a href="/app{{client.ticket.url}}" download><i class="fa fa-download"></i></a>
+                </div>
+                {% endif %}
+                
+                {% if client.receipt %}
+                <div class="h5 mt-3">
+                  Kvitansiya ma'lumotlari : <a href="/app{{client.receipt.url}}" download><i class="fa fa-download"></i></a>
+                </div>
+                {% endif %}
+                
+                {% if client.contract %}
+                <div class="h5 mt-3">
+                  Shartnoma qog'ozi : <a href="/app{{client.contract.url}}" download><i class="fa fa-download"></i></a>
                 </div>
                 {% endif %}
 

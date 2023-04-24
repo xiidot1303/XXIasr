@@ -52,6 +52,7 @@ class Client(models.Model):
         ('taxi', 'Taxi litsenziya'),
         ('ishonchnoma', 'Ishonchnoma'),
         ('aviakassa', 'Aviakassa va tur'),
+        ('daromad12', '12% daromad'),
     )
     type = models.CharField(choices=TYPE_CHOICES, max_length=255)
     SUB_CHOICES = (
@@ -130,6 +131,11 @@ class Client(models.Model):
     ticket_selled_price = models.CharField(max_length=255, null=True, blank=True)
     profit = models.CharField(max_length=255, null=True, blank=True)
     discount = models.CharField(max_length=255, null=True, blank=True)
+
+    card = models.CharField(max_length=64, null=True, blank=True)
+    receipt = models.FileField(null=True, blank=True, upload_to="static/receipt/")
+    contract = models.FileField(null=True, blank=True, upload_to="static/contract/")
+    period = models.DateField(null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if self.type == 'auction':
@@ -373,6 +379,7 @@ class Key(models.Model):
         ('governor', 'Hokim yordamchisi'),
         ('taxi', 'Taxi litsenziya'),
         ('ishonchnoma', 'Ishonchnoma'),
+        ('daromad12', '12% daromad'),
     )
     type = models.CharField(choices=TYPE_CHOICES, max_length=255, blank=True, null=True)
     jshshir = models.CharField(max_length=255, null=True, blank=True)

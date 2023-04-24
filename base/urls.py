@@ -34,6 +34,7 @@ urlpatterns = [
     path("taxi/", TaxiPage, name='taxi'),
     path("ishonchnoma/", IshonchnomaPage, name='ishonchnoma'),
     path("aviakassa/", aviakassaPage, name='aviakassa'),
+    path("daromad12/", daromad12Page, name='daromad12'),
 
 
     path("cancel-serivce/<str:pk>", cancelService, name='cancel-service'),
