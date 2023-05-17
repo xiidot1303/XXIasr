@@ -88,17 +88,7 @@ def filter_keys_by_type(keys, type):
 
 @register.filter
 def type_readable(type):
-    TYPE_CHOICES = {
-        'ytt': 'YaTT',
-        'yuridik': 'Yuridik shaxs',
-        'jismoniy': 'Jismoniy shaxs',
-        'tanirovka':'Tanirovka',
-        'auction':'Avtoraqam',
-        'auction2':'Auksion',
-        'teacher':"O'qituvchi",
-        'governor': 'Hokim yordamchisi',
-        'taxi': 'Taxi litsenziya',
-        'ishonchnoma': 'Ishonchnoma',
-        None: '-----'
-    }
+    from base.models import Client
+    TYPE_CHOICES = dict(Client.TYPE_CHOICES)
+    TYPE_CHOICES[None] = '------'
     return TYPE_CHOICES[type]
