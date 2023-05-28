@@ -1,10 +1,19 @@
 from django.contrib import admin
-
+from django.utils.html import format_html
 from base.models import *
 
 # Register your models here.
 class ClientAdmin(admin.ModelAdmin):
-    search_fields = ['name']
+    list_display = ['name', 'type', 'sub_type', 'jshshir', 'phone1', 'key_button']
+    search_fields = ['name', 'jshshir', 'phone1']
+    list_filter = ['type', 'sub_type', 'jshshir', 'phone1', 'key']
+
+    def key_button(self, obj):
+        if obj.key:
+            change_url = f'/{obj.key}'
+            return format_html('<a target="_blank" class="btn btn-success" href="{}" download style="padding: 1px 5px;"><i class="fas fa-download"></i></a>', change_url)
+        return None
+    key_button.short_description = 'Kalit'
 
 class KeyAdmin(admin.ModelAdmin):
     list_display = ['client', 'name', 'type', 'key_exp']
