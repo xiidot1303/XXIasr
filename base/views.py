@@ -610,6 +610,12 @@ def createClient(request):
                         client = form.save(commit=False)
                         client.type = 'ishonchnoma'
                         client.save()
+                        files = request.FILES.getlist('ishonchnoma_files')
+                        for file in files:
+                            # file_obj = File.objects.create(file=file)
+                            file = File.objects.create(ishonchnoma=file)
+                            client.ishonchnoma_files.add(file)
+                        client.save()
                         messages.success(request, 'Ishonchnoma ro\'yxatga olindi')
                 elif 'bot_login' in form.errors.as_data():
                     messages.error(request, 'Bunday login bilan allaqachon ro\'yxatdan o\'tilgan')
