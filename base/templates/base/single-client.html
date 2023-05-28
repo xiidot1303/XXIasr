@@ -290,9 +290,9 @@
                 </div>
                 {% endif %}
 
-                {% if client.ishonchnoma %}
+                {% if client.ishonchnoma_files.all %}
                 <div class="h5 mt-3">
-                  Ishonchnoma : <a href="/app{{client.ishonchnoma.url}}" download><i class="fa fa-download"></i></a>
+                  Ishonchnoma : <a href="{% url 'download_ishonchnoma_files' client.id %}" download><i class="fa fa-download"></i></a>
                 </div>
                 {% endif %}
                 

@@ -76,5 +76,7 @@ urlpatterns = [
     path('edit-botuser/<int:pk>/', BotuserEditView.as_view(), name='edit-botuser'),
 
     path('change-congragulation/<int:client_pk>/<str:status>/', change_congragulation, name='change_congragulation'),
+
+    path('download-ishonchnoma-files/<client_id>/', download_ishonchnoma_files, name='download_ishonchnoma_files'),
 ]
 

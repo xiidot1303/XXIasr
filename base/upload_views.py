@@ -175,7 +175,13 @@ def editClient(request, pk):
         if request.method == "POST":
             form = IshonchnomaCreation(request.POST, request.FILES, instance=client)
             if form.is_valid():
-                form.save()
+                client = form.save(commit=False)
+                files = request.FILES.getlist('ishonchnoma_files')
+                for file in files:
+                    # file_obj = File.objects.create(file=file)
+                    client.ishonchnoma_files.create(ishonchnoma=file)
+                # form.save()
+                client.save()
                 create_key(client.pk, profile)
                 messages.success(request, "Malumotlar yangilandi")
                 return redirect('ishonchnoma')
@@ -266,7 +272,7 @@ def editClient(request, pk):
             else:
                 messages.error(request, "Qandaydir xatolik :(")
     
-    context = {'form':form}
+    context = {'form':form, 'client': client}
     return render(request, 'base/forms.html', context)
 
 def NotesPage(request):

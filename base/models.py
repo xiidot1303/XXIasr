@@ -36,6 +36,13 @@ class Access(models.Model):
     user = models.ManyToManyField(Profile)
     name = models.CharField(max_length=255)
 
+class File(models.Model):
+    ishonchnoma = models.FileField(upload_to='static/ishonchnoma/')
+    
+    @property
+    def filename(self):
+        return os.path.basename(self.ishonchnoma.name)
+
 class Client(models.Model):
     picture = models.ImageField(null=True, blank=True, default="static/profile/user-default.jpg", upload_to="static/profile/")
     name = models.CharField(max_length=255)
@@ -122,6 +129,7 @@ class Client(models.Model):
 
     proxy_owner = models.CharField(max_length=255, null=True, blank=True)
     ishonchnoma = models.FileField(null=True, blank=True, upload_to="static/ishonchnoma/")
+    ishonchnoma_files = models.ManyToManyField(File)
 
     fly_direction = models.CharField(max_length=255, null=True, blank=True)
     brom_date = models.DateField(null=True, blank=True)

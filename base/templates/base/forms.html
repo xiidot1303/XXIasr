@@ -34,7 +34,14 @@
               {% else %}
                 {% for field in form %}
                 <div class="form-group">
-                  <label for="">{{field.label}}</label>
+                  <label for="">
+                    {{field.label}}
+                    {% if client.type == 'ishonchnoma' and field.label == 'Ishonchnomalar' %}
+                      {% if client.ishonchnoma_files.all %}
+                        <a href="{% url 'download_ishonchnoma_files' client.id %}">Hozirda mavjud fayllar</a>
+                      {% endif %}
+                    {% endif %}
+                  </label>
                   {{field}}
                 </div>
                 {% endfor %}

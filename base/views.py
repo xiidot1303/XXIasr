@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import UpdateView, CreateView
 from django.contrib.auth.models import User
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.db.models import Sum
 from base.forms import *
 from .models import SMS, Access, Client, Notes, Profile, Service, Task, Upload, SMStext, telegramPost, subscriptions, Bot_user
@@ -30,6 +30,7 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.enum.style import WD_STYLE_TYPE
 from docx.shared import Pt
 from django.core.exceptions import PermissionDenied
+import zipfile
 
 # Create your views here.
 def loginPage(request):
@@ -3510,6 +3511,22 @@ def delete_key(request, key_pk):
     key_obj.delete()
     return redirect(request.META.get('HTTP_REFERER'))
 
+@login_required(login_url='login')
+def download_ishonchnoma_files(request, client_id):
+    client = get_object_or_404(Client, id=client_id)
+    # Create a zip file
+    zip_filename = f"{client.name} ishonchnoma fayllari.zip"
+    zip_path = f"static/ishonchnoma/{zip_filename}"
+    with zipfile.ZipFile(zip_path, 'w') as zip_file:
+        for file_obj in client.ishonchnoma_files.all():
+            file_path = file_obj.ishonchnoma.path
+            zip_file.write(file_path, file_obj.filename)
+    
+    # Read the zip file and return it as the response
+    with open(zip_path, 'rb') as f:
+        response = HttpResponse(f.read(), content_type='application/zip')
+        response['Content-Disposition'] = f'attachment; filename="{zip_filename}"'
+        return response
 
 @csrf_exempt
 def bot_webhook(request):

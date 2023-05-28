@@ -290,9 +290,10 @@ class TaxiCreation(ModelForm):
 
 
 class IshonchnomaCreation(ModelForm):
+    ishonchnoma_files = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}), required=False, label="Ishonchnomalar")
     class Meta:
         model = Client
-        fields = ['picture', 'proxy_owner', 'name', 'tex_number', 'text_series', 'ishonchnoma', 'given_date', 'expiry_date', 
+        fields = ['picture', 'proxy_owner', 'name', 'tex_number', 'text_series', 'ishonchnoma', 'ishonchnoma_files', 'given_date', 'expiry_date', 
             'gov_login', 'gov_password', 'jshshir', 'phone1', 'phone2', 
             'phone3', 'key', 'key_exp', 'passport', 'selfy', 'bot_login', 'bot_password', 'bot_user']
         labels = {
@@ -304,6 +305,7 @@ class IshonchnomaCreation(ModelForm):
             'given_date':'Ishonchnoma berilgan sanasi',
             'expiry_date':'Ishonchnoma tugash sanasi',
             'ishonchnoma': 'Ishonchnoma',
+            'ishonchnoma_files': 'Ishonchnomalar',
             'gov_login': 'id.gov login',
             'gov_password' : 'id.gov parol',
             'jshshir': 'JSHSHIR',

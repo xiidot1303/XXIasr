@@ -213,7 +213,7 @@
                            <td class="text-center">
                             {% if profile.status == 'admin' %}
                             {% if client.ishonchnoma %}
-                            <a href="/app{{ client.ishonchnoma.url }}" download class="text-success"><i class="fa fa-download"></i></a>
+                            <a href="{% url 'download_ishonchnoma_files' client.id %}" download class="text-success"><i class="fa fa-download"></i></a>
                             {% else %}
                               <i class="fa fa-close text-danger"></i>
                             {% endif %}
