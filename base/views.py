@@ -1753,6 +1753,7 @@ def IshonchnomaPage(request):
     if rightIndex > paginator.num_pages:
         rightIndex = paginator.num_pages+1
     page_range = range(leftIndex, rightIndex)
+    clients = clients
     context = {'clients':clients, 'page_range':page_range, 'paginator':paginator, 'pagType':pagType, 'profile':profile}
 
     if 'filter' in request.GET:
@@ -1930,7 +1931,7 @@ def IshonchnomaPage(request):
                         status=sms_status
                     )
                 
-  
+        query = query.order_by('expiry_date')
         context = {'clients':query, 'pagType':pagType, 'access':access, 'profile':profile}
 
   

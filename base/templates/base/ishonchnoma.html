@@ -174,7 +174,8 @@
                            <th>id.gov</th>
                            <th>Telefon</th>
                            <th>Pasport</th>
-                           <th>Ishonchnoma</th>
+                           <th>Berilgan sanasi</th>
+                           <th>Ishonchnoma holati</th>
                            <th><i class="fa fa-cog"></i></th>
                        </tr>
                    </thead>
@@ -209,7 +210,9 @@
                               <i class="fa fa-close text-danger"></i>
                              {% endif %}
                             </td>
-
+                            <td>
+                              {{ client.given_date }}
+                            </td>
                            <td class="text-center">
                             {% if profile.status == 'admin' %}
                             {% if client.ishonchnoma_files.all %}
@@ -264,6 +267,8 @@
                                 {% endif %}
                               {% endif %}
                             {% endif %}
+                            <br>
+                            {{ client.expiry_date }}
                            </td>
                            <td>
                              <a href="{% url 'edit-client' client.id %}"><i class="fa fa-pencil"></i></a>
