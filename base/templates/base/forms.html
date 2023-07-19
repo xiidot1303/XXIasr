@@ -41,6 +41,12 @@
                         <a href="{% url 'download_ishonchnoma_files' client.id %}">Hozirda mavjud fayllar</a>
                       {% endif %}
                     {% endif %}
+
+                    {% if client.type == 'daromad12' and field.label == 'Ilova fayllari' %}
+                      {% if client.application_files.all %}
+                        <a href="{% url 'download_application_files' client.id %}">Hozirda mavjud fayllar</a>
+                      {% endif %}
+                    {% endif %}
                   </label>
                   {{field}}
                 </div>

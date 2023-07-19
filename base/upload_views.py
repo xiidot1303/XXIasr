@@ -265,7 +265,12 @@ def editClient(request, pk):
         if request.method == "POST":
             form = Daromad12Creation(request.POST, request.FILES, instance=client)
             if form.is_valid():
-                form.save()
+                client = form.save(commit=False)
+                files = request.FILES.getlist('application_files')
+                for file in files:
+                    client.application_files.create(application=file)
+                # form.save()
+                client.save()
                 create_key(client.pk, profile)
                 messages.success(request, "Malumotlar yangilandi")
                 return redirect('daromad12')

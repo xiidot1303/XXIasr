@@ -38,10 +38,15 @@ class Access(models.Model):
 
 class File(models.Model):
     ishonchnoma = models.FileField(upload_to='static/ishonchnoma/')
+    application = models.FileField(upload_to='static/application/')
     
     @property
     def filename(self):
         return os.path.basename(self.ishonchnoma.name)
+    
+    @property
+    def filename2(self):
+        return os.path.basename(self.application.name)
 
 class Client(models.Model):
     picture = models.ImageField(null=True, blank=True, default="static/profile/user-default.jpg", upload_to="static/profile/")
@@ -144,6 +149,7 @@ class Client(models.Model):
     receipt = models.FileField(null=True, blank=True, upload_to="static/receipt/")
     contract = models.FileField(null=True, blank=True, upload_to="static/contract/")
     period = models.DateField(null=True, blank=True)
+    application_files = models.ManyToManyField(File, related_name='application_files')
 
     def save(self, *args, **kwargs):
         if self.type == 'auction':

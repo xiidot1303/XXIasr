@@ -295,6 +295,12 @@
                   Ishonchnoma : <a href="{% url 'download_ishonchnoma_files' client.id %}" download><i class="fa fa-download"></i></a>
                 </div>
                 {% endif %}
+
+                {% if client.application_files.all %}
+                <div class="h5 mt-3">
+                  Ilova fayllari : <a href="{% url 'download_application_files' client.id %}" download><i class="fa fa-download"></i></a>
+                </div>
+                {% endif %}
                 
                 {% if client.ruxsatnoma %}
                 <div class="h5 mt-3">

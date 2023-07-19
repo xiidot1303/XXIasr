@@ -566,10 +566,11 @@ class GovernorCreation(ModelForm):
 
 
 class Daromad12Creation(ModelForm):
+    application_files = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}), required=False, label="Ilova fayllari")
     class Meta:
         model = Client
-        fields = ['picture', 'name', 'jshshir', 'phone1', 'phone2', 'key', 'key_exp', 'passport', 'selfy',
-            'card', 'receipt', 'contract', 'period', 'bot_login', 'bot_password', 'bot_user']
+        fields = ['picture', 'name', 'jshshir', 'phone1', 'phone2', 'key', 'key_exp',
+            'card', 'application_files', 'receipt', 'contract', 'period', 'bot_login', 'bot_password', 'bot_user']
         labels = {
             'picture':'Rasm',
             'name': 'Nom',
@@ -579,13 +580,12 @@ class Daromad12Creation(ModelForm):
             'bot_user' : 'Telegram foydalanuvchisi',
             'key': 'Kalit',
             'key_exp':'Kalit muddati',
-            'passport':'Pasport',
-            'selfy':'Selfi',
             'bot_login': 'Login',
             'bot_password': 'Parol',
             'card': 'Karta ma\'lumotlari',
             'receipt': 'Kvitansiya ma\'lumotlari',
             'contract': 'Shartnoma qog\'ozi',
+            'application_files': 'Ilova fayllari',
             'period': 'Ariza muddati',
         }
         

@@ -78,5 +78,6 @@ urlpatterns = [
     path('change-congragulation/<int:client_pk>/<str:status>/', change_congragulation, name='change_congragulation'),
 
     path('download-ishonchnoma-files/<client_id>/', download_ishonchnoma_files, name='download_ishonchnoma_files'),
+    path('download-application-files/<client_id>/', download_application_files, name='download_application_files'),
 ]
 

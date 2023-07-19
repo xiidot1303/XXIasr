@@ -759,6 +759,11 @@ def createClient(request):
                             context = {'view':True, 'form':form, 'profile':profile}
                             return render(request, 'base/createclient.html', context)
                         client.save()
+                        files = request.FILES.getlist('application_files')
+                        for file in files:
+                            file = File.objects.create(application=file)
+                            client.application_files.add(file)
+                        client.save()
                         messages.success(request, 'Mijoz ro\'yxatga olindi')
                 elif 'bot_login' in form.errors.as_data():
                     messages.error(request, 'Bunday login bilan allaqachon ro\'yxatdan o\'tilgan')
@@ -3531,6 +3536,23 @@ def download_ishonchnoma_files(request, client_id):
         for file_obj in client.ishonchnoma_files.all():
             file_path = file_obj.ishonchnoma.path
             zip_file.write(file_path, file_obj.filename)
+    
+    # Read the zip file and return it as the response
+    with open(zip_path, 'rb') as f:
+        response = HttpResponse(f.read(), content_type='application/zip')
+        response['Content-Disposition'] = f'attachment; filename="{zip_filename}"'
+        return response
+
+@login_required(login_url='login')
+def download_application_files(request, client_id):
+    client = get_object_or_404(Client, id=client_id)
+    # Create a zip file
+    zip_filename = f"{client.name} ilova fayllari.zip"
+    zip_path = f"static/application/{zip_filename}"
+    with zipfile.ZipFile(zip_path, 'w') as zip_file:
+        for file_obj in client.application_files.all():
+            file_path = file_obj.application.path
+            zip_file.write(file_path, file_obj.filename2)
     
     # Read the zip file and return it as the response
     with open(zip_path, 'rb') as f:
