@@ -206,7 +206,11 @@
                 </thead>
                 <tbody>
                   {% for uncompleted in uploads_uncompleted|slice:":10" %}
+                  {% if uncompleted.remaining_days <= 1 %}
+                    <tr class="bg-animation">
+                  {% else %}
                     <tr>
+                  {% endif %}
                       <td>{{forloop.counter}}</td>
                       <td  style="display: flex; align-items: center ;">
                         {% if uncompleted.client.picture %}
@@ -347,3 +351,26 @@
  
 </div>
 {% endblock content %}
+
+{% block script %}
+
+<script>
+  // JavaScript to animate background color change
+  function animateBackground(element) {
+      setInterval(function() {
+        var currentColor = element.style.backgroundColor;
+        var nextColor = currentColor === 'red' ? '#fff' : 'red';
+        element.style.backgroundColor = nextColor;
+      }, 200); // 1000ms = 1 second
+    }
+
+
+  // Get elements by class and apply animation
+  window.addEventListener('load', function() {
+    var rows = document.getElementsByClassName('bg-animation');
+    for (var i = 0; i < rows.length; i++) {
+      animateBackground(rows[i]);
+    }
+  });
+</script>
+{% endblock script %}

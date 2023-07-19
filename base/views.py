@@ -91,6 +91,7 @@ def homePage(request):
         tasks_completed  = Task.objects.filter(Q(status='5') & Q(user=profile))
         tasks_uncompleted = Task.objects.filter(Q(status='0') | Q(status='5'))
         tasks_uncompleted = tasks_uncompleted.filter(Q(user=profile))
+    uploads_uncompleted = uploads_uncompleted.order_by('period')
     notes_process = Notes.objects.filter(Q(status='5') & Q(user=profile))
     notes_uncompleted = Notes.objects.filter(Q(status='0') & Q(user=profile))
     context = {
@@ -133,6 +134,7 @@ def monitoringPage(request):
 
     else:
         uploads = Upload.objects.filter(Q(status=5) | Q(status=0))
+    uploads = uploads.order_by('-status', 'period')
     if profile.status == 'admin':
         # result = uploads.filter(Q(status=5) | Q(status=0))
         result = uploads

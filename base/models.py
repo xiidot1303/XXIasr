@@ -247,6 +247,11 @@ class Upload(models.Model):
 
     class Meta:
         ordering = ['-status', 'period']
+    
+    @property
+    def remaining_days(self):
+        today = date.today()
+        return (self.period - today).days
 
 class Task(models.Model):
     text = models.TextField(max_length=500)
