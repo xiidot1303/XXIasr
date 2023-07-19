@@ -172,6 +172,7 @@ class YuridikCreation(ModelForm):
         
         widgets = {
             'key_exp':DateInput(),
+            'key_exp2':DateInput(),
             # 'key_exp': forms.DateInput(attrs={'type': 'date'}, format='%d-%m-%Y')
         }
         
