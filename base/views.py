@@ -2200,6 +2200,7 @@ def tanirovkaPage(request):
     if rightIndex > paginator.num_pages:
         rightIndex = paginator.num_pages+1
     page_range = range(leftIndex, rightIndex)
+    clients = clients.order_by('expiry_date')
     context = {'clients':clients, 'page_range':page_range, 'paginator':paginator, 'pagType':pagType, 'profile':profile}
     if 'filter' in request.GET:
         try:
@@ -2283,7 +2284,7 @@ def tanirovkaPage(request):
                 
             else:
                 query = query
-        
+        query = query.order_by('expiry_date')
         if request.method == "POST":
             text = request.POST['text']
             for reciever in query:
