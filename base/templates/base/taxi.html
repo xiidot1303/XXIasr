@@ -267,6 +267,22 @@
                               {% endif %}
                             {% endif %}
                            </td>
+                           <td>{{ client.given_date }}</td>
+                           <td class="text-left">
+                              {% if client.is_t_expired == 'in_ten_days' %}
+                              <div class="btn btn-warning btn-sm">10 kun</div>
+                              {% elif client.is_t_expired == 'in_a_month' %}
+                                <div class="btn btn-primary btn-sm">30 kun</div>
+                              {% elif client.is_t_expired == 'active' %}
+                                <div class="btn btn-success btn-sm">Faol</div>
+                              {% elif client.is_t_expired == 'inactive' %}
+                                <div class="btn btn-danger btn-sm">Muddati tugagan</div>
+                              {% else %}
+                                <div class="btn btn-secondary btn-sm">Kiritilmagan</div>
+                              {% endif %}
+                              <br><br>
+                              {{client.expiry_date}}
+                           </td>
                            <td>
                              <a href="{% url 'edit-client' client.id %}"><i class="fa fa-pencil"></i></a>
                              {% if profile.status == 'admin' %} <a href="{% url 'delete-client' client.id %}"  onclick="return confirm(&#39;Siz {{ client.name }} nomli mijozni o\'chirmoqchimisiz?&#39;)"><i class="fa fa-trash"></i></a> {% endif %}
