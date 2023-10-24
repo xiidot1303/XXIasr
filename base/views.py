@@ -3570,6 +3570,7 @@ def bot_webhook(request):
         dp.process_update(update)
     return HttpResponse('Bot started!')
 
+@permission_required('base.view_key')
 def get_file(request, folder, file):
     f = open('static/{}/{}'.format(folder, file), 'rb')
     return FileResponse(f)
