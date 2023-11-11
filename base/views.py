@@ -224,7 +224,7 @@ def uploadPage(request):
             # send message to client via telegram bot
             bot_send_message(client, text1)
          
-            return redirect('upload')
+            return redirect('home')
 
     context = {'form':form, 'profile':profile}
     return render(request, 'base/upload.html', context)
