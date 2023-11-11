@@ -376,7 +376,14 @@ class TanirovkaCreation(ModelForm):
         }
         
         
-      
+        class DateInput(forms.DateInput):
+            input_type = 'date'
+            
+        widgets = {
+            'given_date':DateInput(),
+            'expiry_date':DateInput()
+
+        }
 
     def __init__(self, *args, **kvargs):
         super(TanirovkaCreation, self).__init__(*args, **kvargs)
