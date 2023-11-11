@@ -4,7 +4,7 @@ from django.urls import path
 from base.client_views import singleClient, change_congragulation
 from base.upload_views import NotesPage, cancelService, confirmSerivce, editClient, editNote
 from base.views import *
-from .user_views import CreateProfile, DeleteProfile, EditProfile, Profiles
+from .user_views import CreateProfile, DeleteProfile, EditProfile, Profiles, ActiveProfile
 from data.config import BOT_TOKEN
 
 urlpatterns = [
@@ -51,6 +51,7 @@ urlpatterns = [
     path("users/", Profiles, name="users"),
     path("create-user/", CreateProfile, name='create-user'),
     path("delete-user/<str:pk>", DeleteProfile, name="delete-profile"),
+    path("active-user/<str:pk>", ActiveProfile, name="active-profile"),
     path("edit-user/<str:pk>", EditProfile, name="edit-profile"),
     path("delete-client/<str:pk>", deleteClient, name="delete-client"),
     path("telegram/", telegramPage, name="telegram"),

@@ -46,13 +46,23 @@ def DeleteProfile(request, pk):
     user = User.objects.get(username=obj.user)
     if profile.status == 'admin' and obj.status != 'admin':
         if request.method == "POST":
-            user.is_active = False if user.is_active else True
+            user.is_active = False
             user.save() 
             messages.success(request, 'Xodim o\'chirildi :)')
             return redirect('users')
         return render(request, 'base/delete.html', {'view':'deleteuser', 'profile':profile, 'obj':obj})
     else:
         return render(request, 'error-404.html')
+
+@login_required(login_url='login')
+def ActiveProfile(request, pk):
+    obj = Profile.objects.get(id=pk)
+    user = User.objects.get(username=obj.user)
+    user.is_active = True
+    user.save()
+    messages.success(request, 'Xodim aktivlashtirildi :)')
+    return redirect('users')
+
 
 @login_required(login_url='login')
 def EditProfile(request, pk):

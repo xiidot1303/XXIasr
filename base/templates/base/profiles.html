@@ -76,7 +76,11 @@
                           <td>{{user.get_office_display}}</td>
                           <td>
                             {% if user.status != 'admin' %}
+                            {% if user.user.is_active %}
                             <a class="btn-danger btn" href="{% url 'delete-profile' user.id %}"><i class="fa fa-trash"></i></a>
+                            {% else %}
+                            <a class="btn-primary btn" href="{% url 'active-profile' user.id %}"><i class="fa fa-check"></i></a>
+                            {% endif %}
                             <a class="btn-success btn" href="{% url 'edit-profile' user.id %}"><i class="fa fa-pencil"></i></a>
                             {% endif %}
                           </td>
