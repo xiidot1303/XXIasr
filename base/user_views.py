@@ -46,8 +46,8 @@ def DeleteProfile(request, pk):
     user = User.objects.get(username=obj.user)
     if profile.status == 'admin' and obj.status != 'admin':
         if request.method == "POST":
-            obj.delete()
-            user.delete()
+            user.is_active = False if user.is_active else True
+            user.save() 
             messages.success(request, 'Xodim o\'chirildi :)')
             return redirect('users')
         return render(request, 'base/delete.html', {'view':'deleteuser', 'profile':profile, 'obj':obj})

@@ -50,7 +50,12 @@
                    </thead>
                    <tbody>
                         {% for user in profiles %}
+                        
+                        {% if user.user.is_active %}
                           <tr>
+                          {% else %}
+                          <tr class="bg-warning text-white">
+                          {% endif %}
                             <td>{{forloop.counter}}</td>
                             <td style="display: flex; align-items: center ;">
                               {% if user.picture %}
@@ -71,8 +76,8 @@
                           <td>{{user.get_office_display}}</td>
                           <td>
                             {% if user.status != 'admin' %}
-                            <a href="{% url 'delete-profile' user.id %}"><i class="fa fa-trash text-danger"></i></a>
-                            <a href="{% url 'edit-profile' user.id %}"><i class="fa fa-pencil text-success"></i></a>
+                            <a class="btn-danger btn" href="{% url 'delete-profile' user.id %}"><i class="fa fa-trash"></i></a>
+                            <a class="btn-success btn" href="{% url 'edit-profile' user.id %}"><i class="fa fa-pencil"></i></a>
                             {% endif %}
                           </td>
                           </tr>
