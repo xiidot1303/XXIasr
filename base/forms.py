@@ -668,6 +668,33 @@ class AviakassaCreation(ModelForm):
 
 
 
+class TaxerCreation(ModelForm):
+    class Meta:
+        model = Client
+        fields = ['picture', 'name', 'work_as', 'phone1', 'phone2', 'phone3', 'bot_login', 'bot_password', 'bot_user']
+        labels = {
+            'picture':'Rasm',
+            'name': 'F.I.Sh.',
+            'work_as' : 'Lavozim',
+            'phone1' : 'Telefon',
+            'phone2' : 'Telefon 2',
+            'phone3' : 'Telefon 3',
+            'bot_user' : 'Telegram foydalanuvchisi',
+            'bot_login': 'Login',
+            'bot_password': 'Parol'
+        }
+     
+    def __init__(self, *args, **kvargs):
+        super(TaxerCreation, self).__init__(*args, **kvargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control'})
+        self.fields['name'].widget.attrs.update({'required':'required'})
+        self.fields['phone1'].widget.attrs.update({'required':'required'})
+        self.fields['bot_user'].widget.attrs.update({'class':'form-control js-example-basic-single'})
+
+
+
 
 class NotesCreation(ModelForm):
     

@@ -65,6 +65,7 @@ class Client(models.Model):
         ('ishonchnoma', 'Ishonchnoma'),
         ('aviakassa', 'Aviakassa va tur'),
         ('daromad12', '12% daromad'),
+        ('taxer', 'Soliqchi'),
     )
     type = models.CharField(choices=TYPE_CHOICES, max_length=255)
     SUB_CHOICES = (
@@ -399,6 +400,7 @@ class Key(models.Model):
         ('taxi', 'Taxi litsenziya'),
         ('ishonchnoma', 'Ishonchnoma'),
         ('daromad12', '12% daromad'),
+        ('taxer', 'Soliqchi'),
     )
     type = models.CharField(choices=TYPE_CHOICES, max_length=255, blank=True, null=True)
     jshshir = models.CharField(max_length=255, null=True, blank=True)

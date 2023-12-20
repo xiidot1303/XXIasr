@@ -35,6 +35,7 @@ urlpatterns = [
     path("ishonchnoma/", IshonchnomaPage, name='ishonchnoma'),
     path("aviakassa/", aviakassaPage, name='aviakassa'),
     path("daromad12/", daromad12Page, name='daromad12'),
+    path("taxer/", taxerPage, name='taxer'),
 
 
     path("cancel-serivce/<str:pk>", cancelService, name='cancel-service'),

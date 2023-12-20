@@ -277,6 +277,17 @@ def editClient(request, pk):
             else:
                 messages.error(request, "Qandaydir xatolik :(")
     
+    elif client.type == 'taxer':
+        form = TaxerCreation(instance=client)
+        if request.method == "POST":
+            form = TaxerCreation(request.POST, request.FILES, instance=client)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Malumotlar yangilandi")
+                return redirect('taxer')
+            else:
+                messages.error(request, "Qandaydir xatolik :(")
+    
     context = {'form':form, 'client': client}
     return render(request, 'base/forms.html', context)
 
