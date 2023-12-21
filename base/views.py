@@ -777,10 +777,10 @@ def createClient(request):
                 if form.is_valid():
                         client = form.save(commit=False)
                         client.type = 'taxer'
-                        if Client.objects.filter(type=client.type, jshshir=client.jshshir):
-                            messages.error(request, 'Ushbu mijoz allaqachon ro\'yxatga olingan')
-                            context = {'view':True, 'form':form, 'profile':profile}
-                            return render(request, 'base/createclient.html', context)
+                        # if Client.objects.filter(type=client.type, jshshir=client.jshshir):
+                        #     messages.error(request, 'Ushbu mijoz allaqachon ro\'yxatga olingan')
+                        #     context = {'view':True, 'form':form, 'profile':profile}
+                        #     return render(request, 'base/createclient.html', context)
                         client.save()
                         messages.success(request, 'Mijoz ro\'yxatga olindi')
                 elif 'bot_login' in form.errors.as_data():
