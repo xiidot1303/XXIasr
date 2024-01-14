@@ -85,7 +85,7 @@ class YaTTCreation(ModelForm):
     class Meta:
         model = Client
         fields = ['picture', 'name', 'tin','sub_type', 'gov_login', 'gov_password', 'jshshir', 'guvohnoma_exp', 
-            'phone1', 'phone2', 'phone3', 'address', 'key', 'key_exp', 'guvohnoma_file', 'passport', 'selfy', 'bot_user', 'bot_login', 'bot_password']
+            'phone1', 'phone2', 'phone3', 'address', 'key', 'key_exp', 'key2', 'key_exp2', 'guvohnoma_file', 'passport', 'selfy', 'bot_user', 'bot_login', 'bot_password']
         labels = {
             'picture':'Rasm',
             'name': 'Nom',
@@ -99,8 +99,10 @@ class YaTTCreation(ModelForm):
             'phone3' : 'Telefon 3',
             'bot_user' : 'Telegram foydalanuvchisi',
             'address' : 'Manzil',
-            'key':'Kalit',
-            'key_exp':'Kalit muddati',
+            'key':'Kalit e-imzo',
+            'key_exp':'Kalit e-imzo muddati',            
+            'key2':'Kalit 2 e-auksion',
+            'key_exp2':'Kalit 2 e-auksion muddati',
             'guvohnoma_file':'Guvohnoma fayli',
             'passport':'Pasport',
             'selfy':'Selfi',
@@ -114,6 +116,7 @@ class YaTTCreation(ModelForm):
             
         widgets = {
             'key_exp':DateInput(),
+            'key_exp2':DateInput(),
             'guvohnoma_exp':DateInput()
         }
 
@@ -197,7 +200,7 @@ class JismoniyCreation(ModelForm):
     class Meta:
         model = Client
         fields = ['picture', 'name', 'tin', 'gov_login', 'gov_password', 'jshshir', 'phone1', 'phone2', 
-            'phone3', 'key', 'key_exp', 'passport', 'selfy', 'bot_login', 'bot_password', 'bot_user']
+            'phone3', 'key', 'key_exp', 'key2', 'key_exp2', 'passport', 'selfy', 'bot_login', 'bot_password', 'bot_user']
         labels = {
             'picture':'Rasm',
             'name': 'Nom',
@@ -209,8 +212,10 @@ class JismoniyCreation(ModelForm):
             'phone2' : 'Telefon 2',
             'phone3' : 'Telefon 3',
             'bot_user' : 'Telegram foydalanuvchisi',
-            'key': 'Kalit',
-            'key_exp':'Kalit muddati',
+            'key': 'Kalit e-imzo',
+            'key_exp':'Kalit e-imzo muddati',            
+            'key2': 'Kalit 2 e-auksion',
+            'key_exp2':'Kalit 2 e-auksion muddati',
             'passport':'Pasport',
             'selfy':'Selfi',
             'bot_login': 'Login',
@@ -221,7 +226,8 @@ class JismoniyCreation(ModelForm):
             input_type = 'date'
             
         widgets = {
-            'key_exp':DateInput()
+            'key_exp':DateInput(),
+            'key_exp2':DateInput(),
         }
 
     def __init__(self, *args, **kvargs):
