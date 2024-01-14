@@ -645,7 +645,7 @@ def createClient(request):
         if type == 'tanirovka':
             form = TanirovkaCreation()
             if request.method == "POST":
-                form = YaTTCreation(request.POST, request.FILES)
+                form = TanirovkaCreation(request.POST, request.FILES)
                 if form.is_valid():
                         client = form.save(commit=False)
                         client.type = 'tanirovka'
@@ -656,19 +656,19 @@ def createClient(request):
                         client.owner = request.POST['owner']
                         client.tex_number = request.POST['tex_number']
                         client.text_series = request.POST['text_series']
-                        try:
-                            if request.POST['given_date'] != "":
-                                g_date = datetime.datetime.strptime(request.POST['given_date'], '%d.%m.%Y')
-                                client.given_date = g_date.strftime('%Y-%m-%d')
-                        except:
-                            client.given_date = None
+                        # try:
+                        #     if request.POST['given_date'] != "":
+                        #         g_date = datetime.datetime.strptime(request.POST['given_date'], '%d.%m.%Y')
+                        #         client.given_date = g_date.strftime('%Y-%m-%d')
+                        # except:
+                        #     client.given_date = None
                         
-                        try:
-                            if request.POST['expiry_date'] != "":
-                                e_date = datetime.datetime.strptime(request.POST['expiry_date'], '%d.%m.%Y')
-                                client.expiry_date = e_date.strftime('%Y-%m-%d')
-                        except:
-                            client.expiry_date = None
+                        # try:
+                        #     if request.POST['expiry_date'] != "":
+                        #         e_date = datetime.datetime.strptime(request.POST['expiry_date'], '%d.%m.%Y')
+                        #         client.expiry_date = e_date.strftime('%Y-%m-%d')
+                        # except:
+                        #     client.expiry_date = None
                     
                         try:
                             client.ruxsatnoma = request.FILES['ruxsatnoma']
