@@ -1811,6 +1811,10 @@ def IshonchnomaPage(request):
             key_expiry = request.GET['key_expiry']
         except:
             key_expiry = ""
+        try:
+            expiry = request.GET['expiry']
+        except:
+            expiry = ""
         
         pagType = False
 
@@ -1868,24 +1872,24 @@ def IshonchnomaPage(request):
             query=query
 
 
-        if key_expiry != "":
-            if key_expiry == "none":
+        if expiry != "":
+            if expiry == "none":
                 query = query.filter(Q(key__exact="") | Q(key__contains=" ") | Q(key__isnull=True))
-            elif key_expiry == "in_ten_days":
+            elif expiry == "in_ten_days":
                 today = datetime.date.today()+datetime.timedelta(days=1)
                 ten_days = today+datetime.timedelta(days=10)
-                query = query.filter(key_exp__range=(today, ten_days))
-            elif key_expiry == "in_a_month":
+                query = query.filter(expiry_date__range=(today, ten_days))
+            elif expiry == "in_a_month":
                 today = datetime.date.today()+datetime.timedelta(days=11)
                 ten_days = today+datetime.timedelta(days=20)
-                query = query.filter(key_exp__range=(today, ten_days))
-            elif key_expiry == "active":
+                query = query.filter(expiry_date__range=(today, ten_days))
+            elif expiry == "active":
                 today = datetime.date.today()+datetime.timedelta(days=10)
                 ten_days = today+datetime.timedelta(days=20)
-                query = query.filter(key_exp__gt=ten_days)
-            elif key_expiry =="inactive":
+                query = query.filter(expiry_date__gt=ten_days)
+            elif expiry =="inactive":
                 today = datetime.date.today()
-                query = query.filter(key_exp__lte=today)
+                query = query.filter(expiry_date__lte=today)
                 
             else:
                 query = query
