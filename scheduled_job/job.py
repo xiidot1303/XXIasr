@@ -9,7 +9,7 @@ def alert_clients():
     # YATT guvohnoma
     for client in Client.objects.filter(
         Q(type='ytt') | Q(type='tanirovka') | Q(type='yuridik') | 
-        Q(type='taxi') | Q(type='aviakassa')
+        Q(type='taxi') | Q(type='aviakassa') | Q(type=='ishonchnoma')
         ):
         # identidy due date
         if client.guvohnoma_exp:
@@ -20,12 +20,15 @@ def alert_clients():
                 if is_upcoming_due_date(due_date) == 10:
                     send_sms(client, is_upcoming_due_date(due_date), sms_id)
                 send_tg_message(client, is_upcoming_due_date(due_date), sms_id)
-        if client.key_exp:
+        if client.key_exp and client.type != 'ishonchnoma':
             due_date = client.key_exp
             sms_id = 8
         elif client.expiry_date and client.type=='taxi':
             due_date = client.expiry_date
             sms_id = 11
+        elif client.expiry_date and client.type=='ishonchnoma':
+            due_date = client.expiry_date
+            sms_id = 13
         elif client.expiry_date:
             due_date = client.expiry_date
             sms_id = 9
