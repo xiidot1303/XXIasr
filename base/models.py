@@ -205,6 +205,23 @@ class Client(models.Model):
             return 'not_found'
 
     @property
+    def is_key2_expired(self):
+        if self.key_exp2:
+            dates = datetime.datetime.strptime(str(self.key_exp2), "%Y-%m-%d").date()
+            today = datetime.date.today()
+            subs =  dates -today
+            if subs.days >=1 and subs.days <=10:
+                return 'in_ten_days'
+            elif subs.days >10 and subs.days <=30:
+                return 'in_a_month'
+            elif subs.days > 30:
+                return 'active'
+            else:
+                return 'inactive'
+        else:
+            return 'not_found'
+
+    @property
     def is_t_expired(self):
         if self.expiry_date:
             dates = datetime.datetime.strptime(str(self.expiry_date), "%Y-%m-%d").date()
