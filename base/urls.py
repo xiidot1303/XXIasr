@@ -81,5 +81,7 @@ urlpatterns = [
 
     path('download-ishonchnoma-files/<client_id>/', download_ishonchnoma_files, name='download_ishonchnoma_files'),
     path('download-application-files/<client_id>/', download_application_files, name='download_application_files'),
+
+    path('fetch_keys/<str:key_type>/', fetch_keys, name='fetch_keys'),
 ]
 

@@ -129,7 +129,7 @@
             
                 <p class="card-title">Kalitlar - {{ type|index:1 }} mijozlar</p> 
                 
-                <table class="table"  id="key-table">
+                <table class="table">
                   <thead>
                     <tr>
                       <th>#</th>
@@ -138,11 +138,47 @@
                       <th>Qo'shdi</th>
                       <th>Muddat</th>
                       <th>Kalit</th>
-                      
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
-                                        
+                    {% for key in keys|filter_keys_by_type:type %}
+                      <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>
+                          {% if key.client %}
+                          <a href="{% url 'client' key.client.pk %}" target="_blank">
+                              {{ key.name }}
+                          </a>
+                          {% else %}
+                              {{ key.name }}
+                          {% endif %}
+                        </td>
+                        <td>{{ key.inn }}</td>
+                        <td style="padding-right: 80px;">
+
+                        </td>
+                        <td>{{ key.added_by.name }}</td>
+                        <td>{{ key.key_exp }}</td>
+                        <td>
+                          {% if perms.base.view_key %}
+                          <a href="/app{{ key.key.url }}" download class="text-success"><i class="fa fa-download"></i></a>
+
+                          {% endif %}
+                      </td>
+                        <td>
+                          {% if perms.base.delete_key %}
+                          <a href="{% url 'delete_key' key.pk %}" class="btn btn-danger" 
+                          onclick="return confirm(&#39;Kalitni o\'chirmoqchimisiz?&#39;)"
+                          >
+                            <i class="fa fa-trash" style="margin-right: 0;"></i></a>
+
+                          {% endif %}
+                      </td>
+                        
+
+                      </tr>
+                    {% endfor %}
                   </tbody>
                 </table>
               </div>
@@ -164,74 +200,7 @@
 
 {% block script %}
 
-<script>
-    $(document).ready(function () {
-        // Function to fetch keys via AJAX
-        
-        function fetchKeys() {
-            $.ajax({
-                url: '{% url "fetch_keys" "all" %}',  // Update with your actual URL
-                type: 'GET',
-                dataType: 'json',
-                success: function (data) {
-                    updateKeyTable(data.keys);
-                }
-            });
-        }
 
-        // Function to update the key table in the template
-        function updateKeyTable(keys) {
-            var keyTable = $('#key-table tbody');
-            keyTable.empty();
-            $.each(keys, function (index, key) {
-                var client = 
-                  key.client_id != undefined 
-                    ? "<a href='client/" + key.client_id +  "' target='_blank'>" + key.name + '</a>' 
-                    : key.name
-                
-                var stir = 
-                  key.client_stir != undefined
-                    ?  key.client_stir
-                    : key.inn
-
-                var added_by =
-                  key.added_by_name != undefined
-                    ? key.added_by_name
-                    : ''
-
-                {% if perms.base.view_key %}
-                key_url = '<a href="/app' + key.key + '" download class="text-success"><i class="fa fa-download"></i></a>'
-                {% else %}
-                key_url = ''
-                {% endif %}
-
-                {% if perms.base.delete_key %}
-                  delete_button = `<a href="keys/delete/`+ key.id + `" class="btn btn-danger" 
-                          onclick="return confirm(&#39;Kalitni o\'chirmoqchimisiz?&#39;)">
-                          <i class="fa fa-trash" style="margin-right: 0;"></i></a>`
-                {% else %}
-                  delete_button = ''
-                {% endif %}
-
-                keyTable.append(
-                  '<tr><td>' + (index + 1) + '</td><td>' + client + '</td>' +
-                  '<td>' + stir + '</td>' + '<td>' + added_by + '</td>' +
-                  '<td>'+ key.key_exp + '</td>' + '<td>' + key_url + '</td>' +
-                  '<td>'+ delete_button + '</td>'
-
-                    + '</tr>'
-                  );
-                // Add more cells as needed based on your model fields
-            });
-        }
-
-        // Fetch keys on page load
-        fetchKeys();
-
-        // Update the key table every 5 seconds (adjust as needed)
-        // setInterval(fetchKeys, 5000);
-    });
-</script>
     
 <!-- <script src="{% static 'assets/js/backend-bundle.min.js' %}"></script> -->
 <!-- Chart Custom JavaScript -->

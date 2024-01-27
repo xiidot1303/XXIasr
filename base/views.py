@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import UpdateView, CreateView
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render, get_object_or_404
-from django.db.models import Sum
+from django.db.models import Sum, F
 from base.forms import *
 from .models import SMS, Access, Client, Notes, Profile, Service, Task, Upload, SMStext, telegramPost, subscriptions, Bot_user
 from django.db.models.query import Q
@@ -31,6 +31,7 @@ from docx.enum.style import WD_STYLE_TYPE
 from docx.shared import Pt
 from django.core.exceptions import PermissionDenied
 import zipfile
+from django.http import JsonResponse
 
 # Create your views here.
 def loginPage(request):
@@ -3673,6 +3674,13 @@ def keys(request, active_type=None):
         }
     return render(request, 'base/keys.html', context)
 
+def fetch_keys(request, key_type):
+    keys = Key.objects.filter(type=key_type) if key_type != 'all' else Key.objects.filter()
+    keys = keys.annotate(
+        client_stir = F('client__tin'), added_by_name = F('added_by__name')
+        ).values()  # Adjust the queryset based on your model
+    print(keys)
+    return JsonResponse({'keys': list(keys)})
 
 @login_required(login_url='login')
 @permission_required('base.change_key')
