@@ -77,9 +77,13 @@
                       </div>
                     </div>
                     <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="">Mijoz nomi</label>
+                        <input type="text" id="filter-client" class="form-control">
+                      </div>
                     </div>
                   </div>
-                  <button class="btn btn-primary btn-rounded" type="submit">Aniqlash</button>
+                  <button class="btn btn-primary btn-rounded" type="button" id="filter-button">Aniqlash</button>
                   </form>
             </div>
           </div>
@@ -151,9 +155,13 @@
 <script>
     $(document).ready(function () {
         // Function to fetch keys via AJAX
-        function fetchKeys() {
+        function fetchKeys(filter) {
+          var url = '{% url "fetch_keys" active_type %}';
+            if (filter) {
+                url += '?filter=true' + filter;
+            }
             $.ajax({
-                url: '{% url "fetch_keys" active_type %}',  // Update with your actual URL
+                url: url,  // Update with your actual URL
                 type: 'GET',
                 dataType: 'json',
                 success: function (data) {
@@ -210,6 +218,12 @@
 
         // Fetch keys on page load
         fetchKeys();
+
+        $('#filter-button').on('click', function () {
+            var client_name = $('#filter-client').val();
+            filterText = '&name=' + client_name
+            fetchKeys(filterText);
+        });
 
         // Update the key table every 5 seconds (adjust as needed)
         // setInterval(fetchKeys, 5000);

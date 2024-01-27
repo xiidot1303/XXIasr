@@ -3672,10 +3672,13 @@ def keys(request, active_type=None):
 def fetch_keys(request, key_type):
     key_type = None if key_type == 'None' else key_type
     keys = Key.objects.filter(type=key_type) if key_type != 'all' else Key.objects.filter()
+    if 'filter' in request.GET:
+        client_name = request.GET['name']
+        keys = keys.filter(name__icontains=client_name) if client_name else keys
     keys = keys.annotate(
         client_stir = F('client__tin'), added_by_name = F('added_by__name')
         ).values()  # Adjust the queryset based on your model
-    print(keys)
+
     return JsonResponse({'keys': list(keys)})
 
 @login_required(login_url='login')
