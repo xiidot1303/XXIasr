@@ -3646,35 +3646,31 @@ def keys(request, active_type=None):
         if error_messages:
             messages.error(request, error_messages)
 
-    query = Key.objects.all().order_by('key_exp')
-    status = ''
-    if 'filter' in request.GET:
-        status = request.GET['status']
-        today = datetime.datetime.today()
-        if status == 'active':
-            tomorrow = today + datetime.timedelta(days=1)
-            query = query.filter(key_exp__range = [tomorrow.strftime("%Y-%m-%d"), '3000-12-12'])
-        elif status == 'inactive':
-            query = query.filter(key_exp__range = ['1000-12-12', today.strftime("%Y-%m-%d")])
-        elif status == 'none':
-            query = query.filter(key_exp = None)
-    # determine types
-    if active_type == 'all':
-        types = [('all', 'Barcha')]
-        type_links = list(Key.TYPE_CHOICES)
-        type_links.insert(0, (None, 'Tur kiritilmagan'))
-    else:
-        types = list(Key.TYPE_CHOICES)
-        types.insert(0, (None, 'Tur kiritilmagan'))
-        type_links = [('all', 'Barcha')]
-    
+    # query = Key.objects.all().order_by('key_exp')
+    # status = ''
+    # if 'filter' in request.GET:
+    #     status = request.GET['status']
+    #     today = datetime.datetime.today()
+    #     if status == 'active':
+    #         tomorrow = today + datetime.timedelta(days=1)
+    #         query = query.filter(key_exp__range = [tomorrow.strftime("%Y-%m-%d"), '3000-12-12'])
+    #     elif status == 'inactive':
+    #         query = query.filter(key_exp__range = ['1000-12-12', today.strftime("%Y-%m-%d")])
+    #     elif status == 'none':
+    #         query = query.filter(key_exp = None)
+
+    types = list(Key.TYPE_CHOICES)
+    types.insert(0, (None, 'Tur kiritilmagan'))
+    types.append(('all', 'Barcha'))
+
     context = {
-        'keys': query, 'types': types, 'type_links': type_links, 
-        'active_type': active_type, 'profile': profile, 'status': status,
+        'types': types, 
+        'active_type': active_type, 'profile': profile,
         }
     return render(request, 'base/keys.html', context)
 
 def fetch_keys(request, key_type):
+    key_type = None if key_type == 'None' else key_type
     keys = Key.objects.filter(type=key_type) if key_type != 'all' else Key.objects.filter()
     keys = keys.annotate(
         client_stir = F('client__tin'), added_by_name = F('added_by__name')

@@ -69,10 +69,10 @@
                       <div class="form-group">
                         <label for="">Holati</label>
                         <select name="status" class="form-control">
-                          <option value="" {% if status == "" %}selected{%endif%}>Barchasi</option>
-                          <option value="active" {% if status == "active" %}selected{%endif%}>Tugamagan</option>
-                          <option value="inactive" {% if status == "inactive" %}selected{%endif%}>Tugagan</option>
-                          <option value="none" {% if status == "none" %}selected{%endif%}>Kiritilmagan</option>
+                          <option value="">Barchasi</option>
+                          <option value="active" >Tugamagan</option>
+                          <option value="inactive">Tugagan</option>
+                          <option value="none" >Kiritilmagan</option>
                         </select>
                       </div>
                     </div>
@@ -94,18 +94,8 @@
         <ul class="nav nav-pills" id="pills-tab" role="tablist">
           {% for type in types %}
           <li class="nav-item mb-1">
-             <a class="nav-link {% if type|index:0 == active_type %}active{%endif%}" id="pills-{{ type|index:0 }}-tab" 
-              data-toggle="pill" href="#pills-{{ type|index:0 }}" role="tab" aria-controls="pills-{{ type|index:0 }}" aria-selected="false">
-              {{ type|index:1 }}
-            </a>
-          </li>
-          
-          {% endfor %}
-          
-          {% for type in type_links %}
-          <li class="nav-item mb-1">
-             <a class="nav-link {% if type|index:0 == active_type %}active{%endif%}" id="pills-{{ type|index:0 }}-tab" 
-              href="{% url 'keys_by_type' type|index:0 %}">
+             <a class="nav-link {% if type|index:0 == active_type %}active{%endif%}" 
+              href="{% url 'keys_by_type' type|index:0 %}" role="tab" aria-selected="false">
               {{ type|index:1 }}
             </a>
           </li>
@@ -121,14 +111,9 @@
       <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
 
-          <div class="card-body tab-content" id="pills-tabContent-2">
-            {% for type in types %}
-            
-            <div class="table-responsive tab-pane fade show {% if type|index:0 == active_type %}active{%endif%}"
-            id="pills-{{ type|index:0 }}" aria-labelledby="pills-{{ type|index:0 }}-tab" role="tabpanel">
-            
-                <p class="card-title">Kalitlar - {{ type|index:1 }} mijozlar</p> 
-                
+          <div class="card-body">
+            <p class="card-title">Kalitlar</p> 
+            <div class="table-responsive">
                 <table class="table"  id="key-table">
                   <thead>
                     <tr>
@@ -146,7 +131,6 @@
                   </tbody>
                 </table>
               </div>
-              {% endfor %}
           </div>
         </div>
       </div>
@@ -167,10 +151,9 @@
 <script>
     $(document).ready(function () {
         // Function to fetch keys via AJAX
-        
         function fetchKeys() {
             $.ajax({
-                url: '{% url "fetch_keys" "all" %}',  // Update with your actual URL
+                url: '{% url "fetch_keys" active_type %}',  // Update with your actual URL
                 type: 'GET',
                 dataType: 'json',
                 success: function (data) {
@@ -241,7 +224,7 @@
 
 <!-- Flextree Javascript-->
 <script src="{% static 'assets/js/flex-tree.min.js' %}"></script>
-<script src="{% static 'assets/js/tree.js"></script>
+<script src="{% static 'assets/js/tree.js' %}"></script>
 
 <!-- Table Treeview JavaScript -->
 <script src="{% static 'assets/js/table-treeview.js' %}"></script>
