@@ -177,7 +177,7 @@
             $.each(keys, function (index, key) {
                 var client = 
                   key.client_id != undefined 
-                    ? "<a href='client/" + key.client_id +  "' target='_blank'>" + key.name + '</a>' 
+                    ? "<a href='/client/" + key.client_id +  "' target='_blank'>" + key.name + '</a>' 
                     : key.name
                 
                 var stir = 
@@ -191,7 +191,7 @@
                     : ''
 
                 {% if perms.base.view_key %}
-                key_url = '<a href="/app' + key.key + '" download class="text-success"><i class="fa fa-download"></i></a>'
+                key_url = '<a href="/app/' + key.key + '" download class="text-success"><i class="fa fa-download"></i></a>'
                 {% else %}
                 key_url = ''
                 {% endif %}
