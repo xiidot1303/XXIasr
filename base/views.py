@@ -226,7 +226,9 @@ def uploadPage(request):
             bot_send_message(client, text1)
          
             return redirect('home')
-
+    if 'client_id' in request.GET:
+        client_id = request.GET['client_id']
+        form.initial['client'] = client_id
     context = {'form':form, 'profile':profile}
     return render(request, 'base/upload.html', context)
 
