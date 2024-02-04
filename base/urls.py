@@ -2,7 +2,7 @@
 from django.urls import path
 
 from base.client_views import singleClient, change_congragulation
-from base.upload_views import NotesPage, cancelService, confirmSerivce, editClient, editNote
+from base.upload_views import NotesPage, cancelService, confirmSerivce, editClient, editNote, change_sub_gived
 from base.views import *
 from .user_views import CreateProfile, DeleteProfile, EditProfile, Profiles, ActiveProfile
 from data.config import BOT_TOKEN
@@ -83,5 +83,6 @@ urlpatterns = [
     path('download-application-files/<client_id>/', download_application_files, name='download_application_files'),
 
     path('fetch_keys/<str:key_type>/', fetch_keys, name='fetch_keys'),
+    path('change_sub_gived/<str:client_id>/', change_sub_gived, name='change_sub_gived'),
 ]
 

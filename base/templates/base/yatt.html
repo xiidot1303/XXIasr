@@ -190,6 +190,7 @@
                            <th>Hisobot turi</th>
                            <th>Kalit</th>
                            <th><i class="fa fa-cog"></i></th>
+                           <th>Hisobot</th>
                        </tr>
                    </thead>
                    
@@ -291,7 +292,13 @@
                              {% if profile.status == 'admin' %} <a href="{% url 'delete-client' client.id %}" onclick="return confirm(&#39;Siz {{ client.name }} nomli mijozni o\'chirmoqchimisiz?&#39;)">
                               <i class="fa fa-trash"></i></a> {% endif %}
                            </td>
-                           
+                           <td>
+                            {% if client.is_sub_gived %}
+                              <a href="{% url 'change_sub_gived' client.id %}" class="btn btn-success btn-sm">Topshirilgan</div>
+                            {% else %}
+                              <a href="{% url 'change_sub_gived' client.id %}" class="btn btn-danger btn-sm">Topshirilmagan</div>
+                            {% endif %}
+                           </td>
                        </tr>
                        {% endfor %}
 

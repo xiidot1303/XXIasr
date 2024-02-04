@@ -342,3 +342,9 @@ def editNote(request, pk):
     else:
         return render(request, 'error-404.html')
         
+
+def change_sub_gived(request, client_id):
+    client = Client.objects.get(pk=client_id)
+    client.is_sub_gived = True if not client.is_sub_gived else False
+    client.save()
+    return redirect(request.META.get('HTTP_REFERER'))

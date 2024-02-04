@@ -138,3 +138,7 @@ def send_tg_message(client, remaining_days, sms_id):
         bot.sendMessage(chat_id=user_id, text=text)
     except:
         return
+    
+def refresh_ytt_sub_gived():
+    clients = Client.objects.filter(type='ytt')
+    clients.update(is_sub_gived = False)

@@ -73,7 +73,7 @@ class Client(models.Model):
         ('oddiy', 'Oddiy'),
     )
     sub_type = models.CharField(choices=SUB_CHOICES, max_length=255, null=True, blank=True)
-
+    is_sub_gived = models.BooleanField(default=False)
     YURIDIK_CHOICES = (
         ('buxgalteriya', 'Buxgalteriya'),
         ('hisobotchilar', 'Hisobotchilar'),
