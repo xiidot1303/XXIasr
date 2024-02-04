@@ -268,9 +268,10 @@ class Upload(models.Model):
     sender = models.ForeignKey(Profile, on_delete=models.PROTECT, related_name='sender')
     office = models.CharField(max_length=10)
     comment = models.TextField(null=True, blank=True)
+    archived = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ['-status', 'period']
+        ordering = ['archived', '-status', 'period']
     
     @property
     def remaining_days(self):

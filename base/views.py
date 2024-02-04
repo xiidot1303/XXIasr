@@ -135,7 +135,7 @@ def monitoringPage(request):
 
     else:
         uploads = Upload.objects.filter(Q(status=5) | Q(status=0))
-    uploads = uploads.order_by('-status', 'period')
+    uploads = uploads.order_by('archived', '-status', 'period')
     if profile.status == 'admin':
         # result = uploads.filter(Q(status=5) | Q(status=0))
         result = uploads

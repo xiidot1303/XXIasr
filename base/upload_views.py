@@ -110,6 +110,13 @@ def confirmSerivce(request, pk):
         return render(request, 'error-404.html')
 
 @login_required(login_url='login')
+def archiveService(request, pk):
+    upload = Upload.objects.get(pk=pk)
+    upload.archived = True if not upload.archived else False
+    upload.save()
+    return redirect(request.META.get('HTTP_REFERER'))
+
+@login_required(login_url='login')
 def editClient(request, pk):
     client = Client.objects.get(id=pk)
     profile=Profile.objects.get(user=request.user)
