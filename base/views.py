@@ -3690,6 +3690,9 @@ def fetch_keys(request, key_type):
     if 'filter' in request.GET:
         client_name = request.GET['name']
         keys = keys.filter(name__icontains=client_name) if client_name else keys
+        client_jshshir = request.GET['jshshir']
+        keys = keys.filter(jshshir__icontains=client_jshshir) if client_jshshir else keys
+
     keys = keys.annotate(
         client_stir = F('client__tin'), added_by_name = F('added_by__name')
         ).values()  # Adjust the queryset based on your model

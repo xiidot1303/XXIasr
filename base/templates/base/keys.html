@@ -81,6 +81,13 @@
                         <input type="text" id="filter-client" class="form-control">
                       </div>
                     </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="">Jshshr</label>
+                        <input type="text" id="filter-client-jshshir" class="form-control">
+                      </div>
+                    </div>
+
                   </div>
                   <button class="btn btn-primary btn-rounded" type="button" id="filter-button">Aniqlash</button>
                   </form>
@@ -123,6 +130,7 @@
                       <th>#</th>
                       <th>Mijoz</th>
                       <th>STIR</th>
+                      <th>Jshshr</th>
                       <th>Qo'shdi</th>
                       <th>Muddat</th>
                       <th>Kalit</th>
@@ -205,7 +213,7 @@
 
                 keyTable.append(
                   '<tr><td>' + (index + 1) + '</td><td>' + client + '</td>' +
-                  '<td>' + stir + '</td>' + '<td>' + added_by + '</td>' +
+                  '<td>' + stir + '</td>' + '<td>' + key.jshshir + '</td>' + '<td>' + added_by + '</td>' +
                   '<td>'+ key.key_exp + '</td>' + '<td>' + key_url + '</td>' +
                   '<td>'+ delete_button + '</td>'
 
@@ -221,6 +229,8 @@
         $('#filter-button').on('click', function () {
             var client_name = $('#filter-client').val();
             filterText = '&name=' + client_name
+            var client_jshshir = $('#filter-client-jshshir').val();
+            filterText += '&jshshir=' + client_jshshir
             fetchKeys(filterText);
         });
 
