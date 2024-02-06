@@ -527,6 +527,7 @@ def createClient(request):
                 print(form.errors)
                 if form.is_valid():
                         client = form.save(commit=False)
+                        client.last_profile = profile
                         client.type = 'ytt'
                         if Client.objects.filter(type=client.type, jshshir=client.jshshir):
                             messages.error(request, 'Ushbu mijoz allaqachon ro\'yxatga olingan')
@@ -550,6 +551,7 @@ def createClient(request):
                 form = YuridikCreation(request.POST, request.FILES)
                 if form.is_valid():
                         client = form.save(commit=False)
+                        client.last_profile = profile
                         if client.yuridik_type == 'buxgalteriya':
                             client.congragulate = True
                         else:
@@ -576,6 +578,7 @@ def createClient(request):
                 form = JismoniyCreation(request.POST, request.FILES)
                 if form.is_valid():
                         client = form.save(commit=False)
+                        client.last_profile = profile
                         client.type = 'jismoniy'
                         if Client.objects.filter(type=client.type, jshshir=client.jshshir):
                             messages.error(request, 'Ushbu mijoz allaqachon ro\'yxatga olingan')
@@ -594,6 +597,7 @@ def createClient(request):
                 form = TaxiCreation(request.POST, request.FILES)
                 if form.is_valid():
                         client = form.save(commit=False)
+                        client.last_profile = profile
                         client.type = 'taxi'
                         if Client.objects.filter(type=client.type, jshshir=client.jshshir):
                             messages.error(request, 'Ushbu mijoz allaqachon ro\'yxatga olingan')
@@ -613,6 +617,7 @@ def createClient(request):
                 form = IshonchnomaCreation(request.POST, request.FILES)
                 if form.is_valid():
                         client = form.save(commit=False)
+                        client.last_profile = profile
                         client.type = 'ishonchnoma'
                         client.save()
                         files = request.FILES.getlist('ishonchnoma_files')
@@ -633,6 +638,7 @@ def createClient(request):
                 form = GovernorCreation(request.POST, request.FILES)
                 if form.is_valid():
                         client = form.save(commit=False)
+                        client.last_profile = profile
                         client.type = 'governor'
                         if Client.objects.filter(type=client.type, jshshir=client.jshshir):
                             messages.error(request, 'Ushbu mijoz allaqachon ro\'yxatga olingan')
@@ -651,6 +657,7 @@ def createClient(request):
                 form = TanirovkaCreation(request.POST, request.FILES)
                 if form.is_valid():
                         client = form.save(commit=False)
+                        client.last_profile = profile
                         client.type = 'tanirovka'
                         if Client.objects.filter(type=client.type, jshshir=client.jshshir):
                             messages.error(request, 'Ushbu mijoz allaqachon ro\'yxatga olingan')
@@ -696,6 +703,7 @@ def createClient(request):
                 form = AuctionCreation(request.POST, request.FILES)
                 if form.is_valid():
                         client = form.save(commit=False)
+                        client.last_profile = profile
                         client.type = 'auction'
                         client.save()
                         messages.success(request, 'Mijoz ro\'yxatga olindi')
@@ -710,6 +718,7 @@ def createClient(request):
                 form = Auction2Creation(request.POST, request.FILES)
                 if form.is_valid():
                         client = form.save(commit=False)
+                        client.last_profile = profile
                         client.type = 'auction2'
                         client.save()
                         messages.success(request, 'Mijoz ro\'yxatga olindi')
@@ -724,6 +733,7 @@ def createClient(request):
                 form = TeacherCreation(request.POST, request.FILES)
                 if form.is_valid():
                         client = form.save(commit=False)
+                        client.last_profile = profile
                         client.type = 'teacher'
                         if Client.objects.filter(type=client.type, jshshir=client.jshshir):
                             messages.error(request, 'Ushbu mijoz allaqachon ro\'yxatga olingan')
@@ -742,6 +752,7 @@ def createClient(request):
                 form = AviakassaCreation(request.POST, request.FILES)
                 if form.is_valid():
                         client = form.save(commit=False)
+                        client.last_profile = profile
                         client.type = 'aviakassa'
                         client.save()
                         messages.success(request, 'Mijoz ro\'yxatga olindi')
@@ -756,6 +767,7 @@ def createClient(request):
                 form = Daromad12Creation(request.POST, request.FILES)
                 if form.is_valid():
                         client = form.save(commit=False)
+                        client.last_profile = profile
                         client.type = 'daromad12'
                         if Client.objects.filter(type=client.type, jshshir=client.jshshir):
                             messages.error(request, 'Ushbu mijoz allaqachon ro\'yxatga olingan')
@@ -779,6 +791,7 @@ def createClient(request):
                 form = TaxerCreation(request.POST, request.FILES)
                 if form.is_valid():
                         client = form.save(commit=False)
+                        client.last_profile = profile
                         client.type = 'taxer'
                         # if Client.objects.filter(type=client.type, jshshir=client.jshshir):
                         #     messages.error(request, 'Ushbu mijoz allaqachon ro\'yxatga olingan')

@@ -152,6 +152,8 @@ class Client(models.Model):
     period = models.DateField(null=True, blank=True)
     application_files = models.ManyToManyField(File, related_name='application_files')
 
+    last_profile = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, blank=True)
+
     def save(self, *args, **kwargs):
         if self.type == 'auction':
             try:
@@ -444,3 +446,11 @@ class Key(models.Model):
                 return False
         else:
             return None
+    
+class ActionHistory(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, blank=True)
+    client_id = models.BigIntegerField(null=True, blank=True)
+    action_time = models.DateTimeField(auto_now_add=True)
+    model_name = models.CharField(null=True, blank=True, max_length=255)
+    action_type = models.CharField(null=True, blank=True, max_length=50)
+    changed_values = models.TextField(null=True, blank=True, )

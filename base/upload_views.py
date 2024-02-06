@@ -120,6 +120,7 @@ def archiveService(request, pk):
 def editClient(request, pk):
     client = Client.objects.get(id=pk)
     profile=Profile.objects.get(user=request.user)
+    client.last_profile = profile
     if client.type == 'ytt':
         form = YaTTCreation(instance=client)
         if request.method == "POST":

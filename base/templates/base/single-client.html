@@ -407,6 +407,35 @@
                   </div>
                 </div>
               </form>
+              <br>
+              <hr>
+              <!-- action histories -->
+              <div class="row mt-3">
+                <div class="col-sm-12">
+                  <div class="card-title text-left">O'zgartirishlar tarixi</div>
+                  <table class="table table-stripped">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Xodim</th>
+                        <th>Sana</th>
+                        <th>O'zgarishlar</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for hisory in histories %}
+                        <tr>
+                          <td>{{forloop.counter}}</td>
+                          <td>{{ hisory.profile.name }}</td>
+                          <td>{{ hisory.action_time|date:"d.m.Y H:i"  }}</td>
+                          <td style="white-space: pre-line; max-width: 1000px;">{{ hisory.changed_values }}</td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
             </div>
         </div>
       </div>

@@ -30,12 +30,13 @@ def singleClient(request, pk):
     try:
         client = Client.objects.get(id=pk)
         uploads = Upload.objects.filter(client=client)
+        action_histories = ActionHistory.objects.filter(client_id = client.pk)
         view = True
     except:
         view = False
 
     if view == True:
-        context = {'client':client, 'profile':profile, 'access':access, 'uploads':uploads}
+        context = {'client':client, 'profile':profile, 'access':access, 'uploads':uploads, 'histories': action_histories}
         return render(request, 'base/single-client.html', context)
     else:
         return render(request, 'error-404.html')

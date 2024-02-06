@@ -18,6 +18,10 @@ class ClientAdmin(admin.ModelAdmin):
 class KeyAdmin(admin.ModelAdmin):
     list_display = ['client', 'name', 'type', 'key_exp']
 
+class ActionHistoryAdmin(admin.ModelAdmin):
+    def get_list_display(self, request):
+        return [field.name for field in self.model._meta.concrete_fields]
+
 admin.site.register(Task)
 admin.site.register(Access)
 admin.site.register(Profile)
@@ -32,3 +36,4 @@ admin.site.register(telegramPost)
 admin.site.register(Bot_user)
 admin.site.register(Template)
 admin.site.register(Key, KeyAdmin)
+admin.site.register(ActionHistory, ActionHistoryAdmin)
