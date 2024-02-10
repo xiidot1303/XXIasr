@@ -87,6 +87,12 @@
                         <input type="text" id="filter-client-jshshir" class="form-control">
                       </div>
                     </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="">Stir</label>
+                        <input type="text" id="filter-client-stir" class="form-control">
+                      </div>
+                    </div>
 
                   </div>
                   <button class="btn btn-primary btn-rounded" type="button" id="filter-button">Aniqlash</button>
@@ -231,6 +237,8 @@
             filterText = '&name=' + client_name
             var client_jshshir = $('#filter-client-jshshir').val();
             filterText += '&jshshir=' + client_jshshir
+            var client_stir = $('#filter-client-stir').val();
+            filterText += '&stir=' + client_stir
             fetchKeys(filterText);
         });
 

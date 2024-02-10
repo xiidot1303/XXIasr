@@ -3692,6 +3692,8 @@ def fetch_keys(request, key_type):
         keys = keys.filter(name__icontains=client_name) if client_name else keys
         client_jshshir = request.GET['jshshir']
         keys = keys.filter(jshshir__icontains=client_jshshir) if client_jshshir else keys
+        client_stir = request.GET['stir']
+        keys = keys.filter(Q(inn=client_stir) | Q(client__tin = client_stir)) if client_stir else keys
 
     keys = keys.annotate(
         client_stir = F('client__tin'), added_by_name = F('added_by__name')
