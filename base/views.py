@@ -3771,6 +3771,7 @@ def get_template(request, folder, file):
 
 @login_required(login_url='login')
 def operator(request, is_called_id = None):
+    profile = Profile.objects.get(user=request.user)
     if is_called_id:
         obj = Duedate.objects.get(pk=is_called_id)
         obj.is_called = True
@@ -3791,7 +3792,7 @@ def operator(request, is_called_id = None):
         today_text = '{}-{}-{}'.format(today.year, today.month, today.day)
         due_dates = due_dates.filter(due_date__range = (today_text, '3000-12-12'))
 
-    context = {'due_dates': due_dates}
+    context = {'due_dates': due_dates, 'profile': profile}
     return render(request, 'base/operator.html', context)
 
 @login_required(login_url='login')
