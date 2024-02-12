@@ -3786,6 +3786,11 @@ def operator(request, is_called_id = None):
             date_to = '3000-12-12'
         
         due_dates = due_dates.filter(due_date__range = (date_from, date_to))
+    else:
+        today = datetime.datetime.today()
+        today_text = '{}-{}-{}'.format(today.year, today.month, today.day)
+        due_dates = due_dates.filter(due_date__range = (today_text, '3000-12-12'))
+
     context = {'due_dates': due_dates}
     return render(request, 'base/operator.html', context)
 
