@@ -92,20 +92,11 @@
                       {% endif %}
                         <td>{{forloop.counter}}</td>
                         <td style="display: flex; align-items: center ;">
-                          {% if d.client.picture %}
-                          <div class="profile-pics">
-                            <img style="width: 100%; height: 100%; border-radius: 0; transition: all 1s;" src="/app{{d.client.picture.url}}" alt="">
-                          </div>
-                          <div class="img-text" style="line-height: 15px; padding-left: 15px;"><a class="text-dark" href="{% url 'client' d.client.id %}">{{ d.client.name|wordwrap:"20"|linebreaksbr }}</a> </div>
-                         
-                          {% else %}
     
-                          <div class="profile-pics">
-                            <img style="width: 100%; height: 100%; border-radius: 0; transition: all 1s;" src="{% static 'profile/profile-default.jpg' %}" alt="">
-                          </div>
+
                           <div class="img-text" style="line-height: 15px; padding-left: 15px;"><a class="text-dark" href="{% url 'client' d.client.id %}">{{ d.client.name|wordwrap:"20"|linebreaksbr }}</a></div>
     
-                          {% endif %}
+                          
                         </td>
                         <td>{{d.type}}</td>
                         <td>
