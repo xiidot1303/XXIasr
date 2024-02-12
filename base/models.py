@@ -454,3 +454,22 @@ class ActionHistory(models.Model):
     model_name = models.CharField(null=True, blank=True, max_length=255)
     action_type = models.CharField(null=True, blank=True, max_length=50)
     changed_values = models.TextField(null=True, blank=True, )
+
+class Duedate(models.Model):
+    client = models.ForeignKey('base.Client', null=True, blank=True, on_delete = models.SET_NULL)
+    # STATUS_CHOICES = [
+    #     (0, 'inactive'),
+    #     (1, 'active')
+    # ]
+    # status = models.IntegerField(default = 1, choices = STATUS_CHOICES)
+    TYPE_CHOICES = [
+        ('key', 'Kalit'),
+        ('guvohnoma', 'Guvohnoma'),
+        ('taxi', 'Taxi litsenziya'),
+        ('ishonchnoma', 'Ishonchnoma'),
+        ('tanirovka', 'Tanirovka'),
+    ]
+    type = models.CharField(null=True, blank=True, max_length=64, choices = TYPE_CHOICES)
+    comment = models.TextField(null=True, blank=True, default = '')
+    due_date = models.DateField(null=True, blank=True)
+    is_called = models.BooleanField(default = False)

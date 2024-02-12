@@ -3769,3 +3769,32 @@ def get_template(request, folder, file):
     f = open('static/templates/{}/{}'.format(folder, file), 'rb')
     return FileResponse(f)
 
+@login_required(login_url='login')
+def operator(request, is_called_id = None):
+    if is_called_id:
+        obj = Duedate.objects.get(pk=is_called_id)
+        obj.is_called = True
+        obj.save()
+    # filter due dates
+    due_dates = Duedate.objects.all().order_by('is_called', 'due_date')
+    if 'filter' in request.GET:
+        date_from = request.GET['from']
+        if not date_from:
+            date_from = '1000-12-12'
+        date_to = request.GET['to']
+        if not date_to:
+            date_to = '3000-12-12'
+        
+        due_dates = due_dates.filter(due_date__range = (date_from, date_to))
+    context = {'due_dates': due_dates}
+    return render(request, 'base/operator.html', context)
+
+@login_required(login_url='login')
+def change_duedate(request, pk):
+    if request.method == 'POST':
+        comment = request.POST['comment']
+        obj = Duedate.objects.get(pk=pk)
+        obj.is_called = True
+        obj.comment = comment
+        obj.save()
+    return redirect(request.META.get('HTTP_REFERER'))

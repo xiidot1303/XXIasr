@@ -22,6 +22,10 @@ class ActionHistoryAdmin(admin.ModelAdmin):
     def get_list_display(self, request):
         return [field.name for field in self.model._meta.concrete_fields]
 
+class DuedateAdmin(admin.ModelAdmin):
+    def get_list_display(self, request):
+        return [field.name for field in self.model._meta.concrete_fields]
+
 admin.site.register(Task)
 admin.site.register(Access)
 admin.site.register(Profile)
@@ -37,3 +41,4 @@ admin.site.register(Bot_user)
 admin.site.register(Template)
 admin.site.register(Key, KeyAdmin)
 admin.site.register(ActionHistory, ActionHistoryAdmin)
+admin.site.register(Duedate, DuedateAdmin)

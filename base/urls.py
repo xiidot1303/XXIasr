@@ -85,5 +85,8 @@ urlpatterns = [
 
     path('fetch_keys/<str:key_type>/', fetch_keys, name='fetch_keys'),
     path('change_sub_gived/<str:client_id>/', change_sub_gived, name='change_sub_gived'),
+
+    path('operator', operator, name = 'operator'),
+    path('edit-duedate/<int:pk>/', change_duedate, name = 'change_duedate'),
 ]
 

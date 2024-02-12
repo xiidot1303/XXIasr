@@ -1,0 +1,233 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block link %}
+<!-- Favicon -->
+<link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}" />
+
+<link rel="stylesheet" href="{% static 'assets/css/backend-plugin.min.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/backend.css' %}">  
+{% endblock %}
+
+
+{% block content %}
+
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-12 grid-margin">
+        <div class="row">
+          <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+            <h3 class="font-weight-bold">XXI ASR BUXGALTERIYA</h3>
+            <h6 class="font-weight-normal mb-0">Tugayotgan muddatlar</span></h6>
+          </div>
+          <div class="col-12 col-xl-4">
+           <div class="justify-content-end d-flex">
+           
+           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            
+            <div class="card-body">
+            <div class="card-title">Filterlash</div>
+            
+                <form action="" method="get">
+                  <input type="hidden" name="filter">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="">Muddatni tanlang (...) dan</label>
+                      <input type="date" name="from" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="">Muddatni tanlang (...) gacha</label>
+                      <input type="date" name="to" class="form-control">
+                    </div>
+                  </div>
+                </div>
+                <button class="btn btn-primary btn-rounded" type="submit">Aniqlash</button>
+                </form>
+          </div>
+        </div>
+      </div>
+     
+    </div>
+
+
+
+    <div class="row">
+      <div class="col-sm-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title"><div class="float-left">Barcha muddati tugayotganlar</div><div class="float-right">
+            </div></div>
+            <div class="table-responsive">
+                <table class="table table-striped ytt data-table table-bordered" id="monitoring">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Mijoz</th>
+                      <th>Turi</th>
+                      <th>Izoh</th>
+                      <th>Muddat</th>
+                      <th></th>
+                
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for d in due_dates %}
+                      {% if d.is_called %}
+                        <tr class="bg-success">
+                        {% else %}
+                          <tr>
+                      {% endif %}
+                        <td>{{forloop.counter}}</td>
+                        <td style="display: flex; align-items: center ;">
+                          {% if d.client.picture %}
+                          <div class="profile-pics">
+                            <img style="width: 100%; height: 100%; border-radius: 0; transition: all 1s;" src="/app{{d.client.picture.url}}" alt="">
+                          </div>
+                          <div class="img-text" style="line-height: 15px; padding-left: 15px;"><a class="text-dark" href="{% url 'client' d.client.id %}">{{ d.client.name|wordwrap:"20"|linebreaksbr }}</a> </div>
+                         
+                          {% else %}
+    
+                          <div class="profile-pics">
+                            <img style="width: 100%; height: 100%; border-radius: 0; transition: all 1s;" src="{% static 'profile/profile-default.jpg' %}" alt="">
+                          </div>
+                          <div class="img-text" style="line-height: 15px; padding-left: 15px;"><a class="text-dark" href="{% url 'client' d.client.id %}">{{ d.client.name|wordwrap:"20"|linebreaksbr }}</a></div>
+    
+                          {% endif %}
+                        </td>
+                        <td>{{d.type}}</td>
+                        <td>
+                          {{d.comment|wordwrap:"20"|linebreaksbr}}
+                        </td>
+                        <td>
+                          {{d.due_date}}
+                        </td>
+
+                        <td>
+                        {% if not d.is_called %}
+                          <button type="button" target="_blank" class="btn btn-primary"
+                                data-toggle="modal" data-target="#receipt{{ d.pk }}Modal">
+                                <i class="fas fa-check"></i>
+                            </button>
+                        {% else %}
+                        {% endif %}
+                        </td>
+                      </tr>
+                    
+                <!-- Modal -->
+                <div class="modal fade" id="receipt{{ d.pk }}Modal" tabindex="-1" role="dialog" aria-labelledby="receipt{{ d.pk }}ModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                       <div class="modal-content">
+                          <div class="modal-header">
+                             <h5 class="modal-title" id="receipt{{ d.pk }}ModalLabel">
+                                {{ d.client.name }}
+                             </h5>
+                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                             <span aria-hidden="true">&times;</span>
+                             </button>
+                          </div>
+                          <form action="edit-duedate/{{ d.pk }}/" method="post">
+                              {% csrf_token %}
+                              <div class="modal-body">
+                                <label for="comment{{ d.pk }}">
+                                    Izoh:
+                                </label>
+                                 <textarea name="comment" id="comment{{ d.pk }}" style="width: 430px; height: 150px;">{{ d.comment }}</textarea>
+                              </div>
+                              <div class="modal-footer">
+                                 <button type="submit" class="btn btn-primary" >Saqlash</button>
+                              </div>
+
+                          </form>
+                       </div>
+                    </div>
+                 </div>
+
+
+
+                    {% endfor %}
+                  </tbody>
+            </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+ 
+</div>
+
+
+{% endblock content %}
+
+
+{% block script %}
+<!-- <script src="{% static 'assets/js/backend-bundle.min.js' %}"></script> -->
+<!-- Chart Custom JavaScript -->
+<script src="{% static 'assets/js/customizer.js' %}"></script>
+
+<script src="{% static 'assets/js/sidebar.js' %}"></script>
+
+<!-- Flextree Javascript-->
+<script src="{% static 'assets/js/flex-tree.min.js' %}"></script>
+<script src="{% static 'assets/js/tree.js"></script>
+
+<!-- Table Treeview JavaScript -->
+<script src="{% static 'assets/js/table-treeview.js' %}"></script>
+
+<!-- SweetAlert JavaScript -->
+<script src="{% static 'assets/js/sweetalert.js' %}"></script>
+
+<!-- Vectoe Map JavaScript -->
+<script src="{% static 'assets/js/vector-map-custom.js' %}"></script>
+
+<!-- Chart Custom JavaScript -->
+<!-- <script src="{% static 'assets/js/chart-custom.js' %}"></script> -->
+<script src="{% static 'assets/js/charts/01.js' %}"></script>
+<script src="{% static 'assets/js/charts/02.js' %}"></script>
+
+<!-- slider JavaScript -->
+<script src="{% static 'assets/js/slider.js' %}"></script>
+
+<!-- Emoji picker -->
+<script src="{% static 'assets/vendor/emoji-picker-element/index.js' %}" type="module"></script>
+
+
+<!-- app JavaScript -->
+<script src="{% static 'assets/js/app.js' %}"></script>
+
+<script>
+  // JavaScript to animate background color change
+  function animateBackground(element) {
+      setInterval(function() {
+        var currentColor = element.style.backgroundColor;
+        var nextColor = currentColor === 'rgba(246, 6, 6, 0.298)' ? '#fff' : 'rgba(246, 6, 6, 0.298)';
+        element.style.backgroundColor = nextColor;
+      }, 1200); // 1000ms = 1 second
+    }
+
+
+  // Get elements by class and apply animation
+  window.addEventListener('load', function() {
+    var rows = document.getElementsByClassName('bg-animation');
+    for (var i = 0; i < rows.length; i++) {
+      animateBackground(rows[i]);
+    }
+  });
+</script>
+
+{% endblock %}
