@@ -10,5 +10,5 @@ def start():
     scheduler.add_job(birthday.send_congragulation, 'cron', hour=9, minute=21, second=21)
     scheduler.add_job(mailing.send_message, 'interval', minutes=7)
     scheduler.add_job(job.refresh_ytt_sub_gived, 'cron', day=1)
-    scheduler.add_job(due_date.check_expires, 'cron', day=1)
+    scheduler.add_job(due_date.check_expires, 'cron', hour=1, minute=1, second=1)
     scheduler.start()
