@@ -53,6 +53,19 @@
                       <input type="date" name="to" class="form-control">
                     </div>
                   </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="type">Turi bo'yicha</label>
+                      <select name="type" class="form-control">
+                        <option value="">Barchasi</option>
+                        <option value="key">Kalit</option>
+                        <option value="guvohnoma">Guvohnoma</option>
+                        <option value="taxi">Taxi Litsenziya</option>
+                        <option value="ishonchnoma">Ishonchnoma</option>
+                        <option value="tanirovka">Tanirovka</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
                 <button class="btn btn-primary btn-rounded" type="submit">Aniqlash</button>
                 </form>
@@ -76,6 +89,7 @@
                     <tr>
                       <th>#</th>
                       <th>Mijoz</th>
+                      <th>Telefon</th>
                       <th>Turi</th>
                       <th>Izoh</th>
                       <th>Muddat</th>
@@ -98,6 +112,7 @@
     
                           
                         </td>
+                        <td>{{d.client.phone1}}</td>
                         <td>{{d.type}}</td>
                         <td>
                           {{d.comment|wordwrap:"20"|linebreaksbr}}

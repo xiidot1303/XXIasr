@@ -3785,8 +3785,9 @@ def operator(request, is_called_id = None):
         date_to = request.GET['to']
         if not date_to:
             date_to = '3000-12-12'
-        
         due_dates = due_dates.filter(due_date__range = (date_from, date_to))
+        type_ = request.GET['type']
+        due_dates = due_dates.filter(type = type_) if type_ else due_dates
     else:
         today = datetime.datetime.today()
         today_text = '{}-{}-{}'.format(today.year, today.month, today.day)
