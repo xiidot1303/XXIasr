@@ -69,7 +69,10 @@ def check_expires():
 
 
     # delete updated due dates
-    Duedate.objects.filter(client__key_exp__range = [month_later_text, '3000-1-1']).delete()
-    Duedate.objects.filter(client__guvohnoma_exp__range = [month_later_text, '3000-1-1']).delete()
-    Duedate.objects.filter(client__expiry_date__range = [month_later_text, '3000-1-1']).delete()
+    Duedate.objects.filter(client__key_exp__range = [month_later_text, '3000-1-1'], type='key').delete()
+    Duedate.objects.filter(client__guvohnoma_exp__range = [month_later_text, '3000-1-1'], type='guvohnoma').delete()
+    Duedate.objects.filter(
+        client__expiry_date__range = [month_later_text, '3000-1-1'], 
+        type__in = ['tanirovka', 'ishonchnoma', 'taxi']
+        ).delete()
         
