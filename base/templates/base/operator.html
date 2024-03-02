@@ -75,7 +75,23 @@
      
     </div>
 
-
+    <div class="row">
+      <div class="col-md-12 grid-margin strech-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title">Umumiy SMS yuborish</div>
+            <form action="" method="POST">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="">SMS matni</label>
+                <textarea name="text" class="form-control" cols="30" rows="5"></textarea>
+              </div>
+              <button class="btn btn-rounded btn-primary" type="submit"><i class="fa fa-send"></i>  Yuborish</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="row">
       <div class="col-sm-12 grid-margin stretch-card">
@@ -89,6 +105,7 @@
                     <tr>
                       <th>#</th>
                       <th>Mijoz</th>
+                      <th>Jshshr</th>
                       <th>Telefon</th>
                       <th>Turi</th>
                       <th>Izoh</th>
@@ -112,6 +129,7 @@
     
                           
                         </td>
+                        <td>{{ d.client.jshshir }}</td>
                         <td>{{d.client.phone1}}</td>
                         <td>{{d.type}}</td>
                         <td>

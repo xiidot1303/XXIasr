@@ -3793,6 +3793,70 @@ def operator(request, is_called_id = None):
         today_text = '{}-{}-{}'.format(today.year, today.month, today.day)
         due_dates = due_dates.filter(due_date__range = (today_text, '3000-12-12'))
 
+     
+    if request.method == "POST":
+        text = request.POST['text']
+        for due_date in due_dates:
+            reciever = due_date.client
+            rephone = reciever.phone1.replace(" ", "")
+            rephone = rephone.replace("-","")
+            rephone = rephone.replace(".","")
+            rephone = rephone.replace(")","")
+            rephone = rephone.replace("(","")
+            if len(rephone) == 13:
+                rephone = rephone
+                sms_status = 10
+            elif len(rephone) == 9:
+                rephone = '+998' + str(rephone)
+                sms_status = 10
+            elif len(rephone) == 12 and rephone[0] == '9':
+                rephone = '+' + str(rephone)
+                sms_status = 10
+            elif len(rephone) == 0 or len(rephone) == 1:
+                rephone = False
+                sms_status = 0
+            else:
+                rephone = False
+                sms_status = 5
+            if rephone:
+                numberid = rephone
+                SMS.objects.create(
+                    client=reciever,
+                    text=text,
+                    status=sms_status
+                )
+                url = 'http://91.204.239.44/broker-api/send'
+                headers = {'Content-type': 'application/json',  # Определение типа данных
+                        'Accept': 'text/plain',
+                        'Authorization': 'Basic eHhpYXNyOmJwOWJFTVA3ODI='}
+                data = {
+                "messages":
+                [
+                {
+                "recipient":numberid,
+                "message-id":"prime000019953",
+                    "sms":{
+                    "originator": "21ASR",
+                    "content": {
+                    "text": text
+                    }
+                    }
+                        }
+                    ]
+                } 
+                try:
+                    requests.post(url, json=data, headers=headers)
+                except:
+                    messages.error(request, 'Internet bilan bog\'liq muammo :(')
+            else:
+                SMS.objects.create(
+                    client=reciever,
+                    text=text,
+                    status=sms_status
+                )
+                
+
+
     context = {'due_dates': due_dates, 'profile': profile}
     return render(request, 'base/operator.html', context)
 
