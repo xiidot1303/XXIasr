@@ -1,3 +1,4 @@
+{% load static %}
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
       <li class="nav-item">
@@ -140,4 +141,35 @@
         </a>
       </li>
     </ul>
+
+    <style>
+      img {
+          width: 300px; /* Adjust according to your image size */
+          height: auto;
+          transition: opacity 1s ease-in-out;
+      }
+  </style>
+    {% if user.username == 'otamurodazimzoda' %}
+    <img id="image" src="{% static 'profile/otamurod1.jpg' %}" alt="" style="width: 200px;">
+    <script>
+      // Array of image sources
+      var images = ["{% static 'profile/otamurod2.jpg' %}", "{% static 'profile/otamurod3.jpg' %}", "{% static 'profile/otamurod4.jpg' %}"];
+      var currentIndex = 0;
+
+      // Function to change the image with fade animation
+      function changeImageWithAnimation() {
+        var imageElement = document.getElementById("image");
+        imageElement.style.opacity = 0; // Set opacity to 0 for fade out effect
+        setTimeout(function() {
+            imageElement.src = images[currentIndex];
+            currentIndex = (currentIndex + 1) % images.length;
+            imageElement.style.opacity = 1; // Set opacity back to 1 for fade in effect
+        }, 1000); // Adjust timing to match CSS transition duration
+    }
+
+    // Change image with animation every 3 seconds
+    setInterval(changeImageWithAnimation, 3000);
+  </script>
+    {% endif %}
+
   </nav>
