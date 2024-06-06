@@ -2,7 +2,7 @@
 from django.urls import path
 
 from base.client_views import singleClient, change_congragulation
-from base.upload_views import NotesPage, cancelService, confirmSerivce, editClient, editNote, change_sub_gived, archiveService
+from base.upload_views import NotesPage, cancelService, confirmSerivce, editClient, editNote, change_sub_gived, archiveService, editUpload
 from base.views import *
 from .user_views import CreateProfile, DeleteProfile, EditProfile, Profiles, ActiveProfile
 from data.config import BOT_TOKEN
@@ -41,6 +41,7 @@ urlpatterns = [
     path("cancel-serivce/<str:pk>", cancelService, name='cancel-service'),
     path("confirm-serivce/<str:pk>", confirmSerivce, name='confirm-service'),
     path("archive-serivce/<int:pk>", archiveService, name='archive-service'),
+    path("edit-upload/<int:pk>", editUpload, name='edit-upload'),
 
     path("client/<str:pk>", singleClient, name='client'),
     path("edit-client/<str:pk>", editClient, name='edit-client'),

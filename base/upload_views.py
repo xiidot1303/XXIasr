@@ -117,6 +117,24 @@ def archiveService(request, pk):
     return redirect(request.META.get('HTTP_REFERER'))
 
 @login_required(login_url='login')
+def editUpload(request, pk):
+    upload = Upload.objects.get(pk=pk)
+    profile=Profile.objects.get(user=request.user)
+    if request.method == "POST":
+        form = UploadForm(request.POST, instance=upload)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Malumotlar yangilandi")
+            return redirect(request.META.get('HTTP_REFERER'))
+        else:
+            messages.error(request, "Ma'lumotlar to'liq kiritilmadi")
+
+    form = UploadForm(instance=upload)
+    context = {'form': form, 'profile': profile}
+    return render(request, 'base/forms.html', context)
+
+
+@login_required(login_url='login')
 def editClient(request, pk):
     client = Client.objects.get(id=pk)
     profile=Profile.objects.get(user=request.user)
