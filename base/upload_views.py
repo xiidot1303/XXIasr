@@ -313,6 +313,17 @@ def editClient(request, pk):
                 return redirect('taxer')
             else:
                 messages.error(request, "Qandaydir xatolik :(")
+        
+    elif client.type == 'student':
+        form = StudentCreation(instance=client)
+        if request.method == "POST":
+            form = StudentCreation(request.POST, request.FILES, instance=client)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Malumotlar yangilandi")
+                return redirect('student')
+            else:
+                messages.error(request, "Qandaydir xatolik :(")
     
     context = {'form':form, 'client': client}
     return render(request, 'base/forms.html', context)

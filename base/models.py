@@ -66,6 +66,7 @@ class Client(models.Model):
         ('aviakassa', 'Aviakassa va tur'),
         ('daromad12', '12% daromad'),
         ('taxer', 'Soliqchi'),
+        ('student', 'Talaba'),
     )
     type = models.CharField(choices=TYPE_CHOICES, max_length=255)
     SUB_CHOICES = (
@@ -151,6 +152,7 @@ class Client(models.Model):
     contract = models.FileField(null=True, blank=True, upload_to="static/contract/")
     period = models.DateField(null=True, blank=True)
     application_files = models.ManyToManyField(File, related_name='application_files')
+    profession = models.CharField(null=True, blank=True, max_length=255)
 
     last_profile = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, blank=True)
 
@@ -421,6 +423,7 @@ class Key(models.Model):
         ('ishonchnoma', 'Ishonchnoma'),
         ('daromad12', '12% daromad'),
         ('taxer', 'Soliqchi'),
+        ('student', 'Talaba')
     )
     type = models.CharField(choices=TYPE_CHOICES, max_length=255, blank=True, null=True)
     jshshir = models.CharField(max_length=255, null=True, blank=True)

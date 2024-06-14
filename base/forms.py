@@ -702,6 +702,37 @@ class TaxerCreation(ModelForm):
 
 
 
+class StudentCreation(ModelForm):
+    class Meta:
+        model = Client
+        fields = ['picture', 'name', 'passport', 'jshshir', 'gov_login', 'gov_password', 'phone1', 'phone2', 'phone3', 'profession', 'bot_user']
+        labels = {
+            'picture':'Rasm',
+            'name': 'F.I.Sh.',
+            'passport': 'Passport',
+            'jshshir': 'Jshshr',
+            'gov_login': 'Login',
+            'gov_password': 'Parol',
+            'phone1' : 'Telefon',
+            'phone2' : 'Telefon 2',
+            'phone3' : 'Telefon 3',
+            'profession' : 'Yo\'nalishi',
+            'bot_user' : 'Telegram foydalanuvchisi',
+
+        }
+     
+    def __init__(self, *args, **kvargs):
+        super(StudentCreation, self).__init__(*args, **kvargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control'})
+        self.fields['name'].widget.attrs.update({'required':'required'})
+        self.fields['phone1'].widget.attrs.update({'required':'required'})
+        self.fields['bot_user'].widget.attrs.update({'class':'form-control js-example-basic-single'})
+
+
+
+
 class NotesCreation(ModelForm):
     
     class Meta:
