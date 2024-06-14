@@ -732,6 +732,33 @@ class StudentCreation(ModelForm):
 
 
 
+class MahallaCreation(ModelForm):
+    class Meta:
+        model = Client
+        fields = ['picture', 'name', 'mahalla_type', 'phone1', 'phone2', 'phone3', 'quarter', 'bot_user']
+        labels = {
+            'picture':'Rasm',
+            'name': 'F.I.Sh.',
+            'mahalla_type': 'Turi',
+            'phone1' : 'Telefon',
+            'phone2' : 'Telefon 2',
+            'phone3' : 'Telefon 3',
+            'quarter' : 'Mahallasi',
+            'bot_user' : 'Telegram foydalanuvchisi',
+
+        }
+     
+    def __init__(self, *args, **kvargs):
+        super(MahallaCreation, self).__init__(*args, **kvargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control'})
+        self.fields['name'].widget.attrs.update({'required':'required'})
+        self.fields['phone1'].widget.attrs.update({'required':'required'})
+        self.fields['bot_user'].widget.attrs.update({'class':'form-control js-example-basic-single'})
+
+
+
 
 class NotesCreation(ModelForm):
     

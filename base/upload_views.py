@@ -324,6 +324,17 @@ def editClient(request, pk):
                 return redirect('student')
             else:
                 messages.error(request, "Qandaydir xatolik :(")
+            
+    elif client.type == 'mahalla':
+        form = MahallaCreation(instance=client)
+        if request.method == "POST":
+            form = MahallaCreation(request.POST, request.FILES, instance=client)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Malumotlar yangilandi")
+                return redirect('mahalla')
+            else:
+                messages.error(request, "Qandaydir xatolik :(")
     
     context = {'form':form, 'client': client}
     return render(request, 'base/forms.html', context)

@@ -37,6 +37,7 @@ urlpatterns = [
     path("daromad12/", daromad12Page, name='daromad12'),
     path("taxer/", taxerPage, name='taxer'),
     path("student/", studentPage, name='student'),
+    path("mahalla/", mahallaPage, name='mahalla'),
 
 
     path("cancel-serivce/<str:pk>", cancelService, name='cancel-service'),
