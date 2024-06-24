@@ -115,6 +115,7 @@
                            <th>F.I.Sh</th>
                            <th>Telefon</th>
                            <th>Lavozim</th>
+                           <th>Mahallasi</th>
                            <th><i class="fa fa-cog"></i></th>
                        </tr>
                    </thead>
@@ -142,6 +143,7 @@
                             </td>
                             <td>{{ client.phone1 }}</td>
                             <td>{{ client.work_as }}</td>
+                            <td>{{ client.quarter }}</td>
 
                             <td>
                               <a href="{% url 'edit-client' client.id %}"><i class="fa fa-pencil"></i></a>

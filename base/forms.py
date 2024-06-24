@@ -677,11 +677,12 @@ class AviakassaCreation(ModelForm):
 class TaxerCreation(ModelForm):
     class Meta:
         model = Client
-        fields = ['picture', 'name', 'work_as', 'phone1', 'phone2', 'phone3', 'bot_login', 'bot_password', 'bot_user']
+        fields = ['picture', 'name', 'work_as', 'quarter', 'phone1', 'phone2', 'phone3', 'bot_login', 'bot_password', 'bot_user']
         labels = {
             'picture':'Rasm',
             'name': 'F.I.Sh.',
             'work_as' : 'Lavozim',
+            'quarter' : 'Mahallasi',
             'phone1' : 'Telefon',
             'phone2' : 'Telefon 2',
             'phone3' : 'Telefon 3',
