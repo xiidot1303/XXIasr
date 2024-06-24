@@ -3519,6 +3519,11 @@ def mahallaPage(request):
         except:
             phone = ""
     
+        try:
+            mahalla_type = request.GET['mahalla_type']
+        except:
+            mahalla_type = ""
+
         pagType = False
 
         tins = False
@@ -3534,6 +3539,10 @@ def mahallaPage(request):
         if quarter != "":
             query = query.filter(Q(quarter__icontains=quarter))
         
+        if mahalla_type != "":
+            query = query.filter(mahalla_type=mahalla_type)
+
+
         if phone != "":
             if phone == 'true':
                 query = query.exclude(Q(phone1__exact="")& Q(phone1=None))
