@@ -659,7 +659,7 @@ def createClient(request):
                         client = form.save(commit=False)
                         client.last_profile = profile
                         client.type = 'tanirovka'
-                        if Client.objects.filter(type=client.type, jshshir=client.jshshir):
+                        if Client.objects.filter(type=client.type, jshshir=client.jshshir, tex_number=client.tex_number):
                             messages.error(request, 'Ushbu mijoz allaqachon ro\'yxatga olingan')
                             context = {'view':True, 'form':form, 'profile':profile}
                             return render(request, 'base/createclient.html', context)
