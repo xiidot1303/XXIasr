@@ -6,8 +6,8 @@ def fine_list(request):
     if profile.status == 'admin' or profile.status == 'superuser':
         fines = Fine.objects.filter().order_by('-date')
     else:
-        fines = Fine.objects.filter(staff=profile).order_by('-date')
-    
+        fines = Fine.objects.filter(Q(staff=profile) | Q(controller=profile)).order_by('-date')
+
     context = {'profile': profile, 'fines': fines}
     return render(request, 'fine/fine_list.html', context)
 
