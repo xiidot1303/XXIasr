@@ -1,4 +1,5 @@
 {% load static %}
+{% load functions %}
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
       <li class="nav-item">
@@ -147,6 +148,9 @@
         <a class="nav-link" href="{% url 'decree_list' %}">
           <i class="fas fa-file-alt menu-icon"></i>
           <span class="menu-title">Buyruqlar</span>
+          {% if profile|is_decree_available %}
+          <span style="position: relative;left: 36%;width: 12px;height: 12px;border-radius: 100%;background: blue;bottom: 0px;"></span>
+          {% endif %}
         </a>
       </li>
 

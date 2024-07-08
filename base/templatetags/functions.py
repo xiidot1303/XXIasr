@@ -1,5 +1,5 @@
 from django import template
-from base.models import Client
+from base.models import Client, Decree
 from django.db.models import CharField, Value, F, Q
 from datetime import date, timedelta
 from itertools import chain
@@ -92,3 +92,8 @@ def type_readable(type):
     TYPE_CHOICES = dict(Client.TYPE_CHOICES)
     TYPE_CHOICES[None] = '------'
     return TYPE_CHOICES[type]
+
+@register.filter
+def is_decree_available(profile):
+    decress = Decree.objects.filter(receiver=profile).exclude(status='done')
+    return decress
