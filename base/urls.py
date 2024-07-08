@@ -4,7 +4,7 @@ from django.urls import path
 from base.client_views import singleClient, change_congragulation
 from base.upload_views import NotesPage, cancelService, confirmSerivce, editClient, editNote, change_sub_gived, archiveService, editUpload
 from base.views.main import *
-from base.views import fine
+from base.views import fine, decree
 from .user_views import CreateProfile, DeleteProfile, EditProfile, Profiles, ActiveProfile
 from data.config import BOT_TOKEN
 
@@ -94,7 +94,15 @@ urlpatterns = [
     path('edit-duedate/<int:pk>/', change_duedate, name = 'change_duedate'),
 
     # fine
-    path('fine/list', fine.fine_list, name='fine_list'),
-    path('fine/create', fine.FineCreateView.as_view(), name='fine_create'),
+    path('fine-list', fine.fine_list, name='fine_list'),
+    path('fine-create', fine.FineCreateView.as_view(), name='fine_create'),
+
+    # decree
+    path('decree-list', decree.decree_list, name='decree_list'),
+    path('decree-create', decree.DecreeCreateView.as_view(), name='decree_create'),
+    path('decree-edit/<int:pk>/', decree.DecreeEditView.as_view(), name='decree_edit'),
+    path('decree-receive/<int:pk>/', decree.decree_receive, name='decree_receive'),
+    path('decree-complete/<int:pk>/', decree.DecreeCompleteView.as_view(), name='decree_complete'),
+    path('decree-check/<int:pk>/<str:status>/', decree.decree_check, name='decree_check'),
 ]
 

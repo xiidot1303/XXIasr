@@ -1,0 +1,158 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="main-panel">
+    <div class="content-wrapper">
+
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+              <div class="row">
+                <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                  <h3 class="font-weight-bold">XXI ASR BUXGALTERIYA</h3>
+                  <h6 class="font-weight-normal mb-0">Buyruqlar</span></h6>
+                </div>
+                <div class="col-12 col-xl-4">
+                 <div class="justify-content-end d-flex">
+                  <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+                    {% if perms.base.add_decree %}
+                    <a href="{% url 'decree_create' %}">
+                      <button class="btn btn-sm btn-light bg-primary" type="button">
+                        <i class="ti ti-plus font-weight-bold text-white"></i>
+                      </button>
+                    </a>
+                    {% endif %}
+                  </div>
+                 </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        {% if perms.base.view_decree %}
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title">Topshirilgan buyruqlar</p>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Sana</th>
+                                        <th>Raqami</th>
+                                        <th>Qaror mazmuni</th>
+                                        <th>Topshiruvchi</th>
+                                        <th>Qabul qiluvchi</th>
+                                        <th>Muddat</th>
+                                        <th>Holat</th>
+                                        <th>Ilova</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for decree in submitted_decrees %}
+                                    <tr>
+                                        <td>{{ decree.date|date:"d.m.Y" }}</td>
+                                        <td>{{ decree.pk }}</td>
+                                        <td>{{ decree.substance }}</td>
+                                        <td>{{ decree.submitter }}</td>
+                                        <td>{{ decree.receiver }}</td>
+                                        <td>{{ decree.due_date|date:"d.m.Y" }}</td>
+                                        <td>{{ decree.get_status_display }}</td>
+                                        <td>
+                                            {% if decree.file %}
+                                            <a href="/{{ decree.file }}" class="btn btn-primary btn-sm">
+                                                <i class="fas fa-download"></i>
+                                            </a>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'decree_edit' decree.pk %}" class="btn btn-primary btn-sm">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            {% if decree.status == 'checking' %}
+                                            <a href="{% url 'decree_check' decree.pk 'done' %}" class="btn btn-success btn-sm">
+                                                <i class="fas fa-check"></i>
+                                            </a>
+                                            <a href="{% url 'decree_check' decree.pk 'received' %}" class="btn btn-danger btn-sm">
+                                                <i class="fas fa-times"></i>
+                                            </a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title">Kelib tushgan buyruqlar</p>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Sana</th>
+                                        <th>Raqami</th>
+                                        <th>Qaror mazmuni</th>
+                                        <th>Topshiruvchi</th>
+                                        <th>Muddat</th>
+                                        <th>Holat</th>
+                                        <th>Ilova</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for decree in received_decrees %}
+                                    <tr>
+                                        <td>{{ decree.date|date:"d.m.Y" }}</td>
+                                        <td>{{ decree.pk }}</td>
+                                        <td>{{ decree.substance }}</td>
+                                        <td>{{ decree.submitter }}</td>
+                                        <td>{{ decree.due_date|date:"d.m.Y" }}</td>
+                                        <td>{{ decree.get_status_display }}</td>
+                                        <td>
+                                            {% if decree.file %}
+                                            <a href="/{{ decree.file }}" class="btn btn-primary btn-sm">
+                                                <i class="fas fa-download"></i>
+                                            </a>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if decree.status == 'submitted' %}
+                                            <a href="{% url 'decree_receive' decree.pk %}" class="btn btn-primary btn-sm">
+                                                <i class="fas fa-check"></i>
+                                            </a>
+                                            {% elif decree.status == 'received' %}
+                                            <a href="{% url 'decree_complete' decree.pk %}" class="btn btn-success btn-sm">
+                                                <i class="fas fa-check-double"></i>
+                                            </a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+{% endblock %}
+                

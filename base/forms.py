@@ -857,13 +857,50 @@ class FineForm(ModelForm):
 
         class DateInput(forms.DateInput):
             input_type = 'date'
-            
+
         widgets = {
             'date': DateInput()
         }
 
     def __init__(self, *args, **kvargs):
         super(FineForm, self).__init__(*args, **kvargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control'})
+
+class DecreeForm(ModelForm):
+    class Meta:
+        model = Decree
+        fields = ['receiver', 'substance', 'due_date']
+        labels = { 
+            'receiver': "Qabul qiluvchi", 
+            'substance': "Mazmuni", 
+            'due_date': "Muddat"
+        }
+
+        class DateInput(forms.DateInput):
+            input_type = 'date'
+
+        widgets = {
+            'due_date': DateInput()
+        }
+
+    def __init__(self, *args, **kvargs):
+        super(DecreeForm, self).__init__(*args, **kvargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control'})
+
+class DecreeCompleteForm(ModelForm):
+    class Meta:
+        model = Decree
+        fields = ['file']
+        labels = { 
+            'file': 'Ilova'
+        }
+
+    def __init__(self, *args, **kvargs):
+        super(DecreeCompleteForm, self).__init__(*args, **kvargs)
 
         for name, field in self.fields.items():
             field.widget.attrs.update({'class': 'form-control'})

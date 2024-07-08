@@ -15,7 +15,7 @@ class FineCreateView(LoginRequiredMixin, CreateView):
     model = Fine
     form_class = FineForm
     template_name = 'base/forms.html'
-    success_url = '/fine/list'
+    success_url = '/fine-list'
     login_url = 'login'
     def form_valid(self, form):
         form.instance.user = self.request.user

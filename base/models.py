@@ -495,3 +495,18 @@ class Fine(models.Model): # jarima
     date = models.DateTimeField(null=True, blank=False)
     fault = models.TextField(null=True, blank=False, max_length=1024)
     file = models.FileField(null=True, blank=True, upload_to='static/fine/')
+
+class Decree(models.Model):
+    submitter = models.ForeignKey(Profile, null=True, blank=False, related_name='decree_submitter', on_delete=models.PROTECT)
+    receiver = models.ForeignKey(Profile, null=True, blank=False, related_name='decree_receiver', on_delete=models.PROTECT)
+    substance = models.TextField(null=True, blank=False, max_length=1024)
+    date = models.DateTimeField(auto_now_add=True)
+    due_date = models.DateTimeField(null=True, blank=False)
+    file = models.FileField(null=True, blank=True, upload_to='static/decree/')
+    STATUSES = [
+        ('submitted', 'Topshirildi'),
+        ('received', 'Qabul qilindi'),
+        ('checking', 'Tekshiruvda'),
+        ('done', 'Yakunlangan'),
+    ]
+    status = models.CharField(null=True, blank=True, max_length=32, choices=STATUSES, default='submitted')
