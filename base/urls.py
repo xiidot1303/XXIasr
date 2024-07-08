@@ -3,7 +3,8 @@ from django.urls import path
 
 from base.client_views import singleClient, change_congragulation
 from base.upload_views import NotesPage, cancelService, confirmSerivce, editClient, editNote, change_sub_gived, archiveService, editUpload
-from base.views import *
+from base.views.main import *
+from base.views import fine
 from .user_views import CreateProfile, DeleteProfile, EditProfile, Profiles, ActiveProfile
 from data.config import BOT_TOKEN
 
@@ -91,5 +92,9 @@ urlpatterns = [
 
     path('operator', operator, name = 'operator'),
     path('edit-duedate/<int:pk>/', change_duedate, name = 'change_duedate'),
+
+    # fine
+    path('fine/list', fine.fine_list, name='fine_list'),
+    path('fine/create', fine.FineCreateView.as_view(), name='fine_create'),
 ]
 

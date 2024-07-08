@@ -3,7 +3,7 @@ from pyexpat import model
 from re import L
 from django import forms
 from django.forms import DateInput, ModelForm, fields, widgets
-from .models import Client, Notes, Profile, Service, Task, Upload, Template, Bot_user
+from .models import *
 
 
 class UploadForm(ModelForm):
@@ -840,6 +840,30 @@ class Bot_userForm(ModelForm):
 
     def __init__(self, *args, **kvargs):
         super(Bot_userForm, self).__init__(*args, **kvargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control'})
+
+class FineForm(ModelForm):
+    class Meta:
+        model = Fine
+        fields = ['staff', 'date', 'fault', 'file']
+        labels = {
+            'staff': "Xodim",
+            'date': "Sana",
+            'fault': 'Xato',
+            'file': 'Fayl'
+        }
+
+        class DateInput(forms.DateInput):
+            input_type = 'date'
+            
+        widgets = {
+            'date': DateInput()
+        }
+
+    def __init__(self, *args, **kvargs):
+        super(FineForm, self).__init__(*args, **kvargs)
 
         for name, field in self.fields.items():
             field.widget.attrs.update({'class': 'form-control'})

@@ -1,0 +1,76 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="main-panel">
+    <div class="content-wrapper">
+
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+              <div class="row">
+                <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                  <h3 class="font-weight-bold">XXI ASR BUXGALTERIYA</h3>
+                  <h6 class="font-weight-normal mb-0">Jarimalar ro'yxati</span></h6>
+                </div>
+                <div class="col-12 col-xl-4">
+                 <div class="justify-content-end d-flex">
+                  <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+                    {% if profile.status == 'admin' or profile.status == 'superadmin' %}
+                    <a href="{% url 'fine_create' %}">
+                      <button class="btn btn-sm btn-light bg-primary" type="button">
+                        <i class="ti ti-plus font-weight-bold text-white"></i>
+                      </button>
+                    </a>
+                    {% endif %}
+                  </div>
+                 </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title"></p>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Xodim</th>
+                                        <th>Xato</th>
+                                        <th>Tekshiruvchi</th>
+                                        <th>Tilxat</th>
+                                        <th>Sana</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for fine in fines %}
+                                    <tr>
+                                        <td>{{ fine.staff.name }}</td>
+                                        <td>{{ fine.fault }}</td>
+                                        <td>{{ fine.controller.name }}</td>
+                                        <td>
+                                            <a href="/{{ fine.file }}">
+                                                <i class="fas fa-download"></i>
+                                            </a>
+                                        </td>
+                                        <td>{{ fine.date|date:"d.m.Y" }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+                

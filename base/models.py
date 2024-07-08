@@ -488,3 +488,10 @@ class Duedate(models.Model):
     comment = models.TextField(null=True, blank=True, default = '')
     due_date = models.DateField(null=True, blank=True)
     is_called = models.BooleanField(default = False)
+
+class Fine(models.Model): # jarima
+    staff = models.ForeignKey(Profile, null=True, blank=False, related_name='fine_staff', on_delete=models.PROTECT)
+    controller = models.ForeignKey(Profile, null=True, blank=False, related_name='fine_controller', on_delete=models.PROTECT)
+    date = models.DateTimeField(null=True, blank=False)
+    fault = models.TextField(null=True, blank=False, max_length=1024)
+    file = models.FileField(null=True, blank=True, upload_to='static/fine/')
