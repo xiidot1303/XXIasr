@@ -17,7 +17,7 @@
                 <div class="col-12 col-xl-4">
                  <div class="justify-content-end d-flex">
                   <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
-                    {% if profile.status == 'admin' or profile.status == 'superadmin' %}
+                    {% if perms.base.add_fine %}
                     <a href="{% url 'fine_create' %}">
                       <button class="btn btn-sm btn-light bg-primary" type="button">
                         <i class="ti ti-plus font-weight-bold text-white"></i>

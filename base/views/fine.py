@@ -11,12 +11,14 @@ def fine_list(request):
     context = {'profile': profile, 'fines': fines}
     return render(request, 'fine/fine_list.html', context)
 
-class FineCreateView(LoginRequiredMixin, CreateView):
+class FineCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Fine
     form_class = FineForm
     template_name = 'base/forms.html'
     success_url = '/fine-list'
     login_url = 'login'
+    permission_required = 'base.add_fine'
+
     def form_valid(self, form):
         form.instance.user = self.request.user
         # get current profile
@@ -28,4 +30,5 @@ class FineCreateView(LoginRequiredMixin, CreateView):
         profile = Profile.objects.get(user=self.request.user)
         context = super().get_context_data(**kwargs)
         context['profile'] = profile
+        context['view'] = 'Jarima yaratish'
         return context
