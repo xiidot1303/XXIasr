@@ -51,6 +51,16 @@ def loginPage(request):
 
             if user is not None:
                 login(request, user)
+                # check that user have not due dated decress
+                decrees = Decree.objects.filter(
+                    receiver__user = request.user,
+                    due_date__lte = datetime.datetime.now()
+                    ).exclude(Q(status = 'done') | Q(status = 'checking'))
+                if decrees:
+                    logout(request)
+                    return redirect('login')
+
+
                 profile = Profile.objects.get(user=user)
                 return redirect("home")
             else:
