@@ -543,10 +543,10 @@ def createClient(request):
                             messages.error(request, 'Ushbu mijoz allaqachon ro\'yxatga olingan')
                             context = {'view':True, 'form':form, 'profile':profile}
                             return render(request, 'base/createclient.html', context)
-                        if client.sub_type == 'aylanma':
-                            client.congragulate = True
-                        else:
-                            client.congragulate = True
+                        # if client.sub_type == 'aylanma':
+                        #     client.congragulate = True
+                        # else:
+                        #     client.congragulate = True
                         client.save()
                         messages.success(request, 'YaTT ro\'yxatga olindi')
                 elif 'bot_login' in form.errors.as_data():
