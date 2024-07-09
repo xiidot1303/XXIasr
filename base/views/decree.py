@@ -86,7 +86,7 @@ def decree_receive(request, pk):
 
 
 @login_required(login_url='login')
-@permission_required('base.update_decree')
+@permission_required('base.change_decree')
 def decree_check(request, pk, status):
     decree = Decree.objects.get(pk=pk)
     decree.status = status
