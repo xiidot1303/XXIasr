@@ -510,3 +510,9 @@ class Decree(models.Model):
         ('done', 'Yakunlangan'),
     ]
     status = models.CharField(null=True, blank=True, max_length=32, choices=STATUSES, default='submitted')
+
+    @property
+    def days_remaining(self):
+        now = datetime.datetime.today()
+        days = (self.due_date - now).days
+        return days + 1

@@ -59,7 +59,19 @@
                                         <td>{{ decree.substance }}</td>
                                         <td>{{ decree.submitter }}</td>
                                         <td>{{ decree.receiver }}</td>
-                                        <td>{{ decree.due_date|date:"d.m.Y" }}</td>
+                                        <td>
+                                            {{ decree.due_date|date:"d.m.Y" }}
+                                            {% if decree.days_remaining > 0 %}
+                                                <div class="mt-1 text-warning">
+                                                {{ decree.days_remaining }} kun qoldi
+                                                </div>
+                                            {% else  %}
+                                                <div class="mt-1 text-danger">
+                                                    Muddati tugagan
+                                                </div>
+                                                    
+                                                {% endif %}
+                                        </td>
                                         <td>{{ decree.get_status_display }}</td>
                                         <td>
                                             {% if decree.file %}
