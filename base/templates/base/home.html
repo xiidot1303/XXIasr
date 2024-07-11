@@ -96,6 +96,33 @@
             </div>
             </a>
           </div>
+
+          <div class="col-md-2 mb-4 stretch-card transparent">
+            <a href="{% url 'fine_list' %}">
+            <div class="card card-light-danger">
+              <div class="card-body">
+                <p class="mb-4">Jarimalar</p>
+                <p class="fs-30 mb-2">
+                  {{fines.count}}
+                </p>
+              </div>
+            </div>
+            </a>
+          </div>
+
+          <div class="col-md-2 mb-4 stretch-card transparent">
+            <a href="{% url 'decree_list' %}">
+            <div class="card card-light-danger">
+              <div class="card-body">
+                <p class="mb-4">Buyruqlar (Tugatilmagan)</p>
+                <p class="fs-30 mb-2">
+                  {{decrees_uncompleted.count}}
+                </p>
+              </div>
+            </div>
+            </a>
+          </div>
+
           </div>
         </div>
       </div>

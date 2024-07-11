@@ -105,12 +105,15 @@ def homePage(request):
     uploads_uncompleted = uploads_uncompleted.order_by('period')
     notes_process = Notes.objects.filter(Q(status='5') & Q(user=profile))
     notes_uncompleted = Notes.objects.filter(Q(status='0') & Q(user=profile))
+    fines = Fine.objects.filter(staff = profile)
+    decrees_uncompleted = Decree.objects.filter(Q(receiver = profile) & (Q(status = 'received') | Q(status = 'submitted')))
     context = {
         'uploads': uploads, 'uploads_uncompleted': uploads_uncompleted,
         'uploads_unpriced': uploads_unpriced,'tasks_completed': tasks_completed,
         'tasks_uncompleted': tasks_uncompleted, 'profile':profile, 
         'notes_process':notes_process, 'notes_uncompleted':notes_uncompleted,
-        'notes': notes,
+        'notes': notes, 'fines': fines,
+        'decrees_uncompleted': decrees_uncompleted
         }
     return render(request, 'base/home.html', context)
 
