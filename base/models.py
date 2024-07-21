@@ -496,6 +496,7 @@ class Fine(models.Model): # jarima
     fault = models.TextField(null=True, blank=False, max_length=1024)
     file = models.FileField(null=True, blank=True, upload_to='static/fine/')
     acquitted = models.BooleanField(default=False)
+    amount = models.CharField(null=True, blank=True, max_length=32)
 
 class Decree(models.Model):
     submitter = models.ForeignKey(Profile, null=True, blank=False, related_name='decree_submitter', on_delete=models.PROTECT)

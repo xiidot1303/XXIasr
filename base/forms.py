@@ -847,12 +847,13 @@ class Bot_userForm(ModelForm):
 class FineForm(ModelForm):
     class Meta:
         model = Fine
-        fields = ['staff', 'date', 'fault', 'file']
+        fields = ['staff', 'date', 'fault', 'amount', 'file']
         labels = {
             'staff': "Xodim",
             'date': "Sana",
             'fault': 'Xato',
-            'file': 'Fayl'
+            'file': 'Fayl',
+            'amount': 'Summa'
         }
 
         class DateInput(forms.DateInput):

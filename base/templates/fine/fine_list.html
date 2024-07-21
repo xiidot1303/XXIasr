@@ -45,6 +45,7 @@
                                         <th>Xato</th>
                                         <th>Tekshiruvchi</th>
                                         <th>Tilxat</th>
+                                        <th>Summa</th>
                                         <th>Sana</th>
                                         <th></th>
                                     </tr>
@@ -64,6 +65,7 @@
                                                 <i class="fas fa-download"></i>
                                             </a>
                                         </td>
+                                        <td>{{ fine.amount }}</td>
                                         <td>{{ fine.date|date:"d.m.Y" }}</td>
                                         <td>
                                             {% if perms.base.change_fine %}
