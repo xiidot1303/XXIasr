@@ -1,6 +1,32 @@
 {% extends 'main.html' %}
 {% load static %}
 
+{% block link %}
+<style>
+    .countdown {
+        font-family: 'Arial', sans-serif;
+        font-size: 1.4em;
+        color: #333;
+        font-weight: bold;
+        /* text-align: center; */
+        /* margin-top: 20%; */
+    }
+    .time-box {
+        display: inline-block;
+        padding: 10px;
+        margin: 0 5px;
+        background: #f3f3f3;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .label {
+        display: block;
+        font-size: 0.5em;
+        color: #666;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 
 <div class="main-panel">
@@ -54,7 +80,26 @@
                                 <tbody>
                                     {% for decree in submitted_decrees %}
                                     <tr>
-                                        <td>{{ decree.date|date:"d.m.Y" }}</td>
+                                        <td>
+                                            <div id="countdown-s-{{ decree.id }}" class="countdown">
+                                                <div class="time-box">
+                                                    <span id="days-s-{{ decree.id }}"></span>
+                                                    <span class="label">Kun</span>
+                                                </div>
+                                                <div class="time-box">
+                                                    <span id="hours-s-{{ decree.id }}"></span>
+                                                    <span class="label">Soat</span>
+                                                </div>
+                                                <div class="time-box">
+                                                    <span id="minutes-s-{{ decree.id }}"></span>
+                                                    <span class="label">Daqiqa</span>
+                                                </div>
+                                                <div class="time-box">
+                                                    <span id="seconds-s-{{ decree.id }}"></span>
+                                                    <span class="label">Soniya</span>
+                                                </div>
+                                            </div>
+                                        </td>
                                         <td>{{ decree.pk }}</td>
                                         <td>
                                             <a href="{% url 'decree_download_substance' decree.pk %}" class="btn btn-primary btn-sm">
@@ -63,19 +108,7 @@
                                         </td>
                                         <td>{{ decree.submitter }}</td>
                                         <td>{{ decree.receiver }}</td>
-                                        <td>
-                                            {{ decree.due_date|date:"d.m.Y" }}
-                                            {% if decree.days_remaining > 0 %}
-                                                <div class="mt-1 text-warning">
-                                                {{ decree.days_remaining }} kun qoldi
-                                                </div>
-                                            {% else  %}
-                                                <div class="mt-1 text-danger">
-                                                    Muddati tugagan
-                                                </div>
-                                                    
-                                                {% endif %}
-                                        </td>
+                                        <td>{{ decree.date|date:"d.m.Y" }}</td>
                                         <td>{{ decree.get_status_display }}</td>
                                         <td>
                                             {% if decree.file %}
@@ -131,7 +164,28 @@
                                 <tbody>
                                     {% for decree in received_decrees %}
                                     <tr>
-                                        <td>{{ decree.date|date:"d.m.Y" }}</td>
+                                        <td>
+    
+                                            <div id="countdown-{{ decree.id }}" class="countdown">
+                                                <div class="time-box">
+                                                    <span id="days-{{ decree.id }}"></span>
+                                                    <span class="label">Kun</span>
+                                                </div>
+                                                <div class="time-box">
+                                                    <span id="hours-{{ decree.id }}"></span>
+                                                    <span class="label">Soat</span>
+                                                </div>
+                                                <div class="time-box">
+                                                    <span id="minutes-{{ decree.id }}"></span>
+                                                    <span class="label">Daqiqa</span>
+                                                </div>
+                                                <div class="time-box">
+                                                    <span id="seconds-{{ decree.id }}"></span>
+                                                    <span class="label">Soniya</span>
+                                                </div>
+                                            </div>
+    
+                                        </td>
                                         <td>{{ decree.pk }}</td>
                                         <td>
                                             <a href="{% url 'decree_download_substance' decree.pk %}" class="btn btn-primary btn-sm">
@@ -139,19 +193,7 @@
                                             </a>
                                         </td>
                                         <td>{{ decree.submitter }}</td>
-                                        <td>
-                                            {{ decree.due_date|date:"d.m.Y" }}
-                                            {% if decree.days_remaining > 0 %}
-                                                <div class="mt-1 text-warning">
-                                                {{ decree.days_remaining }} kun qoldi
-                                                </div>
-                                            {% else  %}
-                                                <div class="mt-1 text-danger">
-                                                    Muddati tugagan
-                                                </div>
-                                                    
-                                                {% endif %}
-                                        </td>
+                                        <td>{{ decree.date|date:"d.m.Y" }}</td>
                                         <td>{{ decree.get_status_display }}</td>
                                         <td>
                                             {% if decree.file %}
@@ -188,3 +230,70 @@
 
 {% endblock %}
                 
+{% block script %}
+<script>
+    {% for decree in received_decrees %}
+    // Set the due date here
+    
+function updateCountdown{{ decree.id }}() {
+    // const dueDate = new Date("2024-12-31T23:59:59").getTime();
+    const dueDate = new Date("{{ decree.due_date|date:'Y-m-d' }}T{{ decree.due_date|date:'H:i:s' }}").getTime();
+    const now = new Date().getTime();
+    const distance = dueDate - now;
+
+    // Calculate days, hours, minutes, and seconds
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // Display the result in the countdown elements
+    document.getElementById('days-{{ decree.id }}').innerHTML = days;
+    document.getElementById('hours-{{ decree.id }}').innerHTML = hours;
+    document.getElementById('minutes-{{ decree.id }}').innerHTML = minutes;
+    document.getElementById('seconds-{{ decree.id }}').innerHTML = seconds;
+
+    // If the countdown is over, display some text
+    if (distance < 0) {
+        clearInterval(interval);
+        document.getElementById('countdown-{{ decree.id }}').innerHTML = "EXPIRED";
+    }
+}
+
+// Update the countdown every second
+const interval_{{ decree.id }} = setInterval(updateCountdown{{ decree.id }}, 1000);
+{% endfor %}
+
+{% for decree in submitted_decrees %}
+    // Set the due date here
+    
+function updateCountdown_s{{ decree.id }}() {
+    // const dueDate = new Date("2024-12-31T23:59:59").getTime();
+    const dueDate = new Date("{{ decree.due_date|date:'Y-m-d' }}T{{ decree.due_date|date:'H:i:s' }}").getTime();
+    const now = new Date().getTime();
+    const distance = dueDate - now;
+
+    // Calculate days, hours, minutes, and seconds
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // Display the result in the countdown elements
+    document.getElementById('days-s-{{ decree.id }}').innerHTML = days;
+    document.getElementById('hours-s-{{ decree.id }}').innerHTML = hours;
+    document.getElementById('minutes-s-{{ decree.id }}').innerHTML = minutes;
+    document.getElementById('seconds-s-{{ decree.id }}').innerHTML = seconds;
+
+    // If the countdown is over, display some text
+    if (distance < 0) {
+        clearInterval(interval);
+        document.getElementById('countdown-s-{{ decree.id }}').innerHTML = "EXPIRED";
+    }
+}
+
+// Update the countdown every second
+const interval_s_{{ decree.id }} = setInterval(updateCountdown_s{{ decree.id }}, 1000);
+{% endfor %}
+</script>
+{% endblock %}
