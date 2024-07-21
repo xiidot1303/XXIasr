@@ -56,7 +56,11 @@
                                     <tr>
                                         <td>{{ decree.date|date:"d.m.Y" }}</td>
                                         <td>{{ decree.pk }}</td>
-                                        <td>{{ decree.substance }}</td>
+                                        <td>
+                                            <a href="{% url 'decree_download_substance' decree.pk %}" class="btn btn-primary btn-sm">
+                                                <i class="fas fa-download"></i>
+                                            </a>
+                                        </td>
                                         <td>{{ decree.submitter }}</td>
                                         <td>{{ decree.receiver }}</td>
                                         <td>
@@ -129,7 +133,11 @@
                                     <tr>
                                         <td>{{ decree.date|date:"d.m.Y" }}</td>
                                         <td>{{ decree.pk }}</td>
-                                        <td>{{ decree.substance }}</td>
+                                        <td>
+                                            <a href="{% url 'decree_download_substance' decree.pk %}" class="btn btn-primary btn-sm">
+                                                <i class="fas fa-download"></i>
+                                            </a>
+                                        </td>
                                         <td>{{ decree.submitter }}</td>
                                         <td>
                                             {{ decree.due_date|date:"d.m.Y" }}

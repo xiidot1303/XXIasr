@@ -1,4 +1,7 @@
 from base.views import *
+from docx import Document
+from docx.shared import Pt
+from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 
 @login_required(login_url='login')
 def decree_list(request):
@@ -92,3 +95,39 @@ def decree_check(request, pk, status):
     decree.status = status
     decree.save()
     return redirect('decree_list')
+
+
+@login_required(login_url='login')
+def decree_download_substance(request, pk):
+    decree = Decree.objects.get(pk=pk)
+    substance = decree.substance
+
+    # Create a new Document
+    doc = Document()
+
+    # Add some text to the document
+    heading = f"№{decree.id} / {decree.date.strftime('%d.%m')}\n" \
+        f"{decree.date.strftime('%d.%m.%Y')} y."
+    doc.add_heading(heading, level=1)
+    # Add two empty paragraphs to create space
+    doc.add_paragraph('')
+    doc.add_paragraph('')
+    # Add the text "qaror" in the center of the document with a larger font size
+    paragraph = doc.add_paragraph()
+    run = paragraph.add_run('Qaror')
+    run.font.size = Pt(20)  # Set font size
+    paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER  # Center the paragraph
+
+    doc.add_paragraph(substance)
+
+    # Save the document to a BytesIO object
+    from io import BytesIO
+    file_stream = BytesIO()
+    doc.save(file_stream)
+    file_stream.seek(0)
+
+    # Create the HTTP response
+    response = HttpResponse(file_stream, content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+    response['Content-Disposition'] = f'attachment; filename="Buyruq mazmuni ({decree.receiver.name}).docx"'
+
+    return response

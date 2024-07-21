@@ -106,5 +106,6 @@ urlpatterns = [
     path('decree-receive/<int:pk>/', decree.decree_receive, name='decree_receive'),
     path('decree-complete/<int:pk>/', decree.DecreeCompleteView.as_view(), name='decree_complete'),
     path('decree-check/<int:pk>/<str:status>/', decree.decree_check, name='decree_check'),
+    path('decree-download-substance/<int:pk>/', decree.decree_download_substance, name='decree_download_substance'),
 ]
 
