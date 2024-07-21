@@ -97,6 +97,7 @@ urlpatterns = [
     path('fine-list', fine.fine_list, name='fine_list'),
     path('fine-create', fine.FineCreateView.as_view(), name='fine_create'),
     path('fine-edit/<int:pk>/', fine.FineEditView.as_view(), name='fine_edit'),
+    path('fine-acquitted/<int:pk>/', fine.fine_acquitted, name='fine_acquitted'),
 
     # decree
     path('decree-list', decree.decree_list, name='decree_list'),

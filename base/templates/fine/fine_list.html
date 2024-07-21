@@ -51,7 +51,11 @@
                                 </thead>
                                 <tbody>
                                     {% for fine in fines %}
+                                    {% if fine.acquitted %}
+                                    <tr style="background-color: rgba(13, 206, 206, 0.642);">
+                                    {% else %}
                                     <tr>
+                                    {% endif %}
                                         <td>{{ fine.staff.name }}</td>
                                         <td>{{ fine.fault }}</td>
                                         <td>{{ fine.controller.name }}</td>
@@ -66,6 +70,11 @@
                                             <a href="{% url 'fine_edit' fine.pk %}" class="btn btn-primary btn-sm">
                                                 <i class="fas fa-edit"></i>
                                             </a>
+                                            <a href="{% url 'fine_acquitted' fine.pk %}" 
+                                                class="btn btn-{% if not fine.acquitted %}success{% else %}danger{%endif%} btn-sm">
+                                                <i class="fas fa-gavel"></i>
+                                            </a>
+                                            
                                             {% endif %}
                                         </td>
                                     </tr>

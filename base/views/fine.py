@@ -1,6 +1,6 @@
 from base.views import *
 
-@login_required
+@login_required(login_url='login')
 def fine_list(request):
     profile = Profile.objects.get(user=request.user)
     if profile.status == 'admin' or profile.status == 'superuser':
@@ -54,3 +54,10 @@ class FineEditView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
         context['profile'] = profile
         context['view'] = 'Jarima'
         return context
+
+@login_required(login_url='login')
+def fine_acquitted(request, pk):
+    obj = Fine.objects.get(pk = pk)
+    obj.acquitted = not obj.acquitted
+    obj.save()
+    return redirect(request.META.get('HTTP_REFERER'))

@@ -105,7 +105,7 @@ def homePage(request):
     uploads_uncompleted = uploads_uncompleted.order_by('period')
     notes_process = Notes.objects.filter(Q(status='5') & Q(user=profile))
     notes_uncompleted = Notes.objects.filter(Q(status='0') & Q(user=profile))
-    fines = Fine.objects.filter(staff = profile)
+    fines = Fine.objects.filter(staff = profile, acquitted=False)
     decrees_uncompleted = Decree.objects.filter(Q(receiver = profile) & (Q(status = 'received') | Q(status = 'submitted')))
     context = {
         'uploads': uploads, 'uploads_uncompleted': uploads_uncompleted,
