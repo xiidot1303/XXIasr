@@ -872,11 +872,12 @@ class FineForm(ModelForm):
 class DecreeForm(ModelForm):
     class Meta:
         model = Decree
-        fields = ['receiver', 'substance', 'due_date']
+        fields = ['receiver', 'substance', 'file', 'due_date']
         labels = { 
             'receiver': "Qabul qiluvchi", 
             'substance': "Mazmuni", 
-            'due_date': "Muddat"
+            'due_date': "Muddat",
+            'file': 'Ilova'
         }
 
         class DateInput(forms.DateInput):
