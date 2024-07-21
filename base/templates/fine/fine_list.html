@@ -46,6 +46,7 @@
                                         <th>Tekshiruvchi</th>
                                         <th>Tilxat</th>
                                         <th>Sana</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -60,6 +61,13 @@
                                             </a>
                                         </td>
                                         <td>{{ fine.date|date:"d.m.Y" }}</td>
+                                        <td>
+                                            {% if perms.base.change_fine %}
+                                            <a href="{% url 'fine_edit' fine.pk %}" class="btn btn-primary btn-sm">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            {% endif %}
+                                        </td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>

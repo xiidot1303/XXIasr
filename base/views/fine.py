@@ -32,3 +32,25 @@ class FineCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         context['profile'] = profile
         context['view'] = 'Jarima yaratish'
         return context
+
+class FineEditView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    model = Fine
+    form_class = FineForm
+    template_name = 'base/forms.html'
+    success_url = '/fine-list'
+    login_url = 'login'
+    permission_required = 'base.change_fine'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        # get current profile
+        profile = Profile.objects.get(user = self.request.user)
+        form.instance.controller = profile
+        return super().form_valid(form)
+    
+    def get_context_data(self, **kwargs):
+        profile = Profile.objects.get(user=self.request.user)
+        context = super().get_context_data(**kwargs)
+        context['profile'] = profile
+        context['view'] = 'Jarima'
+        return context
