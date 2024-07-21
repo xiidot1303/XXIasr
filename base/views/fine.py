@@ -7,8 +7,13 @@ def fine_list(request):
         fines = Fine.objects.filter().order_by('-date')
     else:
         fines = Fine.objects.filter(Q(staff=profile) | Q(controller=profile)).order_by('-date')
-
-    context = {'profile': profile, 'fines': fines}
+    # filter
+    if "filter" in request.GET:
+        user_id = request.GET['user']
+        if user_id:
+            fines = fines.filter(staff__id = user_id)
+    users = Profile.objects.filter(user__is_active = True)
+    context = {'profile': profile, 'fines': fines, 'users': users}
     return render(request, 'fine/fine_list.html', context)
 
 class FineCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
