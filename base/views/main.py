@@ -55,7 +55,7 @@ def loginPage(request):
                 decrees = Decree.objects.filter(
                     receiver__user = request.user,
                     due_date__lte = datetime.datetime.now()
-                    ).exclude(Q(status = 'done') | Q(status = 'checking'))
+                    ).filter(status = "submitted")
                 if decrees:
                     logout(request)
                     return redirect('login')
