@@ -111,7 +111,9 @@
           <div class="card-body">
             <div class="card-title"><div class="float-left">O'qituvchilar ro'yxati</div>
             <div class="float-right">
-                <button class="btn btn-sm btn-success" id="export_button">Excel</button>
+              {% if profile.status == 'admin' or profile.status == 'superuser' %}
+              <button class="btn btn-sm btn-success" id="export_button">Excel</button>
+              {% endif %}
             </div>
             </div>
            <div class="table-responsive">
