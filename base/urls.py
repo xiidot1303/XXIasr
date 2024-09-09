@@ -11,6 +11,7 @@ from data.config import BOT_TOKEN
 urlpatterns = [
     path(BOT_TOKEN, bot_webhook),
     path("login/", loginPage, name='login'),
+    path('2fa-verify/', verify_2fa, name='2fa_verify'),
     path("logout/", logoutPage, name='logout'),
     path("", homePage, name="home"),
     path("monitoring/", monitoringPage, name="monitoring"),

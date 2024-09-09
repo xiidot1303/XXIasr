@@ -15,7 +15,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.views.decorators.csrf import csrf_exempt
 from bot.update import dp, updater
 from django.http.response import HttpResponse, FileResponse, Http404
-from data.config import ENVIRONMENT
+from data.config import ENVIRONMENT, OFFICE_IP_ADDRESS, TWO_STEP_AUTH_BOT_TOKEN, TWO_STEP_AUTH_CODE_RECEIVERS
 from telegram import Update
 import json
 import telegram
@@ -32,6 +32,8 @@ from docx.shared import Pt
 from django.core.exceptions import PermissionDenied
 import zipfile
 from django.http import JsonResponse
+import random
+from telegram import Bot
 
 # Create your views here.
 def loginPage(request):
@@ -47,9 +49,32 @@ def loginPage(request):
             except:
                 print("Foydalanuvchi topilmadi")
 
-            user = authenticate(request,username=username, password=password)
 
+            user = authenticate(request,username=username, password=password)
             if user is not None:
+                # get ip address of request
+                x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+                if x_forwarded_for:
+                    # In case of multiple IPs in the header, the first one is the client IP
+                    ip = x_forwarded_for.split(',')[0].strip()
+                else:
+                    # Fallback to REMOTE_ADDR if no forwarded IP is available
+                    ip = request.META.get('REMOTE_ADDR')
+                if ip != OFFICE_IP_ADDRESS:
+                    # send 2FA 
+                    code = random.randint(100000, 999999)
+                    request.session['2fa_code'] = code
+                    request.session['username'] = username
+                    request.session['password'] = password
+                    bot = Bot(token=TWO_STEP_AUTH_BOT_TOKEN)
+                    profile = Profile.objects.get(user__id = user.id)
+                    for user_id in TWO_STEP_AUTH_CODE_RECEIVERS:
+                        text = f"Kirish uchun tasdiqlash kodi: {code}\n\n" \
+                            F"Foydalanuvchi: {profile.name}\n" \
+                                f"Ip: {ip}"
+                        bot.send_message(chat_id=user_id, text=text)
+                    return redirect('2fa_verify')
+
                 login(request, user)
                 # check that user have not due dated decress
                 decrees = Decree.objects.filter(
@@ -66,6 +91,23 @@ def loginPage(request):
             else:
                 print("Login yoki Parol xato")
     return render(request, 'login.html')
+
+def verify_2fa(request):
+    if request.method == 'POST':
+        entered_code = request.POST.get('code')
+        stored_code = request.session.get('2fa_code')
+        username = request.session['username']
+        password = request.session['password']
+
+        if entered_code == str(stored_code):
+            # Log the user in if the code matches
+            user = authenticate(request,username=username, password=password)
+            login(request, user)
+            return redirect('home')  # Or any success page
+        else:
+            messages.error(request, 'Invalid 2FA code')
+    
+    return render(request, 'verify_2fa.html')
 
 def  logoutPage(request):
     logout(request)
