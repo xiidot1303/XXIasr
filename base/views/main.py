@@ -15,7 +15,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.views.decorators.csrf import csrf_exempt
 from bot.update import dp, updater
 from django.http.response import HttpResponse, FileResponse, Http404
-from data.config import ENVIRONMENT, OFFICE_IP_ADDRESS, TWO_STEP_AUTH_BOT_TOKEN, TWO_STEP_AUTH_CODE_RECEIVERS
+from data.config import ENVIRONMENT, OFFICE_IP_ADDRESSES, TWO_STEP_AUTH_BOT_TOKEN, TWO_STEP_AUTH_CODE_RECEIVERS
 from telegram import Update
 import json
 import telegram
@@ -60,7 +60,7 @@ def loginPage(request):
                 else:
                     # Fallback to REMOTE_ADDR if no forwarded IP is available
                     ip = request.META.get('REMOTE_ADDR')
-                if ip != OFFICE_IP_ADDRESS:
+                if not ip in OFFICE_IP_ADDRESSES:
                     # send 2FA 
                     code = random.randint(100000, 999999)
                     request.session['2fa_code'] = code
