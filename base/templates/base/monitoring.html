@@ -151,7 +151,7 @@
                             <a href="{% url 'archive-service' row.id %}" class="btn btn-secondary">
                               <i class="fas fa-archive"></i>
                             </a>
-                            {% if perms.base.change_upload %}
+                            {% if profile.id == row.reciever.id %}
                             <a href="{% url 'edit-upload' row.id %}" class="btn btn-primary">
                               <i class="fas fa-edit"></i>
                             </a>
@@ -269,7 +269,7 @@
                                 <i class="fas fa-recycle"></i>
                               </a>
                           {% endif %}
-                          {% if perms.base.change_upload %}
+                          {% if profile.id == row.reciever.id %}
                           <a href="{% url 'edit-upload' row.id %}" class="btn btn-primary btn-sm">
                             <i class="fas fa-edit"></i>
                           </a>
