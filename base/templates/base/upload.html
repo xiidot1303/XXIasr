@@ -32,6 +32,13 @@
     <div class="row">
         <div class="col-md-12 grid-margin strech-card">
             <div class="card">
+            {% if mini_upload %}
+            <ul style="list-style-type: none;padding-top: 10px;">
+              <li style="font-size: 18px;font-weight: bold;">Mijoz: {{ mini_upload.name }}</li>
+              <li style="font-size: 18px;font-weight: bold;">Telefon raqam: {{ mini_upload.phone }}</li>
+              <li style="font-size: 18px;font-weight: bold;">Xizmat turi: {{ mini_upload.service }}</li>
+            </ul>
+            {% endif %}
                 <div class="p-4">
                     <form action="" method="POST" enctype="multipart/form-data">
                       {% csrf_token %}
@@ -41,7 +48,7 @@
                             {{field}}
                           {% endfor %}
                         </div>  
-                      
+                        <input type="hidden" name="mini_upload" value="{{ mini_upload.id }}">
                         <button class="btn btn-primary btn-rounded" type="submit">Yuklash</button>
                     </form>
                 </div>

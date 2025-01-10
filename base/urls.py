@@ -2,7 +2,7 @@
 from django.urls import path
 
 from base.client_views import singleClient, change_congragulation
-from base.upload_views import NotesPage, cancelService, confirmSerivce, editClient, editNote, change_sub_gived, archiveService, editUpload
+from base.upload_views import *
 from base.views.main import *
 from base.views import fine, decree
 from .user_views import CreateProfile, DeleteProfile, EditProfile, Profiles, ActiveProfile
@@ -16,6 +16,7 @@ urlpatterns = [
     path("", homePage, name="home"),
     path("monitoring/", monitoringPage, name="monitoring"),
     path("upload/", uploadPage, name="upload"),
+    path("mini-upload/", create_mini_upload, name="mini_upload"),
     path("create-service/", createService, name="create-service"),
     path("edit-service/<str:pk>", editService, name="edit-service"),
     path("delete-service/<str:pk>", deleteService, name="delete-service"),

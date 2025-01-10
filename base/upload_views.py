@@ -1,11 +1,13 @@
 import requests
 from django.contrib import messages
+from django.http import HttpRequest
 from .models import Notes, Profile, Upload, Client, SMStext
 from django.shortcuts import redirect, render
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from base.utils.message import *
 from base.utils.services import create_key
+from django.views.decorators.csrf import csrf_exempt
 
 
 @login_required(login_url='login')
@@ -395,4 +397,12 @@ def change_sub_gived(request, client_id):
     client = Client.objects.get(pk=client_id)
     client.is_sub_gived = True if not client.is_sub_gived else False
     client.save()
+    return redirect(request.META.get('HTTP_REFERER'))
+
+
+@csrf_exempt
+def create_mini_upload(request: HttpRequest):
+    profile = Profile.objects.get(user=request.user)
+    MiniUpload.objects.create(**request.POST.dict(), profile=profile)
+    messages.success(request, "Xizmat muvaffaqiyatli yuklandi!")
     return redirect(request.META.get('HTTP_REFERER'))

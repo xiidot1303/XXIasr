@@ -294,6 +294,15 @@ class Upload(models.Model):
         today = date.today()
         return (self.period - today).days
 
+class MiniUpload(models.Model):
+    profile = models.ForeignKey(Profile, null=True, on_delete=models.PROTECT)
+    name = models.CharField(max_length=255, null=True)
+    phone = models.CharField(null=True, max_length=32)
+    service = models.CharField(null=True, max_length=255)
+    upload = models.ForeignKey(Upload, null=True, blank=True, on_delete=models.CASCADE)
+    datetime = models.DateTimeField(null=True, db_index=True, auto_now_add=True)
+
+
 class Task(models.Model):
     text = models.TextField(max_length=500)
     given_date = models.DateTimeField(auto_now_add=True)

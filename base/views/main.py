@@ -194,7 +194,8 @@ def monitoringPage(request):
     if profile.status == 'admin':
         # result = uploads.filter(Q(status=5) | Q(status=0))
         result = uploads
-        context = {'profile':profile, 'result':result, 'users': users, 'services': services}
+        mini_uploads = MiniUpload.objects.filter(upload=None)
+        context = {'profile':profile, 'result':result, 'users': users, 'services': services, 'mini_uploads': mini_uploads}
         return render(request, 'base/monitoring.html', context)
 
     elif profile.status == 'superuser':
@@ -218,6 +219,7 @@ def uploadPage(request):
     profile = Profile.objects.get(user=request.user)
     if request.method == "POST":
         profile = Profile.objects.get(id=request.POST['reciever'])
+        mini_upload_id = request.POST.get('mini_upload', None)
         admins = Profile.objects.filter(Q(status='admin') | Q(status='superuser'))
         sender = Profile.objects.get(user=request.user)
         form = UploadForm(request.POST, request.FILES)
@@ -232,6 +234,12 @@ def uploadPage(request):
             # narxlashni bekor qilish
             upload.status = 5
             upload.save()
+            # set mini upload
+            if mini_upload_id:
+                mini_upload = MiniUpload.objects.get(pk=mini_upload_id)
+                mini_upload.upload = upload
+                mini_upload.save()
+                
             shablon1 = SMStext.objects.get(id=4).text
             text1=shablon1.replace("**nom", client.name)
             rephone = client.phone1.replace(" ", "")
@@ -281,10 +289,13 @@ def uploadPage(request):
             bot_send_message(client, text1)
          
             return redirect('home')
+    context = {'form':form, 'profile':profile}
     if 'client_id' in request.GET:
         client_id = request.GET['client_id']
         form.initial['client'] = client_id
-    context = {'form':form, 'profile':profile}
+    if 'mini_upload' in request.GET:
+        mini_upload = MiniUpload.objects.get(pk=request.GET['mini_upload'])
+        context['mini_upload'] = mini_upload
     return render(request, 'base/upload.html', context)
 
 @login_required(login_url='login')
