@@ -297,7 +297,7 @@ class Upload(models.Model):
 
 class MiniUpload(models.Model):
     profile = models.ForeignKey(Profile, null=True, on_delete=models.PROTECT)
-    # reciever = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, related_name='mini_upload_reciever')
+    receiver = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, related_name='mini_upload_reciever')
     name = models.CharField(max_length=255, null=True)
     phone = models.CharField(null=True, max_length=32)
     service = models.CharField(null=True, max_length=255)

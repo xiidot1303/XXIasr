@@ -1,5 +1,5 @@
 from django import template
-from base.models import Client, Decree
+from base.models import Client, Decree, Profile
 from django.db.models import CharField, Value, F, Q
 from datetime import date, timedelta
 from itertools import chain
@@ -97,3 +97,9 @@ def type_readable(type):
 def is_decree_available(profile):
     decress = Decree.objects.filter(receiver=profile).exclude(status='done')
     return decress
+
+
+@register.filter
+def list_profiles(v):
+    profiles = Profile.objects.filter(user__is_active=True)
+    return profiles

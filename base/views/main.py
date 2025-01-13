@@ -201,14 +201,16 @@ def monitoringPage(request):
     elif profile.status == 'superuser':
         # result = uploads.filter(Q(status=5, office=profile.office) | Q(status=0, office=profile.office))
         result = uploads.filter(office=profile.office)
-        context = {'profile':profile, 'result':result, 'users': users, 'services': services}
+        mini_uploads = MiniUpload.objects.filter(upload=None)
+        context = {'profile':profile, 'result':result, 'users': users, 'services': services, 'mini_uploads': mini_uploads}
         return render(request, 'base/monitoring.html', context)
 
 
     elif profile.status == 'user':
         # uncompleted = uploads.filter(Q(status=5) | Q(status=0))
         result = uploads.filter(reciever=profile)
-        context = {'profile':profile, 'result':result, 'services': services}
+        mini_uploads = MiniUpload.objects.filter(upload=None, receiver=profile)
+        context = {'profile':profile, 'result':result, 'services': services, 'mini_uploads': mini_uploads}
         return render(request, 'base/monitoring.html', context)
     else:
         return render(request, 'error-404.html')

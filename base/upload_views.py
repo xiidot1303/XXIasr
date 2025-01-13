@@ -407,6 +407,8 @@ def change_sub_gived(request, client_id):
 @csrf_exempt
 def create_mini_upload(request: HttpRequest):
     profile = Profile.objects.get(user=request.user)
-    MiniUpload.objects.create(**request.POST.dict(), profile=profile)
+    data = request.POST.dict()
+    data['receiver'] = Profile.objects.get(pk=data['receiver'])
+    MiniUpload.objects.create(**data, profile=profile)
     messages.success(request, "Xizmat muvaffaqiyatli yuklandi!")
     return redirect(request.META.get('HTTP_REFERER'))

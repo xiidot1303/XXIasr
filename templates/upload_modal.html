@@ -1,3 +1,4 @@
+{% load functions %}
 <div class="modal fade upload-modal" tabindex="-1" role="dialog"   aria-hidden="true">
    <div class="modal-dialog">
       <div class="modal-content">
@@ -22,6 +23,15 @@
               <div class="mb-3">
                   <label for="service" class="form-label">Xizmat turi</label>
                   <input type="text" class="form-control" id="service" name="service" placeholder="Xizmat turini yozing" required>
+              </div>
+              <div class="form-group mb-3">
+                  <label for="" class="">Xodim</label>
+                  <select name="receiver" id="receiver" class="form-control choicesjs">
+                     {% for profile in 0|list_profiles %}
+                     <option value="{{ profile.id }}">{{ profile.name }}</option>
+                     {% endfor %}
+                  </select>
+                  <!-- <input type="text" class="form-control" id="service" name="service" placeholder="Xizmat turini yozing" required> -->
               </div>
             </div>
             <div class="modal-footer">
