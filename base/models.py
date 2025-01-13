@@ -273,7 +273,8 @@ class Upload(models.Model):
     STATUS_CHOICES = (
         ('0','Narxlanmagan'),
         ('5','Bajarilmagan'),
-        ('10','Bajarilgan')
+        ('10','Bajarilgan'),
+        ('100','Tasdiqlangan'),
     )
     status = models.CharField(max_length=255, choices=STATUS_CHOICES, default='0')
     payment = models.CharField(max_length=255, null=True, blank=True)
@@ -296,6 +297,7 @@ class Upload(models.Model):
 
 class MiniUpload(models.Model):
     profile = models.ForeignKey(Profile, null=True, on_delete=models.PROTECT)
+    # reciever = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, related_name='mini_upload_reciever')
     name = models.CharField(max_length=255, null=True)
     phone = models.CharField(null=True, max_length=32)
     service = models.CharField(null=True, max_length=255)

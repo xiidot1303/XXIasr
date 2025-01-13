@@ -32,6 +32,31 @@
       </div>
     </div>
   </div>
+
+  {% elif obj.status == '10' %}
+      <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-title">Xizmatni tasdiqlash</p>
+          <form action="" method="POST">
+              {% csrf_token %}
+            <p>
+                <b>Xizmatni tasdiqlash :</b>  {{obj.service}} - {{obj.client}}
+            </p>
+            <p>
+              Izoh - <i>{{obj.comment}}</i>
+          </p>
+            <a href="{{ redirect_url }}">Ortga</a>
+              <button class="btn btn-primary btn-rounded" type="submit">Tasdiqlash</button>
+              <input type="hidden" name="redirect_url" value="{{ redirect_url }}">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
   {% else %}
     {% if obj.reciever.user == request.user %}
     <div class="content-wrapper">

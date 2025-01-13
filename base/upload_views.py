@@ -105,6 +105,10 @@ def confirmSerivce(request, pk):
         
                 messages.success(request, "Xizmat tugatildi :)")
                 return redirect(redirect_url)
+            elif obj.status == '10':
+                obj.status = '100'
+                obj.save()
+                return redirect(redirect_url)
             else:
                 return render(request, 'error-404.html')
         return render(request, 'base/confirm.html', {'obj':obj, 'profile':profile, 'redirect_url': request.META.get('HTTP_REFERER')})
