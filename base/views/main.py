@@ -298,6 +298,16 @@ def uploadPage(request):
         form.initial['client'] = client_id
     if 'mini_upload' in request.GET:
         mini_upload = MiniUpload.objects.get(pk=request.GET['mini_upload'])
+        # find client by phone number match
+        phone = mini_upload.phone[-9:]
+        client = Client.objects.filter(phone1__icontains=phone).first()
+        if not client:
+            client = Client.objects.create(
+                name = mini_upload.name,
+                phone1 = mini_upload.phone
+            )
+        form.initial['client'] = client.id
+
         context['mini_upload'] = mini_upload
     return render(request, 'base/upload.html', context)
 

@@ -267,9 +267,9 @@ class Service(models.Model):
         ordering = ['name']
 
 class Upload(models.Model):
-    service = models.ForeignKey(Service, on_delete=models.PROTECT)
+    service = models.ForeignKey(Service, null=True, blank=True, on_delete=models.PROTECT)
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
-    reciever = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, blank=True, related_name='reciever')
+    reciever = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, blank=False, related_name='reciever')
     STATUS_CHOICES = (
         ('0','Narxlanmagan'),
         ('5','Bajarilmagan'),
@@ -279,7 +279,7 @@ class Upload(models.Model):
     status = models.CharField(max_length=255, choices=STATUS_CHOICES, default='0')
     payment = models.CharField(max_length=255, null=True, blank=True)
     loaded_date = models.DateTimeField(auto_now_add=True)
-    period = models.DateField(null=True, blank=True)
+    period = models.DateField(null=True, blank=False)
     uploaded_file = models.FileField(upload_to='static/files', null=True, blank=True)
     answer = models.TextField(max_length=350, null=True, blank=True)
     sender = models.ForeignKey(Profile, on_delete=models.PROTECT, related_name='sender')

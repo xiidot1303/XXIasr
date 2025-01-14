@@ -134,7 +134,13 @@
                         <tr>
                           <td>{{forloop.counter}}</td>
                           <td>{{row.client}}</td>
-                          <td>{{row.service}}</td>
+                          <td>
+                            {% if row.service %}
+                            {{ row.service }}
+                            {% else %}
+                            {{ row.miniupload.service }}
+                            {% endif %}
+                          </td>
                           <td>{{row.loaded_date}}</td>
                           <td title="{{ row.comment }}">.-.-.-.</td>
                           <td>{{row.period}}</td>
@@ -225,7 +231,11 @@
                         </td>
                         <td>{{row.get_status_display}}</td>
                         <td>
+                          {% if row.service %}
                           {{row.service|wordwrap:"20"|linebreaksbr}}
+                          {% else %}
+                          {{ row.miniupload.service }}
+                          {% endif %}
                         </td>
                         <td>
                           {{row.loaded_date}}

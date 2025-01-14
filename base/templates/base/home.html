@@ -310,7 +310,13 @@
 
                         
                        </td>
-                      <td style="line-height: 20px;">{{uncompleted.service|wordwrap:"30"|linebreaksbr}}</td>
+                      <td style="line-height: 20px;">
+                        {% if uncompleted.service %}
+                        {{uncompleted.service|wordwrap:"30"|linebreaksbr}}
+                        {% else %}
+                        {{ uncompleted.miniupload.service }}
+                        {% endif %}
+                      </td>
                       <td title="{{ uncompleted.comment }}">.....</td>
                       <td>{{uncompleted.loaded_date}}</td>
                       <td>{{uncompleted.period}}</td>
