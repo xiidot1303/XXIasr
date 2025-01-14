@@ -307,6 +307,7 @@ def uploadPage(request):
                 phone1 = mini_upload.phone
             )
         form.initial['client'] = client.id
+        form.initial['reciever'] = profile.id
 
         context['mini_upload'] = mini_upload
     return render(request, 'base/upload.html', context)
