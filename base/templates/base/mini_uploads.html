@@ -54,7 +54,7 @@
                     <th>Telefon raqam</th>
                     <th>Xizmat turi</th>
                     <th>Kiritilgan sana</th>
-                    <th>Xodim</th>
+                    <th>Qabul qiluvchi</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -66,7 +66,7 @@
                       <td>{{ row.phone }}</td>
                       <td>{{ row.service }}</td>
                       <td>{{ row.datetime|date:"d.m.Y H:i" }}</td>
-                      <td>{{ row.profile }}</td>
+                      <td>{{ row.receiver }}</td>
                       <td>
                         <a href="{% url 'upload' %}?mini_upload={{ row.id }}" class="btn btn-primary">
                           <i class="fas fa-check"></i>
