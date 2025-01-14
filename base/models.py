@@ -301,7 +301,7 @@ class MiniUpload(models.Model):
     name = models.CharField(max_length=255, null=True)
     phone = models.CharField(null=True, max_length=32)
     service = models.CharField(null=True, max_length=255)
-    upload = models.ForeignKey(Upload, null=True, blank=True, on_delete=models.CASCADE)
+    upload = models.OneToOneField(Upload, null=True, blank=True, on_delete=models.CASCADE)
     datetime = models.DateTimeField(null=True, db_index=True, auto_now_add=True)
 
 

@@ -409,6 +409,52 @@ def create_mini_upload(request: HttpRequest):
     profile = Profile.objects.get(user=request.user)
     data = request.POST.dict()
     data['receiver'] = Profile.objects.get(pk=data['receiver'])
-    MiniUpload.objects.create(**data, profile=profile)
+    mini_upload: MiniUpload = MiniUpload.objects.create(**data, profile=profile)
+    # send sms to client
+
+
+    shablon1 = SMStext.objects.get(id=14).text
+    text1=shablon1.replace("**nom", mini_upload.name)
+    rephone = mini_upload.phone
+    rephone = rephone.replace("-","")
+    rephone = rephone.replace(".","")
+    rephone = rephone.replace(")","")
+    rephone = rephone.replace("(","")
+    if len(rephone) == 13:
+        rephone = rephone
+    elif len(rephone) == 9:
+        rephone = '+998' + str(rephone)
+    elif len(rephone) == 12 and rephone[0] == '9':
+        rephone = '+' + str(rephone)
+    elif len(rephone) == 0 or len(rephone) == 1:
+        rephone = False
+    else:
+        rephone = False
+    if rephone:
+        numberid = rephone
+    
+    url = 'http://91.204.239.44/broker-api/send'
+    headers = {'Content-type': 'application/json',  # Определение типа данных
+            'Accept': 'text/plain',
+            'Authorization': 'Basic eHhpYXNyOmJwOWJFTVA3ODI='}
+    data = {
+    "messages":
+    [
+    {
+    "recipient":numberid,
+    "message-id":"prime000019953",
+        "sms":{
+        "originator": "21ASR",
+        "content": {
+        "text": text1
+        }
+        }
+            }
+        ]
+    } 
+    
+    requests.post(url, json=data, headers=headers)
+
+
     messages.success(request, "Xizmat muvaffaqiyatli yuklandi!")
     return redirect(request.META.get('HTTP_REFERER'))
