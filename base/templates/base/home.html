@@ -38,17 +38,19 @@
             </div>
             </a>
           </div>
+          {% if profile.status != 'user' %}
           <div class="col-md-2 mb-4 stretch-card transparent">
-              <a href='{% url "monitoring" %}'>
+              <a href='{% url "mini_uploads" %}'>
             <div class="card card-light-danger">
               <div class="card-body">
-                <p class="mb-4">Yuklatilgan xizmatlar <b>(narxlanmagan)</b></p>
-                <p class="fs-30 mb-2">{{uploads_unpriced.count}}</p>
+                <p class="mb-4">Tezkor xizmatlar <b>(Biriktirilmagan)</b></p>
+                <p class="fs-30 mb-2">{{mini_uploads_all.count}}</p>
                 
               </div>
             </div>
             </a>
           </div>
+          {% endif %}
           <div class="col-md-2 mb-4 stretch-card transparent">
               <a href='{% url "task" %}'>
             <div class="card card-light-danger">

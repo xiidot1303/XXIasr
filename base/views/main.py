@@ -126,6 +126,7 @@ def homePage(request):
     profile = Profile.objects.get(user=request.user)
     notes = Notes.objects.filter(user=profile, status='0').order_by('period')
     mini_uploads = MiniUpload.objects.filter(upload=None, receiver=profile)    
+    mini_uploads_all = MiniUpload.objects.filter(upload=None)    
     if profile.status == 'admin':
         uploads  = Upload.objects.all()
         uploads_uncompleted = Upload.objects.filter(status='5')
@@ -158,6 +159,7 @@ def homePage(request):
         'notes': notes, 'fines': fines,
         'decrees_uncompleted': decrees_uncompleted,
         'mini_uploads': mini_uploads,
+        'mini_uploads_all': mini_uploads_all,
         }
     return render(request, 'base/home.html', context)
 
@@ -4271,3 +4273,12 @@ def change_duedate(request, pk):
         obj.comment = comment
         obj.save()
     return redirect(request.META.get('HTTP_REFERER'))
+
+
+@login_required(login_url='login')
+def mini_uploads(request):
+    mini_uploads = MiniUpload.objects.filter(upload=None)
+    context = {
+        'mini_uploads': mini_uploads
+    }
+    return render(request, 'base/mini_uploads.html', context)

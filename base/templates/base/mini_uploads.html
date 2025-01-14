@@ -1,0 +1,93 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block link %}
+<!-- Favicon -->
+<link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}" />
+
+<link rel="stylesheet" href="{% static 'assets/css/backend-plugin.min.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/backend.css' %}">  
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-12 grid-margin">
+        <div class="row">
+          <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+            <h3 class="font-weight-bold">XXI ASR BUXGALTERIYA</h3>
+            <h6 class="font-weight-normal mb-0">Tezkor xizmatlar</span></h6>
+          </div>
+          <div class="col-12 col-xl-4">
+           <div class="justify-content-end d-flex">
+           
+           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+<!-- mini uploads -->
+<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      
+        <div class="card-body">
+        <div class="card-title"><div class="float-left">Biriktirilmagan yuklamalar</div><div class="float-right">
+        </div></div>
+            <div class="table-responsive">
+              <table class="table table-striped ytt data-table table-bordered" id="monitoring">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Mijoz</th>
+                    <th>Telefon raqam</th>
+                    <th>Xizmat turi</th>
+                    <th>Kiritilgan sana</th>
+                    <th>Xodim</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for row in mini_uploads %}
+                    <tr>
+                      <td>{{forloop.counter}}</td>
+                      <td>{{ row.name }}</td>
+                      <td>{{ row.phone }}</td>
+                      <td>{{ row.service }}</td>
+                      <td>{{ row.datetime|date:"d.m.Y H:i" }}</td>
+                      <td>{{ row.profile }}</td>
+                      <td>
+                        <a href="{% url 'upload' %}?mini_upload={{ row.id }}" class="btn btn-primary">
+                          <i class="fas fa-check"></i>
+                        </a>
+                      </td>
+
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+            
+      </div>
+    </div>
+  </div>
+ 
+</div>
+
+<!-- END mini uploads -->
+
+
+  </div>
+</div>
+{% endblock %}
