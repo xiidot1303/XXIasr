@@ -125,6 +125,7 @@ def homePage(request):
 
     profile = Profile.objects.get(user=request.user)
     notes = Notes.objects.filter(user=profile, status='0').order_by('period')
+    mini_uploads = MiniUpload.objects.filter(upload=None, receiver=profile)    
     if profile.status == 'admin':
         uploads  = Upload.objects.all()
         uploads_uncompleted = Upload.objects.filter(status='5')
@@ -155,7 +156,8 @@ def homePage(request):
         'tasks_uncompleted': tasks_uncompleted, 'profile':profile, 
         'notes_process':notes_process, 'notes_uncompleted':notes_uncompleted,
         'notes': notes, 'fines': fines,
-        'decrees_uncompleted': decrees_uncompleted
+        'decrees_uncompleted': decrees_uncompleted,
+        'mini_uploads': mini_uploads,
         }
     return render(request, 'base/home.html', context)
 
@@ -194,23 +196,20 @@ def monitoringPage(request):
     if profile.status == 'admin':
         # result = uploads.filter(Q(status=5) | Q(status=0))
         result = uploads
-        mini_uploads = MiniUpload.objects.filter(upload=None)
-        context = {'profile':profile, 'result':result, 'users': users, 'services': services, 'mini_uploads': mini_uploads}
+        context = {'profile':profile, 'result':result, 'users': users, 'services': services}
         return render(request, 'base/monitoring.html', context)
 
     elif profile.status == 'superuser':
         # result = uploads.filter(Q(status=5, office=profile.office) | Q(status=0, office=profile.office))
         result = uploads.filter(office=profile.office)
-        mini_uploads = MiniUpload.objects.filter(upload=None)
-        context = {'profile':profile, 'result':result, 'users': users, 'services': services, 'mini_uploads': mini_uploads}
+        context = {'profile':profile, 'result':result, 'users': users, 'services': services}
         return render(request, 'base/monitoring.html', context)
 
 
     elif profile.status == 'user':
         # uncompleted = uploads.filter(Q(status=5) | Q(status=0))
         result = uploads.filter(reciever=profile)
-        mini_uploads = MiniUpload.objects.filter(upload=None, receiver=profile)
-        context = {'profile':profile, 'result':result, 'services': services, 'mini_uploads': mini_uploads}
+        context = {'profile':profile, 'result':result, 'services': services}
         return render(request, 'base/monitoring.html', context)
     else:
         return render(request, 'error-404.html')

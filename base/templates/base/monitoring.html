@@ -101,58 +101,6 @@
       </div>
      
     </div>
-
-
-<!-- mini uploads -->
-<div class="row">
-  <div class="col-md-12 grid-margin stretch-card">
-    <div class="card">
-      
-        <div class="card-body">
-        <div class="card-title"><div class="float-left">Biriktirilmagan yuklamalar</div><div class="float-right">
-            {% comment %} <button class="btn btn-sm btn-success" id="export_button">Excel</button> {% endcomment %}
-        </div></div>
-            <div class="table-responsive">
-              <table class="table table-striped ytt data-table table-bordered" id="monitoring">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Mijoz</th>
-                    <th>Telefon raqam</th>
-                    <th>Xizmat turi</th>
-                    <th>Kiritilgan sana</th>
-                    <th>Xodim</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for row in mini_uploads %}
-                    <tr>
-                      <td>{{forloop.counter}}</td>
-                      <td>{{ row.name }}</td>
-                      <td>{{ row.phone }}</td>
-                      <td>{{ row.service }}</td>
-                      <td>{{ row.datetime|date:"d.m.Y H:i" }}</td>
-                      <td>{{ row.profile }}</td>
-                      <td>
-                        <a href="{% url 'upload' %}?mini_upload={{ row.id }}" class="btn btn-primary">
-                          <i class="fas fa-check"></i>
-                        </a>
-                      </td>
-
-                    </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-            </div>
-            
-      </div>
-    </div>
-  </div>
- 
-</div>
-
-<!-- END mini uploads -->
     
 
     {% if view == 'query'%}
