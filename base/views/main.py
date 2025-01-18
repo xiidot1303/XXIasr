@@ -237,11 +237,6 @@ def uploadPage(request):
             # narxlashni bekor qilish
             upload.status = 5
             upload.save()
-            # set mini upload
-            if mini_upload_id:
-                mini_upload = MiniUpload.objects.get(pk=mini_upload_id)
-                mini_upload.upload = upload
-                mini_upload.save()
                 
             shablon1 = SMStext.objects.get(id=4).text
             text1=shablon1.replace("**nom", client.name)
@@ -306,10 +301,17 @@ def uploadPage(request):
                 name = mini_upload.name,
                 phone1 = mini_upload.phone
             )
-        form.initial['client'] = client.id
-        form.initial['reciever'] = mini_upload.receiver.id if mini_upload.receiver else None
+        # create upload
+        one_day_later = (datetime.datetime.now() + datetime.timedelta(days=1)).date()
+        upload: Upload = Upload.objects.create(
+            client = client, reciever = mini_upload.receiver if mini_upload.receiver else None,
+            status = 10, period = one_day_later, sender = profile, office = profile.office
+        )
+        # set mini upload
+        mini_upload.upload = upload
+        mini_upload.save()
+        return redirect(request.META.get('HTTP_REFERER'))
 
-        context['mini_upload'] = mini_upload
     return render(request, 'base/upload.html', context)
 
 @login_required(login_url='login')
