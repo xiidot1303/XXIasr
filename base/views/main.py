@@ -310,6 +310,34 @@ def uploadPage(request):
         # set mini upload
         mini_upload.upload = upload
         mini_upload.save()
+
+        # send sms to client
+        shablon = SMStext.objects.get(id=1).text
+        text = shablon.replace("**nom", client.name)
+        rephone = client.phone1
+        numberid = rephone
+        url = 'http://91.204.239.44/broker-api/send'
+        headers = {'Content-type': 'application/json',  # Определение типа данных
+                'Accept': 'text/plain',
+                'Authorization': 'Basic eHhpYXNyOmJwOWJFTVA3ODI='}
+        data = {
+        "messages":
+        [
+        {
+        "recipient":numberid,
+        "message-id":"prime000019953",
+            "sms":{
+            "originator": "21ASR",
+            "content": {
+            "text": text
+            }
+            }
+                }
+            ]
+        } 
+        
+        requests.post(url, json=data, headers=headers)
+
         return redirect(request.META.get('HTTP_REFERER'))
 
     return render(request, 'base/upload.html', context)
