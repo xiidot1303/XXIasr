@@ -4,6 +4,7 @@ from django.urls import path
 from base.client_views import singleClient, change_congragulation
 from base.upload_views import *
 from base.views.main import *
+from base.views.botwebhook import *
 from base.views import fine, decree
 from .user_views import CreateProfile, DeleteProfile, EditProfile, Profiles, ActiveProfile
 from data.config import BOT_TOKEN

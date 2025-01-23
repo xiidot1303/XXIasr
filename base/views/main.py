@@ -4195,15 +4195,6 @@ def download_application_files(request, client_id):
         response['Content-Disposition'] = f'attachment; filename="{zip_filename}"'
         return response
 
-@csrf_exempt
-def bot_webhook(request):
-
-    if ENVIRONMENT == 'local':
-        updater.start_polling()
-    else:
-        update = Update.de_json(json.loads(request.body.decode('utf-8')), dp.bot)
-        dp.process_update(update)
-    return HttpResponse('Bot started!')
 
 @permission_required('base.view_key')
 def get_file(request, folder, file):
