@@ -166,7 +166,7 @@ def homePage(request):
 @login_required(login_url='login')
 def monitoringPage(request):
     profile = Profile.objects.get(user=request.user)
-    users = Profile.objects.all().exclude(status = 'admin')
+    users = Profile.objects.all().exclude(user__is_active=False)
     services = Service.objects.all()
 
     if 'filter' in request.GET:
