@@ -55,23 +55,28 @@
                     <th>Xizmat turi</th>
                     <th>Kiritilgan sana</th>
                     <th>Qabul qiluvchi</th>
-                    <th></th>
+                    <!-- <th></th> -->
                   </tr>
                 </thead>
                 <tbody>
                   {% for row in mini_uploads %}
+                  {% if row.status == 1 %}
+                  <tr class="bg-danger">
+                  
+                  {% else %}
                     <tr>
+                  {% endif %}
                       <td>{{forloop.counter}}</td>
                       <td>{{ row.name }}</td>
                       <td>{{ row.phone }}</td>
                       <td>{{ row.service }}</td>
                       <td>{{ row.datetime|date:"d.m.Y H:i" }}</td>
                       <td>{{ row.receiver }}</td>
-                      <td>
+                      <!-- <td>
                         <a href="{% url 'upload' %}?mini_upload={{ row.id }}" class="btn btn-primary">
                           <i class="fas fa-check"></i>
                         </a>
-                      </td>
+                      </td> -->
 
                     </tr>
                   {% endfor %}

@@ -303,6 +303,12 @@ class MiniUpload(models.Model):
     service = models.CharField(null=True, max_length=255)
     upload = models.OneToOneField(Upload, null=True, blank=True, on_delete=models.CASCADE)
     datetime = models.DateTimeField(null=True, db_index=True, auto_now_add=True)
+    STATUS_CHOICES = (
+        (0, 'Qabul qilinmagan'),
+        (1, 'Jarayonda'),
+    )
+    status = models.IntegerField(null=True, choices=STATUS_CHOICES, default=0)
+
 
 
 class Task(models.Model):

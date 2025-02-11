@@ -19,6 +19,7 @@ urlpatterns = [
     path("upload/", uploadPage, name="upload"),
     path("mini-upload/", create_mini_upload, name="mini_upload"),
     path("mini-uploads/", mini_uploads, name="mini_uploads"),
+    path("receive-upload/<int:pk>/", receive_mini_upload, name="receive_upload"),
     path("create-service/", createService, name="create-service"),
     path("edit-service/<str:pk>", editService, name="edit-service"),
     path("delete-service/<str:pk>", deleteService, name="delete-service"),

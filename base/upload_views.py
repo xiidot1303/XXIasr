@@ -458,3 +458,10 @@ def create_mini_upload(request: HttpRequest):
 
     messages.success(request, "Xizmat muvaffaqiyatli yuklandi!")
     return redirect(request.META.get('HTTP_REFERER'))
+
+
+def receive_mini_upload(request, pk):
+    mini_upload: MiniUpload = MiniUpload.objects.get(pk=pk)
+    mini_upload.status = 1
+    mini_upload.save()
+    return redirect(request.META.get('HTTP_REFERER'))
