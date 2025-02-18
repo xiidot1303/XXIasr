@@ -29,7 +29,7 @@ class DuedateAdmin(admin.ModelAdmin):
 class MiniUploadAdmin(admin.ModelAdmin):
     list_display = ['profile', 'receiver', 'name', 'phone', 'service', 'upload', 'datetime', 'status']
     search_fields = ['name', 'phone', 'service']
-    list_filter = ['status', 'datetime']
+    list_filter = ['status', 'profile', 'receiver']
 
 admin.site.register(Task)
 admin.site.register(Access)
