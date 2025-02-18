@@ -43,7 +43,7 @@ def get_service(update: Update, context):
     update.message.reply_html(text)
     phone = context.user_data['phone']
     # create mini upload
-    receiver = Profile.objects.filter(user__username = "shoxsaidshohjaxon").first()
+    receiver = Profile.objects.filter(user__username = "zoxirtoxirovich").first()
     mini = MiniUpload.objects.create(
         receiver=receiver, name=update.message.chat.first_name,
         phone=phone, service=service
