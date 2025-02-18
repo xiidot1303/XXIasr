@@ -26,13 +26,18 @@ class DuedateAdmin(admin.ModelAdmin):
     def get_list_display(self, request):
         return [field.name for field in self.model._meta.concrete_fields]
 
+class MiniUploadAdmin(admin.ModelAdmin):
+    list_display = ['profile', 'receiver', 'name', 'phone', 'service', 'upload', 'datetime', 'status']
+    search_fields = ['name', 'phone', 'service']
+    list_filter = ['status', 'datetime']
+
 admin.site.register(Task)
 admin.site.register(Access)
 admin.site.register(Profile)
 admin.site.register(Service)
 admin.site.register(Client, ClientAdmin)
 admin.site.register(Upload)
-admin.site.register(MiniUpload)
+admin.site.register(MiniUpload, MiniUploadAdmin)
 admin.site.register(SMS)
 admin.site.register(SMStext)
 admin.site.register(Notes)
