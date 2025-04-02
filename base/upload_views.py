@@ -44,7 +44,7 @@ def confirmSerivce(request, pk):
                 text = shablon.replace("**nom", obj.reciever.name)
                 rephone = obj.reciever.phone
                 numberid = rephone
-                url = 'http://91.204.239.44/broker-api/send'
+                url = 'https://send.smsxabar.uz/broker-api/send'
                 headers = {'Content-type': 'application/json',  # Определение типа данных
                         'Accept': 'text/plain',
                         'Authorization': 'Basic eHhpYXNyOmJwOWJFTVA3ODI='}
@@ -77,7 +77,7 @@ def confirmSerivce(request, pk):
                 text = shablon.replace("**nom", obj.client.name)
                 rephone = obj.client.phone1
                 numberid = rephone
-                url = 'http://91.204.239.44/broker-api/send'
+                url = 'https://send.smsxabar.uz/broker-api/send'
                 headers = {'Content-type': 'application/json',  # Определение типа данных
                         'Accept': 'text/plain',
                         'Authorization': 'Basic eHhpYXNyOmJwOWJFTVA3ODI='}
@@ -433,7 +433,7 @@ def create_mini_upload(request: HttpRequest):
     if rephone:
         numberid = rephone
     
-    url = 'http://91.204.239.44/broker-api/send'
+    url = 'https://send.smsxabar.uz/broker-api/send'
     headers = {'Content-type': 'application/json',  # Определение типа данных
             'Accept': 'text/plain',
             'Authorization': 'Basic eHhpYXNyOmJwOWJFTVA3ODI='}

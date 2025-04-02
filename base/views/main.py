@@ -259,7 +259,7 @@ def uploadPage(request):
             if rephone:
                 numberid = rephone
             
-            url = 'http://91.204.239.44/broker-api/send'
+            url = 'https://send.smsxabar.uz/broker-api/send'
             headers = {'Content-type': 'application/json',  # Определение типа данных
                     'Accept': 'text/plain',
                     'Authorization': 'Basic eHhpYXNyOmJwOWJFTVA3ODI='}
@@ -316,7 +316,7 @@ def uploadPage(request):
         text = shablon.replace("**nom", client.name)
         rephone = client.phone1
         numberid = rephone
-        url = 'http://91.204.239.44/broker-api/send'
+        url = 'https://send.smsxabar.uz/broker-api/send'
         headers = {'Content-type': 'application/json',  # Определение типа данных
                 'Accept': 'text/plain',
                 'Authorization': 'Basic eHhpYXNyOmJwOWJFTVA3ODI='}
@@ -433,7 +433,7 @@ def taskPage(request):
         text = shablon.replace("**nom", reciever.name)
         rephone = reciever.phone
         numberid = rephone
-        url = 'http://91.204.239.44/broker-api/send'
+        url = 'https://send.smsxabar.uz/broker-api/send'
         headers = {'Content-type': 'application/json',  # Определение типа данных
                 'Accept': 'text/plain',
                 'Authorization': 'Basic eHhpYXNyOmJwOWJFTVA3ODI='}
@@ -555,7 +555,7 @@ def finishTask(request, pk):
             print(text)
             rephone = task.sender
             numberid = rephone
-            url = 'http://91.204.239.44/broker-api/send'
+            url = 'https://send.smsxabar.uz/broker-api/send'
             headers = {'Content-type': 'application/json',  # Определение типа данных
                     'Accept': 'text/plain',
                     'Authorization': 'Basic eHhpYXNyOmJwOWJFTVA3ODI='}
@@ -1193,7 +1193,7 @@ def YaTTPage(request):
                         status=sms_status
                     )
 
-                    url = 'http://91.204.239.44/broker-api/send'
+                    url = 'https://send.smsxabar.uz/broker-api/send'
                     headers = {'Content-type': 'application/json',  # Определение типа данных
                             'Accept': 'text/plain',
                             'Authorization': 'Basic eHhpYXNyOmJwOWJFTVA3ODI='}
@@ -1426,7 +1426,7 @@ def YuridikPage(request):
                         status=sms_status
                     )
 
-                    url = 'http://91.204.239.44/broker-api/send'
+                    url = 'https://send.smsxabar.uz/broker-api/send'
                     headers = {'Content-type': 'application/json',  # Определение типа данных
                             'Accept': 'text/plain',
                             'Authorization': 'Basic eHhpYXNyOmJwOWJFTVA3ODI='}
@@ -1647,7 +1647,7 @@ def JismoniyPage(request):
                         status=sms_status
                     )
 
-                    url = 'http://91.204.239.44/broker-api/send'
+                    url = 'https://send.smsxabar.uz/broker-api/send'
                     headers = {'Content-type': 'application/json',  # Определение типа данных
                             'Accept': 'text/plain',
                             'Authorization': 'Basic eHhpYXNyOmJwOWJFTVA3ODI='}
@@ -1873,7 +1873,7 @@ def TaxiPage(request):
                         status=sms_status
                     )
 
-                    url = 'http://91.204.239.44/broker-api/send'
+                    url = 'https://send.smsxabar.uz/broker-api/send'
                     headers = {'Content-type': 'application/json',  # Определение типа данных
                             'Accept': 'text/plain',
                             'Authorization': 'Basic eHhpYXNyOmJwOWJFTVA3ODI='}
@@ -2096,7 +2096,7 @@ def IshonchnomaPage(request):
                         status=sms_status
                     )
 
-                    url = 'http://91.204.239.44/broker-api/send'
+                    url = 'https://send.smsxabar.uz/broker-api/send'
                     headers = {'Content-type': 'application/json',  # Определение типа данных
                             'Accept': 'text/plain',
                             'Authorization': 'Basic eHhpYXNyOmJwOWJFTVA3ODI='}
@@ -2334,7 +2334,7 @@ def GovernorPage(request):
                         status=sms_status
                     )
 
-                    url = 'http://91.204.239.44/broker-api/send'
+                    url = 'https://send.smsxabar.uz/broker-api/send'
                     headers = {'Content-type': 'application/json',  # Определение типа данных
                             'Accept': 'text/plain',
                             'Authorization': 'Basic eHhpYXNyOmJwOWJFTVA3ODI='}
@@ -2514,7 +2514,7 @@ def tanirovkaPage(request):
                         status=sms_status
                     )
 
-                    url = 'http://91.204.239.44/broker-api/send'
+                    url = 'https://send.smsxabar.uz/broker-api/send'
                     headers = {'Content-type': 'application/json',  # Определение типа данных
                             'Accept': 'text/plain',
                             'Authorization': 'Basic eHhpYXNyOmJwOWJFTVA3ODI='}
@@ -2686,7 +2686,7 @@ def auctionPage(request):
                         status=sms_status
                     )
 
-                    url = 'http://91.204.239.44/broker-api/send'
+                    url = 'https://send.smsxabar.uz/broker-api/send'
                     headers = {'Content-type': 'application/json',  # Определение типа данных
                             'Accept': 'text/plain',
                             'Authorization': 'Basic eHhpYXNyOmJwOWJFTVA3ODI='}
@@ -2837,7 +2837,7 @@ def auction2Page(request):
                         status=sms_status
                     )
 
-                    url = 'http://91.204.239.44/broker-api/send'
+                    url = 'https://send.smsxabar.uz/broker-api/send'
                     headers = {'Content-type': 'application/json',  # Определение типа данных
                             'Accept': 'text/plain',
                             'Authorization': 'Basic eHhpYXNyOmJwOWJFTVA3ODI='}
@@ -2991,7 +2991,7 @@ def teachersPage(request):
                         status=sms_status
                     )
 
-                    url = 'http://91.204.239.44/broker-api/send'
+                    url = 'https://send.smsxabar.uz/broker-api/send'
                     headers = {'Content-type': 'application/json',  # Определение типа данных
                             'Accept': 'text/plain',
                             'Authorization': 'Basic eHhpYXNyOmJwOWJFTVA3ODI='}
@@ -3128,7 +3128,7 @@ def aviakassaPage(request):
                         status=sms_status
                     )
 
-                    url = 'http://91.204.239.44/broker-api/send'
+                    url = 'https://send.smsxabar.uz/broker-api/send'
                     headers = {'Content-type': 'application/json',  # Определение типа данных
                             'Accept': 'text/plain',
                             'Authorization': 'Basic eHhpYXNyOmJwOWJFTVA3ODI='}
@@ -3266,7 +3266,7 @@ def daromad12Page(request):
                         status=sms_status
                     )
 
-                    url = 'http://91.204.239.44/broker-api/send'
+                    url = 'https://send.smsxabar.uz/broker-api/send'
                     headers = {'Content-type': 'application/json',  # Определение типа данных
                             'Accept': 'text/plain',
                             'Authorization': 'Basic eHhpYXNyOmJwOWJFTVA3ODI='}
@@ -3404,7 +3404,7 @@ def taxerPage(request):
                         status=sms_status
                     )
 
-                    url = 'http://91.204.239.44/broker-api/send'
+                    url = 'https://send.smsxabar.uz/broker-api/send'
                     headers = {'Content-type': 'application/json',  # Определение типа данных
                             'Accept': 'text/plain',
                             'Authorization': 'Basic eHhpYXNyOmJwOWJFTVA3ODI='}
@@ -3543,7 +3543,7 @@ def studentPage(request):
                         status=sms_status
                     )
 
-                    url = 'http://91.204.239.44/broker-api/send'
+                    url = 'https://send.smsxabar.uz/broker-api/send'
                     headers = {'Content-type': 'application/json',  # Определение типа данных
                             'Accept': 'text/plain',
                             'Authorization': 'Basic eHhpYXNyOmJwOWJFTVA3ODI='}
@@ -3699,7 +3699,7 @@ def mahallaPage(request):
                         status=sms_status
                     )
 
-                    url = 'http://91.204.239.44/broker-api/send'
+                    url = 'https://send.smsxabar.uz/broker-api/send'
                     headers = {'Content-type': 'application/json',  # Определение типа данных
                             'Accept': 'text/plain',
                             'Authorization': 'Basic eHhpYXNyOmJwOWJFTVA3ODI='}
@@ -4261,7 +4261,7 @@ def operator(request, is_called_id = None):
                     text=text,
                     status=sms_status
                 )
-                url = 'http://91.204.239.44/broker-api/send'
+                url = 'https://send.smsxabar.uz/broker-api/send'
                 headers = {'Content-type': 'application/json',  # Определение типа данных
                         'Accept': 'text/plain',
                         'Authorization': 'Basic eHhpYXNyOmJwOWJFTVA3ODI='}

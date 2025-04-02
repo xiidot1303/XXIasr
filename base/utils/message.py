@@ -40,7 +40,7 @@ def send_sms(client, text):
         numberid = rephone
 
     # send sms
-    url = 'http://91.204.239.44/broker-api/send'
+    url = 'https://send.smsxabar.uz/broker-api/send'
     headers = {'Content-type': 'application/json',  # Определение типа данных
             'Accept': 'text/plain',
             'Authorization': 'Basic eHhpYXNyOmJwOWJFTVA3ODI='}

@@ -92,7 +92,7 @@ def send_sms(client, remaining_days, sms_id):
     
     text = text.replace('**kun', str(remaining_days))
     text = text.replace('**nom', client.name)
-    url = 'http://91.204.239.44/broker-api/send'
+    url = 'https://send.smsxabar.uz/broker-api/send'
     headers = {'Content-type': 'application/json',  # Определение типа данных
             'Accept': 'text/plain',
             'Authorization': 'Basic eHhpYXNyOmJwOWJFTVA3ODI='}
