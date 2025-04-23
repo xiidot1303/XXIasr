@@ -453,7 +453,7 @@ def create_mini_upload(request: HttpRequest):
         ]
     } 
     
-    requests.post(url, json=data, headers=headers)
+    # requests.post(url, json=data, headers=headers)
 
 
     messages.success(request, "Xizmat muvaffaqiyatli yuklandi!")
